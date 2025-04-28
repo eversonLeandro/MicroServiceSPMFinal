@@ -1,6 +1,6 @@
 package co.edu.unicauca.microserviceproject.service;
 
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequest;
+import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequestPostulation;
 import co.edu.unicauca.microserviceproject.entities.Company;
 import co.edu.unicauca.microserviceproject.entities.Coordinator;
 import co.edu.unicauca.microserviceproject.entities.Postulation;
@@ -45,7 +45,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project createProject(ProjectRequest dto) throws Exception {
+    public Project createProject(ProjectRequestPostulation dto) throws Exception {
 
         Project project = new Project();
         project.setNombre(dto.getNombre());

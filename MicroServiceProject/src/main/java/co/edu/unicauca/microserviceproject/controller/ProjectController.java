@@ -1,6 +1,6 @@
 package co.edu.unicauca.microserviceproject.controller;
 
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequest;
+import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequestPostulation;
 import co.edu.unicauca.microserviceproject.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import co.edu.unicauca.microserviceproject.service.ProjectService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/apiPostulation")
 public class ProjectController {
 
     @Autowired
@@ -52,24 +52,24 @@ public class ProjectController {
     }
 
     @PostMapping("/project")
-    public ResponseEntity<?> createProject(@RequestBody ProjectRequest projectRequest) throws Exception {
+    public ResponseEntity<?> createProject(@RequestBody ProjectRequestPostulation projectRequestPostulation) throws Exception {
 
         Project savedProject = null;
         try {
             /*savedProject = projectService.createProject(
-                    projectRequest.getNombre(),
-                    projectRequest.getResumen(),
-                    projectRequest.getDescripcion(),
-                    projectRequest.getObjetivo(),
-                    projectRequest.getTiempoMaximo(),
-                    projectRequest.getPresupuesto(),
-                    projectRequest.getFechaEntregadaEsperada(),
-                    projectRequest.getNitCompany(),
-                    projectRequest.getCodCor(),
-                    projectRequest.getIdPostulaciones()
+                    projectRequestPostulation.getNombre(),
+                    projectRequestPostulation.getResumen(),
+                    projectRequestPostulation.getDescripcion(),
+                    projectRequestPostulation.getObjetivo(),
+                    projectRequestPostulation.getTiempoMaximo(),
+                    projectRequestPostulation.getPresupuesto(),
+                    projectRequestPostulation.getFechaEntregadaEsperada(),
+                    projectRequestPostulation.getNitCompany(),
+                    projectRequestPostulation.getCodCor(),
+                    projectRequestPostulation.getIdPostulaciones()
             );
             */
-            savedProject = projectService.createProject(projectRequest);
+            savedProject = projectService.createProject(projectRequestPostulation);
 
         } catch (IllegalAccessException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error al guardar datos.\"}");

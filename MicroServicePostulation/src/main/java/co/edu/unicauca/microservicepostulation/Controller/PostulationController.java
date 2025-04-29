@@ -1,11 +1,12 @@
 package co.edu.unicauca.microservicepostulation.Controller;
 import co.edu.unicauca.microservicepostulation.entity.Postulation;
 import co.edu.unicauca.microservicepostulation.service.PostulationService;
-import co.edu.unicauca.microservicepostulation.service.SenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
 @RequestMapping("/postulaciones")
 @RequiredArgsConstructor
 @RestController
@@ -16,5 +17,16 @@ public class PostulationController {
     @PostMapping
     public Postulation createPostulation(@RequestParam Long idEstudiante, @RequestParam Long idProyecto) {
         return postulationService.savePostulation(idEstudiante, idProyecto);
+    }
+    @GetMapping
+    public ResponseEntity<List<Postulation>> getAllPostulations() {
+        List<Postulation> postulaciones = postulationService.getAllPostulations();
+        return ResponseEntity.ok(postulaciones);
+    }
+
+    @GetMapping("/student/{idEstudiante}")
+    public ResponseEntity<List<Postulation>> getPostulationsByStudent(@PathVariable Long idEstudiante) {
+        List<Postulation> postulaciones = postulationService.getPostulationsByStudent(idEstudiante);
+        return ResponseEntity.ok(postulaciones);
     }
     }

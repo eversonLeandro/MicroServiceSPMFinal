@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Timestamp;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostulationService {
@@ -17,6 +19,10 @@ public class PostulationService {
     private SenderService senderService;
 
     public Postulation savePostulation(Long idEstudiante, Long idProyecto) {
+        // Validación: evitar postulaciones duplicadas
+        if (postulationRepository.existsByIdEstudianteAndIdProyecto(idEstudiante, idProyecto)) {
+            throw new IllegalArgumentException("El estudiante ya está postulado a este proyecto.");
+        }
         // 1. Guardar en la base de datos
         Postulation postulation = Postulation.builder()
                 .idEstudiante(idEstudiante)
@@ -35,5 +41,12 @@ public class PostulationService {
         senderService.sendPostulation(dto);
 
         return postulation;
+    }
+    public List<Postulation> getAllPostulations() {
+        return postulationRepository.findAll();
+    }
+
+    public List<Postulation> getPostulationsByStudent(Long idEstudiante) {
+        return postulationRepository.findByIdEstudiante(idEstudiante);
     }
 }

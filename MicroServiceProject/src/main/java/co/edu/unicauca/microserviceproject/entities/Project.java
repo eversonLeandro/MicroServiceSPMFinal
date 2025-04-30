@@ -61,6 +61,12 @@ public class Project {
         this.estado = new RecibidoState(); // Estado inicial
     }
 
+    @PrePersist
+    public void estado() {
+        if(getEstado() == null){
+            setEstado(new RecibidoState());
+        }
+    }
     public void nextState() {
         this.estado.avanzarEstado(this);
     }

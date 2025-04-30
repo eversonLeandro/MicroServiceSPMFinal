@@ -2,14 +2,10 @@ package co.edu.unicauca.microserviceproject.infra.dto;
 
 import java.util.List;
 
-public class ProjectRequest {
+public class ProjectRequestPostulation {
 
-
-    private String estadoTexto;
 
     private Long nitCompany;
-    private Long codCor;
-
     private String nombre;
     private String resumen;
     private String descripcion;
@@ -18,16 +14,8 @@ public class ProjectRequest {
     private String presupuesto;
     private String fechaEntregadaEsperada;
 
-    private List<Long> idPostulaciones;
 
     // Getters y Setters
-    public String getEstadoTexto() {
-        return estadoTexto;
-    }
-
-    public void setEstadoTexto(String estadoTexto) {
-        this.estadoTexto = estadoTexto;
-    }
 
     public Long getNitCompany() {
         return nitCompany;
@@ -37,13 +25,6 @@ public class ProjectRequest {
         this.nitCompany = nitCompany;
     }
 
-    public Long getCodCor() {
-        return codCor;
-    }
-
-    public void setCodCor(Long codCor) {
-        this.codCor = codCor;
-    }
 
     public String getNombre() {
         return nombre;
@@ -101,11 +82,5 @@ public class ProjectRequest {
         this.fechaEntregadaEsperada = fechaEntregadaEsperada;
     }
 
-    public List<Long> getIdPostulaciones() {
-        return idPostulaciones;
-    }
 
-    public void setIdPostulaciones(List<Long> idPostulaciones) {
-        this.idPostulaciones = idPostulaciones;
-    }
 }

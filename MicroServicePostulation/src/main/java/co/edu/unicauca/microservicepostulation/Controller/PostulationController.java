@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
-
+import jakarta.validation.Valid;
 @RequestMapping("/postulaciones")
 @RequiredArgsConstructor
 @RestController
@@ -15,8 +15,8 @@ public class PostulationController {
     private PostulationService postulationService;
 
     @PostMapping
-    public Postulation createPostulation(@RequestParam Long idEstudiante, @RequestParam Long idProyecto) {
-        return postulationService.savePostulation(idEstudiante, idProyecto);
+    public Postulation createPostulation(@Valid @RequestBody Postulation postulation) {
+        return postulationService.savePostulation(postulation.getIdEstudiante(), postulation.getIdProyecto());
     }
     @GetMapping
     public ResponseEntity<List<Postulation>> getAllPostulations() {

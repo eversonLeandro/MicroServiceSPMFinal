@@ -6,6 +6,7 @@ import co.edu.unicauca.microserviceproject.entities.Coordinator;
 import co.edu.unicauca.microserviceproject.entities.Postulation;
 import co.edu.unicauca.microserviceproject.entities.Project;
 import jakarta.transaction.Transactional;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import co.edu.unicauca.microserviceproject.repository.CompanyRepository;
@@ -72,6 +73,9 @@ public class ProjectService {
             throw new IllegalAccessException("El usuario con ID " + dto.getNitCompany() + " no existe");
         }
         project.setCompany(company.get());
+
+
+        RabbitTemplate rabbitTemplate = new RabbitTemplate();
 
         return projectRepository.save(project);
     }

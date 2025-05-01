@@ -10,7 +10,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostulationDTO  implements Serializable{
-    private String studentCode;
-    private Long projectId;
+    private Long idPostulation;
+    private String codStudent;
+    private Long codProject;
     private Timestamp postulationDate;
 }

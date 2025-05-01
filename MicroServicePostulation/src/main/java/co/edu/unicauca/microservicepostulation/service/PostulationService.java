@@ -34,6 +34,7 @@ public class PostulationService {
 
         // 2. Enviar mensaje a RabbitMQ
         PostulationDTO dto = new PostulationDTO(
+                postulation.getId(),
                 idEstudiante.toString(),
                 idProyecto,
                 Timestamp.valueOf(postulation.getFechaPostulacion())

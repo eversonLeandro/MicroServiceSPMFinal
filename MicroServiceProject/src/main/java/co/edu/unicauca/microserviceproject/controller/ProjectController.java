@@ -54,7 +54,7 @@ public class ProjectController {
     @GetMapping("/projectsCompany/{nit}")
     public ResponseEntity<?> getAllProjectsCompany(@PathVariable Long nit) throws Exception  {
         try{
-            List<Project> projects = projectService.findAll();
+            List<Project> projects = projectService.findAllCompany(nit);
             if (projects == null) {
                 return ResponseEntity.notFound().build();
             } else {

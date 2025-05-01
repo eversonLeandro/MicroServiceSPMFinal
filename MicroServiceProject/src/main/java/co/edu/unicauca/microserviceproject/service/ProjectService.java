@@ -62,22 +62,6 @@ public class ProjectService {
         }
         project.setCompany(company.get());
 
-        Optional<Coordinator> coordinator = coordinatorRepository.findById(dto.getCodCor());
-        if (coordinator.isEmpty()) {
-            throw new IllegalAccessException("El usuario con ID " + dto.getCodCor() + " no existe");
-        }
-        project.setCoordinator(coordinator.get());
-
-        List<Postulation> postulaciones = new ArrayList<>();
-        for (Long id : dto.getIdPostulaciones()) {
-            Optional<Postulation> postulation = postulationRepository.findById(id);
-            if (postulation.isEmpty()) {
-                throw new IllegalArgumentException("La postulación con ID " + id + " no existe");
-            }
-            postulaciones.add(postulation.get());
-        }
-        project.setPostulations(postulaciones);
-
         return projectRepository.save(project);
     }
 

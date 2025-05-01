@@ -40,6 +40,17 @@ public class ProjectService {
         }
     }
 
+    public List<Project> findAllCompany(Long nit) throws Exception {
+        try {
+            return projectRepository.findAllByCompany_Nit(nit);
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
+
     public Project findById(Long id) throws Exception {
         return projectRepository.findById(id).get();
     }

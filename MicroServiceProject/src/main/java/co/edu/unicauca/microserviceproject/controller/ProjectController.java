@@ -11,7 +11,7 @@ import co.edu.unicauca.microserviceproject.service.ProjectService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/apiPostulation")
+@RequestMapping("/apiProject")
 public class ProjectController {
 
     @Autowired
@@ -40,6 +40,20 @@ public class ProjectController {
     @GetMapping("/projects")
     public ResponseEntity<?> getAllProjects() throws Exception  {
         try {
+            List<Project> projects = projectService.findAll();
+            if (projects == null) {
+                return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.ok(projects);
+            }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error al recuperar datos.\"}");
+        }
+    }
+
+    @GetMapping("/projectsCompany/{nit}")
+    public ResponseEntity<?> getAllProjectsCompany(@PathVariable Long nit) throws Exception  {
+        try{
             List<Project> projects = projectService.findAll();
             if (projects == null) {
                 return ResponseEntity.notFound().build();

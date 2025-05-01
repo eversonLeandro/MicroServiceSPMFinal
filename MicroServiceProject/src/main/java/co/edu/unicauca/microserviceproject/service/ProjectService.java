@@ -1,11 +1,15 @@
 package co.edu.unicauca.microserviceproject.service;
 
+import co.edu.unicauca.microserviceproject.infra.config.RabbitMQConfig;
+import co.edu.unicauca.microserviceproject.infra.dto.ProjectMapperCompany;
+import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequestCompany;
 import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequestPostulation;
 import co.edu.unicauca.microserviceproject.entities.Company;
 import co.edu.unicauca.microserviceproject.entities.Coordinator;
 import co.edu.unicauca.microserviceproject.entities.Postulation;
 import co.edu.unicauca.microserviceproject.entities.Project;
 import jakarta.transaction.Transactional;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +33,10 @@ public class ProjectService {
     CoordinatorRepository coordinatorRepository;
     @Autowired
     PostulationRepository postulationRepository;
-
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private ProjectMapperCompany projectMapperCompany;
 
 
     public List<Project> findAll() throws Exception {
@@ -59,6 +66,10 @@ public class ProjectService {
     @Transactional
     public Project createProject(ProjectRequestPostulation dto) throws Exception {
 
+        if (dto == null) {
+            throw new IllegalArgumentException("El DTO del proyecto no puede ser nulo");
+        }
+
         Project project = new Project();
         project.setNombre(dto.getNombre());
         project.setResumen(dto.getResumen());
@@ -68,16 +79,25 @@ public class ProjectService {
         project.setPresupuesto(dto.getPresupuesto());
         project.setFechaEntregadaEsperada(dto.getFechaEntregadaEsperada());
 
+
         Optional<Company> company = companyRepository.findById(dto.getNitCompany());
         if (company.isEmpty()) {
             throw new IllegalAccessException("El usuario con ID " + dto.getNitCompany() + " no existe");
         }
         project.setCompany(company.get());
 
+        // Guardar primero en base de datos
+        Project savedProject = projectRepository.save(project);
 
-        RabbitTemplate rabbitTemplate = new RabbitTemplate();
+        ProjectRequestCompany projectRequestCompany = projectMapperCompany.dto(project);
 
-        return projectRepository.save(project);
+        try {
+            // Enviar a RabbitMQ
+            rabbitTemplate.convertAndSend(RabbitMQConfig.PROJECT_QUEUE, projectRequestCompany);
+        } catch (AmqpException e) {
+            System.out.println(e.getMessage());
+        }
+        return savedProject;
     }
 
     public void deleteById(Long id) throws Exception {

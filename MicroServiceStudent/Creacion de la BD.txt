@@ -1,0 +1,42 @@
+-- Eliminar tablas en orden correcto por dependencias
+DROP TABLE IF EXISTS team_student;
+DROP TABLE IF EXISTS student;
+DROP TABLE IF EXISTS team;
+DROP TABLE IF EXISTS usuario;
+
+-- Crear tabla usuario
+CREATE TABLE usuario (
+  userName VARCHAR(50) NOT NULL,
+  pass VARCHAR(255) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  rol ENUM('ESTUDIANTE','COORDINADOR','EMPRESA') NOT NULL,
+  estado ENUM('HABILITADO','DESHABILITADO') NOT NULL DEFAULT 'HABILITADO',
+  PRIMARY KEY (userName)
+);
+
+-- Crear tabla student
+CREATE TABLE student (
+  codEst VARCHAR(15) NOT NULL,
+  cedula VARCHAR(15) NOT NULL UNIQUE,
+  telefono VARCHAR(15) NOT NULL,
+  estado ENUM('HABILITADO','DESHABILITADO') NOT NULL DEFAULT 'HABILITADO',
+  userName VARCHAR(50) NOT NULL,
+  PRIMARY KEY (codEst),
+  UNIQUE KEY uq_student_username (userName),
+  CONSTRAINT fk_student_usuario FOREIGN KEY (userName) REFERENCES usuario(userName)
+);
+
+-- Crear tabla team
+CREATE TABLE Team (
+  idTeam BIGINT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (idTeam)
+);
+
+-- Tabla intermedia team_student
+CREATE TABLE team_student (
+  id_team BIGINT NOT NULL,
+  id_student VARCHAR(15) NOT NULL,
+  PRIMARY KEY (id_team, id_student),
+  CONSTRAINT fk_team FOREIGN KEY (id_team) REFERENCES Team(idTeam),
+  CONSTRAINT fk_student FOREIGN KEY (id_student) REFERENCES student(codEst)
+);

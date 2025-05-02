@@ -22,8 +22,6 @@ public class StudentMapper {
         student.setCodEst(dto.getCodEst());
         student.setCedula(dto.getCedula());
         student.setTelefono(dto.getTelefono());
-        student.setEstado(Student.Estado.HABILITADO);
-        student.setUsuario(usuario);
 
         return student;
     }
@@ -33,8 +31,7 @@ public class StudentMapper {
                 student.getCodEst(),
                 student.getCedula(),
                 student.getTelefono(),
-                student.getUsuario().getUserName(),
-                "null"
+                student.getNombre()
         );
     }
 }

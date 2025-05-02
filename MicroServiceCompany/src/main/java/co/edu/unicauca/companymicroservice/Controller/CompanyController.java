@@ -1,6 +1,7 @@
 package co.edu.unicauca.companymicroservice.Controller;
 
 import co.edu.unicauca.companymicroservice.Entities.Company;
+import co.edu.unicauca.companymicroservice.Entities.Project;
 import co.edu.unicauca.companymicroservice.Infra.DTO.CompanyDTO;
 import co.edu.unicauca.companymicroservice.Service.CompanyService;
 import jakarta.validation.Valid;
@@ -51,7 +52,8 @@ public class CompanyController {
     @PutMapping("/{idCompany}")
     public ResponseEntity<?> update(@PathVariable String idCompany, @Valid @RequestBody Company entity) {
         try {
-            boolean updated =  companyService.update(idCompany, entity);
+            Project project =new Project();
+            boolean updated =  companyService.update(idCompany, entity,project);
             if (updated) {
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"Compañía actualizada correctamente.\"}");
             } else {

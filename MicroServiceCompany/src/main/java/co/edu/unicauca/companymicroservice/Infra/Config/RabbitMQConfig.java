@@ -10,10 +10,15 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String PROJECT_QUEUE = "projectQueue";
+    public static final String QUEUE_COMPANY_CREATED = "queueCompany";
 
     @Bean
+    public Queue CompanyCreatedQueue() {
+        return new Queue(QUEUE_COMPANY_CREATED, true);
+    }
+    @Bean
     public Queue projectQueue() {
-        return new Queue(PROJECT_QUEUE , true);
+        return new Queue(PROJECT_QUEUE , false);
     }
 
     @Bean

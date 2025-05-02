@@ -1,5 +1,7 @@
 package co.edu.unicauca.microserviceproject.infra.dto;
 
+import java.io.Serializable;
+
 public class ProjectRequestCompany {
     private Long id;
     private Long nitCompany;

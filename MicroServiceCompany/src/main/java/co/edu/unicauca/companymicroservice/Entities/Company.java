@@ -25,7 +25,7 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contacto> contactos;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "company", orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Project> proyectos;
 
 

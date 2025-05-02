@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService implements BaseService<Usuario>{
+public class UsuarioService{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -20,7 +20,6 @@ public class UsuarioService implements BaseService<Usuario>{
         this.usuarioRepository = usuarioRepository;
     }
 
-    @Override
     @Transactional
     public List<Usuario> findAll() throws Exception {
         try{
@@ -31,7 +30,6 @@ public class UsuarioService implements BaseService<Usuario>{
         }
     }
 
-    @Override
     @Transactional
     public Usuario findById(String ID) throws Exception {
         try{
@@ -42,7 +40,6 @@ public class UsuarioService implements BaseService<Usuario>{
         }
     }
 
-    @Override
     @Transactional
     public boolean save(Usuario entity) throws Exception {
         try{
@@ -53,13 +50,11 @@ public class UsuarioService implements BaseService<Usuario>{
         }
     }
 
-    @Override
     @Transactional
     public boolean update(Long id, Usuario entity) throws Exception {
         return false;
     }
 
-    @Override
     @Transactional
     public boolean delete(Long id) throws Exception {
         return false;

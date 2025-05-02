@@ -1,15 +1,19 @@
 package co.edu.unicauca.microserviceproject.entities;
 
 
+import co.edu.unicauca.microserviceproject.infra.Prototype.PrototypeProject;
 import co.edu.unicauca.microserviceproject.states.ProjectState;
 import co.edu.unicauca.microserviceproject.states.RecibidoState;
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 
 import java.util.List;
 
 @Entity
-public class Project {
+public class Project implements PrototypeProject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,8 +25,9 @@ public class Project {
     @Transient
     private ProjectState estado;
 
-    @ManyToOne
-    @JoinColumn(name = "nitCompany", referencedColumnName = "nit")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "nit", referencedColumnName = "nit", nullable = false)
+    @NotNull
     private Company company;
 
     @ManyToOne
@@ -60,7 +65,9 @@ public class Project {
         this.estado = estado;
         this.estado = new RecibidoState(); // Estado inicial
     }
-
+    public Project(ProjectState estado) {
+        this.estado = new RecibidoState();
+    }
     @PrePersist
     public void estado() {
         if(getEstado() == null){
@@ -165,6 +172,18 @@ public class Project {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public PrototypeProject clonar() {
+        return new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado);
+    }
+    public Project clone() {
+        return new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado);
     }
 }
 

@@ -1,6 +1,6 @@
 package co.edu.unicauca.studentmicroservice.Controller;
 
-import co.edu.unicauca.studentmicroservice.Infra.DTO.StudentDTO;
+import co.edu.unicauca.studentmicroservice.Entities.Student;
 import co.edu.unicauca.studentmicroservice.Service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins  = "*")
-@RequestMapping("StudentMicroservice/Students")
+@RequestMapping("/api/Students")
 public class StudentController {
 
     private final StudentService studentService;
@@ -18,7 +18,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("")
+    @GetMapping("obtnerestudiantes")
     public ResponseEntity<?> getAll(){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(studentService.findAll());
@@ -36,8 +36,8 @@ public class StudentController {
         }
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> save(@Valid@RequestBody StudentDTO entity){
+    @PostMapping("crear")
+    public ResponseEntity<?> save(@Valid@RequestBody Student entity){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(studentService.save(entity));
         }catch (Exception e){

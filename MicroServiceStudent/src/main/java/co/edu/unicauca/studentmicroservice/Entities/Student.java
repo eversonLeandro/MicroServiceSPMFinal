@@ -8,37 +8,29 @@ import java.util.List;
 public class Student {
 
     @Id
-    @Column(length = 15, nullable = false)
+    @Column(length = 10, nullable = false,unique=true)
     private String codEst;
-
-    @Column(length = 15, nullable = false, unique = true)
+    @Column(length = 30, nullable = false,unique = true)
+    private String nombre;
+    @Column(length = 10, nullable = false, unique = true)
     private String cedula;
-
-    @Column(length = 15, nullable = false)
+    @Column(length = 10, nullable = false)
     private String telefono;
+    @Column(length = 35, nullable = false)
+    private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Estado estado = Estado.HABILITADO;
 
-    @OneToOne
-    @JoinColumn(name = "userName", referencedColumnName = "userName")
-    private Usuario usuario;
-
-    @ManyToMany(mappedBy = "students")
-    private List<Team> teams;
 
     public Student() {
     }
 
-    public Student(String codEst, String cedula, String telefono, Usuario usuario) {
-        this.codEst = codEst;
+    public Student(String cedula, String codEst, String email, String nombre, String telefono) {
         this.cedula = cedula;
+        this.codEst = codEst;
+        this.email = email;
+        this.nombre = nombre;
         this.telefono = telefono;
-        this.estado = Estado.HABILITADO;
-        this.usuario = usuario;
     }
-
 
     public String getCodEst() {
         return codEst;
@@ -64,32 +56,13 @@ public class Student {
         this.telefono = telefono;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
+    public String getEmail() {return email;}
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
+    public void setEmail(String email) {this.email = email;}
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+    public String getNombre() {return nombre;}
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    public void setNombre(String nombre) {this.nombre = nombre;}
 
-    public List<Team> getTeams() {
-        return teams;
-    }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
-
-    public enum Estado {
-        HABILITADO,
-        DESHABILITADO
-    }
 }

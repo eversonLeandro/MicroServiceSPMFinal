@@ -2,11 +2,21 @@ package co.edu.unicauca.companymicroservice.Service;
 
 import co.edu.unicauca.companymicroservice.Entities.Company;
 import co.edu.unicauca.companymicroservice.Entities.Contacto;
+import co.edu.unicauca.companymicroservice.Entities.Project;
 import co.edu.unicauca.companymicroservice.Infra.DTO.CompanyDTO;
+import co.edu.unicauca.companymicroservice.Infra.DTO.ProjectRequestCompany;
+import co.edu.unicauca.companymicroservice.Infra.DTO.UsuarioRequest;
 import co.edu.unicauca.companymicroservice.Infra.Mappers.CompanyMapper;
+import co.edu.unicauca.companymicroservice.Infra.Mappers.ProjectMapper;
+import co.edu.unicauca.companymicroservice.Infra.Mappers.UsuarioMapper;
 import co.edu.unicauca.companymicroservice.Repositories.CompanyRepository;
 import co.edu.unicauca.companymicroservice.Repositories.ContactoRepository;
+import co.edu.unicauca.companymicroservice.Infra.Config.RabbitMQConfig;
+import co.edu.unicauca.companymicroservice.Repositories.ProjectRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +33,14 @@ public class CompanyService{
     private CompanyMapper companyMapper;
     @Autowired
     private ContactoRepository contactoRepository;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private ProjectRepository projectRepository;
+    @Autowired
+    private UsuarioMapper usuarioMapper;
+    private ProjectMapper projectMapper = new ProjectMapper();
+
 
     public CompanyService(CompanyRepository repository) {
         this.companyRepository = repository;
@@ -65,6 +83,8 @@ public class CompanyService{
             contacto.setCompany(company);
             contactoRepository.save(contacto);
 
+            UsuarioRequest userdto=usuarioMapper.obteneruser(entity);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_COMPANY_CREATED,userdto);
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -72,8 +92,7 @@ public class CompanyService{
         }
     }
 
-    @Transactional
-    public boolean update(String idCompany, Company newCompanyData) throws Exception {
+    public boolean update(String idCompany, Company newCompanyData, Project project) throws Exception {
         try {
             Optional<Company> optionalCompany = companyRepository.findById(idCompany);
             if (optionalCompany.isPresent()) {
@@ -90,7 +109,10 @@ public class CompanyService{
                 if (newCompanyData.getProyectos() != null && !newCompanyData.getProyectos().isEmpty()) {
                     existingCompany.setProyectos(newCompanyData.getProyectos());
                 }
-
+                List<Project> proyectos = existingCompany.getProyectos();
+                proyectos.add(project);
+                existingCompany.setProyectos(proyectos);
+                projectRepository.save(project);
                 companyRepository.save(existingCompany);
                 return true;
             } else {
@@ -100,6 +122,21 @@ public class CompanyService{
             throw new Exception("Error al actualizar la compañía: " + e.getMessage());
         }
     }
+
+    @Transactional
+    public void addProjectToCompany(ProjectRequestCompany projectdto) {
+        Optional<Company> companyOptional = companyRepository.findById(String.valueOf(projectdto.getNitCompany()));
+        if (companyOptional.isPresent()) {
+            Company company = companyOptional.get();
+            Project project = projectMapper.projectToEntity(projectdto, company);
+            project.setCompany(company);
+            company.getProyectos().add(project);
+            companyRepository.save(company);
+        } else {
+            throw new RuntimeException("No se encontró la compañía con NIT: " + projectdto.getNitCompany());
+        }
+    }
+
 
 }
 

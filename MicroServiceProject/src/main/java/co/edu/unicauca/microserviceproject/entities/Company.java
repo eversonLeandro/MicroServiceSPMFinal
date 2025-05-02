@@ -2,12 +2,19 @@ package co.edu.unicauca.microserviceproject.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @Entity
 public class Company {
 
     @Id
     private Long nit;
     private String nombre;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projects = new ArrayList<>();
 
     public Long getNit() {
         return nit;
@@ -32,6 +39,7 @@ public class Company {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
 
     private String estado;
     public Company() {

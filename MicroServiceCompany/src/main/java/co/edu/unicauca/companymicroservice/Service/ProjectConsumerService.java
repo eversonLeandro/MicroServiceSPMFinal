@@ -5,9 +5,11 @@ import co.edu.unicauca.companymicroservice.Entities.Project;
 import co.edu.unicauca.companymicroservice.Infra.DTO.ProjectRequestCompany;
 import co.edu.unicauca.companymicroservice.Infra.Mappers.ProjectMapper;
 import co.edu.unicauca.companymicroservice.Repositories.CompanyRepository;
+import co.edu.unicauca.companymicroservice.Infra.Config.RabbitMQConfig;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,18 +23,11 @@ public class ProjectConsumerService {
 
     @RabbitListener(queues = "projectQueue")
     public void receiveMessage(ProjectRequestCompany projectdto) {
-        try{
-            Optional<Company> company = companyRepository.findById(String.valueOf(projectdto.getNitCompany()));
-            Project project = mapperProject.projectToEntity(projectdto, company.get());
-
-            company.get().getProyectos().add(project);
-            companyService.update(company.get().getNit(), company.get());
-
-
-        }catch (Exception e){
-            System.out.println("Error:" + e.getMessage());
+        try {
+            companyService.addProjectToCompany(projectdto);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
-
     }
 
 }

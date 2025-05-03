@@ -2,12 +2,11 @@ package co.edu.unicauca.microserviceproject.entities;
 
 
 import co.edu.unicauca.microserviceproject.infra.Prototype.PrototypeProject;
-import co.edu.unicauca.microserviceproject.states.ProjectState;
-import co.edu.unicauca.microserviceproject.states.RecibidoState;
+import co.edu.unicauca.microserviceproject.infra.states.EstadoFactory;
+import co.edu.unicauca.microserviceproject.infra.states.ProjectState;
+import co.edu.unicauca.microserviceproject.infra.states.RecibidoState;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 
 import java.util.List;
@@ -25,8 +24,8 @@ public class Project implements PrototypeProject {
     @Transient
     private ProjectState estado;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "nit", referencedColumnName = "nit", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "nit", referencedColumnName = "nit")
     @NotNull
     private Company company;
 
@@ -74,6 +73,10 @@ public class Project implements PrototypeProject {
             setEstado(new RecibidoState());
         }
     }
+    @PostLoad
+    public void inicializarEstado() {
+        this.estado = EstadoFactory.crearEstado(estadoTexto);
+    }
     public void nextState() {
         this.estado.avanzarEstado(this);
     }
@@ -88,6 +91,7 @@ public class Project implements PrototypeProject {
 
     public void setEstado(ProjectState estado) {
         this.estado = estado;
+        this.estadoTexto = estado.getEstado();
     }
 
     public String getNombre() {
@@ -178,13 +182,24 @@ public class Project implements PrototypeProject {
         this.id = id;
     }
 
+    public String getEstadoTexto() {
+        return estadoTexto;
+    }
+
+    public void setEstadoTexto(String estadoTexto) {
+        this.estadoTexto = estadoTexto;
+    }
+
     @Override
     public PrototypeProject clonar() {
         return new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado);
     }
     public Project clone() {
-        return new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado);
-    }
+        Project clone = new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado);
+        clone.setEstado(new RecibidoState());
+        clone.setEstadoTexto("RECIBIDO");
+        return clone;
+}
 }
 
 

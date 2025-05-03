@@ -22,23 +22,24 @@ public class Company {
     @Column(nullable = false)
     private Estado estado = Estado.HABILITADO;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Contacto> contactos;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contacto_id", referencedColumnName = "idContacto")
+    private Contacto contacto;
 
-    @OneToMany(mappedBy = "company", orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> proyectos;
 
 
     public Company() {
     }
 
-    public Company(String nit, String nombre, Estado estado,String sector,List<Contacto> contactos,List<Project> proyectos ){
+    public Company(String nit, String nombre, Estado estado,String sector,Contacto contacto,List<Project> proyectos ){
         this.nit = nit;
         this.nombre = nombre;
         this.estado = estado;
         this.sector = Company.Sector.valueOf(sector.toUpperCase());
         this.proyectos = proyectos;
-        this.contactos = contactos;
+        this.contacto = contacto;
 
     }
 
@@ -67,12 +68,12 @@ public class Company {
         this.estado = estado;
     }
 
-    public List<Contacto> getContactos() {
-        return contactos;
+    public Contacto getContacto() {
+        return contacto;
     }
 
-    public void setContactos(List<Contacto> contactos) {
-        this.contactos = contactos;
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
     }
 
     public List<Project> getProyectos() {

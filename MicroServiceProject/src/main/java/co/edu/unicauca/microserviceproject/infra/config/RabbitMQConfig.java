@@ -13,6 +13,7 @@ public class RabbitMQConfig {
 
     public static final String PROJECT_QUEUE = "projectQueue";
     public static final String POSTULATION_QUEUE = "postulationQueue";
+    public static final String COMPANY_QUEUE = "companyQueue";
 
     @Bean
     public Queue projectQueue() {
@@ -22,16 +23,21 @@ public class RabbitMQConfig {
     public Queue postulationQueue() {
         return new Queue(POSTULATION_QUEUE , false);
     }
+    @Bean
+    public Queue companyQueue() { return new Queue(COMPANY_QUEUE , false);}
 
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }
+
+
 
 }

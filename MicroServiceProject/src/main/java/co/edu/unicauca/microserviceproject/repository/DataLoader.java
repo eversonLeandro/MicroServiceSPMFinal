@@ -41,6 +41,12 @@ public class DataLoader implements CommandLineRunner {
         company.setNombre("Innovative Tech S.A.S.");
         companyRepository.save(company);
 
+        // Crear empresa
+        Company company1 = new Company();
+        company1.setNit(Long.valueOf("30"));
+        company1.setNombre("meradata");
+        companyRepository.save(company1);
+
         // Crear coordinador
 
         Coordinator coordinator = new Coordinator();
@@ -68,7 +74,7 @@ public class DataLoader implements CommandLineRunner {
         project2.setTiempoMaximo("4 meses");
         project2.setPresupuesto("5.000.000");
         project2.setFechaEntregadaEsperada("2025-09-15");
-        project2.setCompany(company);
+        project2.setCompany(company1);
         project2.setCoordinator(coordinator);
 
         // Crear postulaciones y agregarlas al proyecto

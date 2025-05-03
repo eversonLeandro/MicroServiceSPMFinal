@@ -1,28 +1,28 @@
 package co.edu.unicauca.microserviceproject.service;
+
 import co.edu.unicauca.microserviceproject.infra.Prototype.ProjectPrototypeRegister;
-import co.edu.unicauca.microserviceproject.infra.config.RabbitMQConfig;
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectMapperCompany;
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequest;
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequestCompany;
+import co.edu.unicauca.microserviceproject.infra.dto.*;
 import co.edu.unicauca.microserviceproject.entities.Company;
 import co.edu.unicauca.microserviceproject.entities.Project;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceException;
-import org.springframework.amqp.AmqpException;
+import co.edu.unicauca.microserviceproject.infra.states.MessageResponse;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import co.edu.unicauca.microserviceproject.repository.CompanyRepository;
 import co.edu.unicauca.microserviceproject.repository.CoordinatorRepository;
 import co.edu.unicauca.microserviceproject.repository.PostulationRepository;
 import co.edu.unicauca.microserviceproject.repository.ProjectRepository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -42,14 +42,12 @@ public class ProjectService {
     @Autowired
     private ApplicationEventPublisher eventPublisher;
     @Autowired
-    private EntityManager entityManager;
-
-    @Autowired
     private ProjectPrototypeRegister prototypeRegistry;
     @Autowired
     private SenderService senderService;
     @Autowired
     private ProjectPrototypeRegister projectPrototypeRegister;
+
 
     public List<Project> findAll() throws Exception {
         try {
@@ -60,40 +58,31 @@ public class ProjectService {
         }
     }
 
-    public List<Project> findAllCompany(Long nit) throws Exception {
+    public List<ProjectRequestCompany> findAllCompany(Long nit) throws Exception {
         try {
-            return projectRepository.findAllByCompany_Nit(nit);
+            List<Project> projects = projectRepository.findAllByCompany_Nit(nit);
+
+            return projects.stream()
+                    .map(projectMapperCompany::dto)
+                    .collect(Collectors.toList());
 
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            throw new Exception("Error al obtener los proyectos de la empresa: " + e.getMessage());
         }
     }
-
 
 
     public Project findById(Long id) throws Exception {
         return projectRepository.findById(id).get();
     }
 
-    @Transactional
+
     public Project createProject(ProjectRequest dto) throws Exception {
-        // Validación exhaustiva
-        if (dto == null || dto.getNitCompany() == null) {
-            throw new IllegalArgumentException("Datos requeridos faltantes");
+        if (dto == null) {
+            throw new IllegalArgumentException("El DTO del proyecto no puede ser nulo");
         }
 
-        // Carga explícita con verificación de estado
-        Company company = companyRepository.findById(dto.getNitCompany())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        String.format("Compañía con NIT %d no encontrada", dto.getNitCompany())));
-
-        // Verificación adicional del estado de la entidad
-        if (!entityManager.contains(company)) {
-            company = entityManager.merge(company);
-        }
-
-        // Construcción segura del proyecto
-        Project project = (Project)projectPrototypeRegister.getGestor().clonar("DEFECTO");
+        Project project = (Project) projectPrototypeRegister.getGestor().clonar("DEFECTO");
         project.setNombre(dto.getNombre());
         project.setResumen(dto.getResumen());
         project.setDescripcion(dto.getDescripcion());
@@ -101,27 +90,60 @@ public class ProjectService {
         project.setTiempoMaximo(dto.getTiempoMaximo());
         project.setPresupuesto(dto.getPresupuesto());
         project.setFechaEntregadaEsperada(dto.getFechaEntregadaEsperada());
-        project.setCompany(company); // Asignación crítica
-
-        // Persistencia con verificación
-        try {
-            Project savedProject = projectRepository.save(project);
-            entityManager.flush(); // Fuerza la escritura inmediata
-
-            // Verificación post-guardado
-            if (savedProject.getCompany() == null) {
-                throw new IllegalStateException("Relación con compañía perdida después de persistir");
-            }
-
-            return savedProject;
-        } catch (DataIntegrityViolationException e) {
-            throw new PersistenceException("Error de integridad referencial", e);
+        project.setEstadoTexto("RECIBIDO");
+        Optional<Company> company = companyRepository.findById(dto.getNitCompany());
+        if (company.isEmpty()) {
+            throw new IllegalArgumentException("La compañía con NIT " + dto.getNitCompany() + " no existe.");
         }
+
+        project.setCompany(company.get());
+        Project savedProject = projectRepository.save(project);
+
+        ProjectRequestCompany projectRequestCompany = projectMapperCompany.dto(savedProject);
+
+        // Preparar llamada REST
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<ProjectRequestCompany> request = new HttpEntity<>(projectRequestCompany, headers);
+
+        ResponseEntity<ProjectRequestCompany> response = restTemplate.postForEntity(
+                "http://localhost:8088/apiCompanies/saveProject",
+                request,
+                ProjectRequestCompany.class
+        );
+
+        ProjectRequestCompany responseBody = response.getBody();
+        System.out.println("Respuesta del microservicio: " + responseBody);
+
+        return savedProject;
     }
 
     public void deleteById(Long id) throws Exception {
         projectRepository.deleteById(id);
     }
 
+    @Transactional
+    public ProjectStatusResponse updateProjectStatus(Long projectId, String action) {
+
+        System.out.println("sdaadas");
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        MessageResponse messageResponse = null;
+
+        if ("avanzar".equalsIgnoreCase(action)) {
+            messageResponse = project.getEstado().avanzarEstado(project);
+        } else if ("noAvanzar".equalsIgnoreCase(action)) {
+            messageResponse = project.getEstado().NoAvanzaEstado(project);
+        } else {
+            throw new IllegalArgumentException("Acción no válida: " + action);
+        }
+        project.setEstado(messageResponse.getEstado());
+        projectRepository.save(project);
+
+        return new ProjectStatusResponse(messageResponse.getEstado().getEstado(), messageResponse.getMessage());
+    }
 
 }

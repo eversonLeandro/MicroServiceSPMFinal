@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProject;
 
     @Column(columnDefinition = "TEXT", nullable = false)

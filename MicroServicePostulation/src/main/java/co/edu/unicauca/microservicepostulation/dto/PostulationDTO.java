@@ -13,5 +13,5 @@ public class PostulationDTO  implements Serializable{
     private Long idPostulation;
     private String codStudent;
     private Long codProject;
-    private Timestamp postulationDate;
+    private Timestamp fecha;
 }

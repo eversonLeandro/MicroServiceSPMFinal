@@ -2,27 +2,23 @@ package co.edu.unicauca.companymicroservice.Service;
 
 import co.edu.unicauca.companymicroservice.Entities.Company;
 import co.edu.unicauca.companymicroservice.Entities.Contacto;
-import co.edu.unicauca.companymicroservice.Entities.Project;
 import co.edu.unicauca.companymicroservice.Infra.DTO.CompanyDTO;
+import co.edu.unicauca.companymicroservice.Infra.DTO.CompanyRequestProject;
 import co.edu.unicauca.companymicroservice.Infra.DTO.ProjectRequestCompany;
 import co.edu.unicauca.companymicroservice.Infra.DTO.UsuarioRequest;
 import co.edu.unicauca.companymicroservice.Infra.Mappers.CompanyMapper;
-import co.edu.unicauca.companymicroservice.Infra.Mappers.ProjectMapper;
 import co.edu.unicauca.companymicroservice.Infra.Mappers.UsuarioMapper;
 import co.edu.unicauca.companymicroservice.Repositories.CompanyRepository;
 import co.edu.unicauca.companymicroservice.Repositories.ContactoRepository;
 import co.edu.unicauca.companymicroservice.Infra.Config.RabbitMQConfig;
-import co.edu.unicauca.companymicroservice.Repositories.ProjectRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CompanyService{
@@ -36,35 +32,29 @@ public class CompanyService{
     @Autowired
     private RabbitTemplate rabbitTemplate;
     @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
     private UsuarioMapper usuarioMapper;
-    private ProjectMapper projectMapper = new ProjectMapper();
-
 
     public CompanyService(CompanyRepository repository) {
         this.companyRepository = repository;
     }
 
 
-    @Transactional
-    public List<Company> findAll() throws Exception {
-        try{
-            List<Company> entities = companyRepository.findAll();
-            return entities;
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
+    public List<CompanyDTO> findAllDTOs() {
+        List<Company> companies = companyRepository.findAll();
+        List<CompanyDTO> dtos = new ArrayList<>();
+        for (Company company : companies) {
+            dtos.add(companyMapper.toDto(company));
         }
+        return dtos;
     }
 
     @Transactional
-    public Company findById(String ID) throws Exception {
-        try{
-            Optional<Company> entityOptional = companyRepository.findById(ID);
-            return entityOptional.get();
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
+    public CompanyDTO  findByNit(String nit) throws Exception {
+            Optional<Company> company = companyRepository.findById(nit);
+        if (company.isEmpty()) {
+            return null;
         }
+        return companyMapper.toDto(company.orElse(null));
     }
 
 
@@ -80,11 +70,16 @@ public class CompanyService{
             Company company = companyMapper.toEntity(entity,contacto);
             companyRepository.save(company);
 
-            contacto.setCompany(company);
-            contactoRepository.save(contacto);
-
             UsuarioRequest userdto=usuarioMapper.obteneruser(entity);
+
+            CompanyRequestProject companyRequestProject = new CompanyRequestProject();
+            companyRequestProject.setNit(Long.valueOf(company.getNit()));
+            companyRequestProject.setNombre(company.getNombre());
+
             rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_COMPANY_CREATED,userdto);
+
+            rabbitTemplate.convertAndSend(RabbitMQConfig.COMPANY_QUEUE,companyRequestProject);
+
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -92,7 +87,8 @@ public class CompanyService{
         }
     }
 
-    public boolean update(String idCompany, Company newCompanyData, Project project) throws Exception {
+    @Transactional
+    public boolean update(String idCompany, Company newCompanyData) throws Exception {
         try {
             Optional<Company> optionalCompany = companyRepository.findById(idCompany);
             if (optionalCompany.isPresent()) {
@@ -102,17 +98,14 @@ public class CompanyService{
                 existingCompany.setEstado(newCompanyData.getEstado());
                 existingCompany.setSector(newCompanyData.getSector());
 
-                if (newCompanyData.getContactos() != null && !newCompanyData.getContactos().isEmpty()) {
-                    existingCompany.setContactos(newCompanyData.getContactos());
+                if (newCompanyData.getContacto() != null ) {
+                    existingCompany.setContacto(newCompanyData.getContacto());
                 }
 
                 if (newCompanyData.getProyectos() != null && !newCompanyData.getProyectos().isEmpty()) {
                     existingCompany.setProyectos(newCompanyData.getProyectos());
                 }
-                List<Project> proyectos = existingCompany.getProyectos();
-                proyectos.add(project);
-                existingCompany.setProyectos(proyectos);
-                projectRepository.save(project);
+
                 companyRepository.save(existingCompany);
                 return true;
             } else {
@@ -122,21 +115,6 @@ public class CompanyService{
             throw new Exception("Error al actualizar la compañía: " + e.getMessage());
         }
     }
-
-    @Transactional
-    public void addProjectToCompany(ProjectRequestCompany projectdto) {
-        Optional<Company> companyOptional = companyRepository.findById(String.valueOf(projectdto.getNitCompany()));
-        if (companyOptional.isPresent()) {
-            Company company = companyOptional.get();
-            Project project = projectMapper.projectToEntity(projectdto, company);
-            project.setCompany(company);
-            company.getProyectos().add(project);
-            companyRepository.save(company);
-        } else {
-            throw new RuntimeException("No se encontró la compañía con NIT: " + projectdto.getNitCompany());
-        }
-    }
-
 
 }
 

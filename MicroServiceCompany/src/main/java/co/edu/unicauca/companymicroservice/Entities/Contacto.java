@@ -24,21 +24,35 @@ public class Contacto {
 
     @Column(length = 50, nullable = false)
     private String cargo;
+    @Column(length = 50, nullable = false)
+    private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company;
     public Contacto() {
     }
 
-    public Contacto(String apellido, String nombre, String telefono,String cargo,Company company) {
+    public Contacto(String apellido, String cargo, String email, String nombre, String telefono) {
         this.apellido = apellido;
+        this.cargo = cargo;
+        this.email = email;
         this.nombre = nombre;
         this.telefono = telefono;
-        this.cargo = cargo;
-        this.company = company;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setIdContacto(Long idContacto) {
+        this.idContacto = idContacto;
+    }
 
     public Long getIdContacto() {
         return idContacto;
@@ -69,13 +83,6 @@ public class Contacto {
     }
     public void setCargo(String cargo) {
         this.cargo = cargo;
-    }
-
-    public void setCompany(Company company){
-        this.company = company;
-    }
-    public Company getCompany(){
-        return this.company;
     }
 
 }

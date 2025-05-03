@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Component
 public class CompanyMapper {
 
@@ -22,25 +21,30 @@ public class CompanyMapper {
     }
 
     public CompanyDTO toDto(Company company) {
-        CompanyDTO dto = new CompanyDTO();
-        dto.setNit(company.getNit());
-        dto.setNombre(company.getNombre());
-        dto.setTelefono(company.getContactos().get(0).getTelefono());
-        dto.setNombrecontaccto(company.getContactos().get(0).getNombre());
-        dto.setSector(String.valueOf(company.getSector()));
-        dto.setEstado(company.getEstado().name());
-        return dto;
-    }
+        if (company == null) return null;
 
+        Contacto contacto = company.getContacto();
+
+        return new CompanyDTO(
+                company.getNit(),
+                company.getNombre(),
+                contacto != null ? contacto.getEmail() : null,
+                contacto != null ? contacto.getTelefono() : null,
+                contacto != null ? contacto.getNombre() : null,
+                contacto != null ? contacto.getApellido() : null,
+                company.getSector().toString(),
+                contacto != null ? contacto.getCargo() : null,
+                company.getEstado().toString()
+        );
+    }
     public Company toEntity(CompanyDTO dto , Contacto contacto) {
-        List<Contacto> contactos = new ArrayList<>();
+
         Company company = new Company();
         company.setNit(dto.getNit());
         company.setNombre(dto.getNombre());
         company.setSector(Company.Sector.valueOf(dto.getSector().toUpperCase()));
         company.setEstado(Company.Estado.valueOf(dto.getEstado()));
-        contactos.add(contacto);
-        company.setContactos(contactos);
+        company.setContacto(new Contacto(dto.getApellido(),dto.getCargo(),dto.getEmail(),dto.getNombre(),dto.getTelefono()));
         company.setEstado(Company.Estado.HABILITADO);
 
         return company;

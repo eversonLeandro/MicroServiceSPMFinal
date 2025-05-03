@@ -96,4 +96,24 @@ public class StudentService implements BaseService<Student> {
     public boolean delete(Long id) throws Exception {
         return false;
     }
+    @Transactional
+    public Student findByUsername(String username) throws Exception {
+        try {
+            return studentRepository.findByNombre(username); // Asegúrate que este método existe
+        } catch (Exception e) {
+            throw new Exception("Error al buscar estudiante por username", e);
+        }
+    }
+ @Transactional
+    public Student saveTest(Student entity) throws Exception {
+        try {
+            Student saved = studentRepository.save(entity);
+            UsuarioRequest usuariDTO = modelMapper.map(entity,UsuarioRequest.class);
+            usuariDTO.setRol("STUDENT");
+            rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_STUDENT_CREATED,usuariDTO);
+            return saved;
+        } catch (Exception e) {
+            throw new Exception("Error al guardar estudiante");
+        }
+    }
 }

@@ -44,4 +44,8 @@ public class Team {
         }
         this.students = students;
     }
+
+    public void setIdTeam(Long idTeam) {
+        this.idTeam = idTeam;
+    }
 }

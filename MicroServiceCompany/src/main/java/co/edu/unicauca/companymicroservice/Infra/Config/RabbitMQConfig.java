@@ -11,6 +11,8 @@ public class RabbitMQConfig {
 
     public static final String PROJECT_QUEUE = "projectQueue";
     public static final String QUEUE_COMPANY_CREATED = "queueCompany";
+    public static final String COMPANY_QUEUE = "companyQueue";
+
 
     @Bean
     public Queue CompanyCreatedQueue() {
@@ -19,6 +21,10 @@ public class RabbitMQConfig {
     @Bean
     public Queue projectQueue() {
         return new Queue(PROJECT_QUEUE , false);
+    }
+    @Bean
+    public Queue companyQueue() {
+        return new Queue(COMPANY_QUEUE , false);
     }
 
     @Bean

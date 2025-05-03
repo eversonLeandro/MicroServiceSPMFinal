@@ -1,6 +1,5 @@
 package co.edu.unicauca.microserviceproject.controller;
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectMapperCompany;
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectRequest;
+import co.edu.unicauca.microserviceproject.infra.dto.*;
 import co.edu.unicauca.microserviceproject.entities.Project;
 import co.edu.unicauca.microserviceproject.service.SenderService;
 import org.hibernate.Hibernate;
@@ -61,7 +60,7 @@ public class ProjectController {
     @GetMapping("/projectsCompany/{nit}")
     public ResponseEntity<?> getAllProjectsCompany(@PathVariable Long nit) throws Exception  {
         try{
-            List<Project> projects = projectService.findAllCompany(nit);
+            List<ProjectRequestCompany> projects = projectService.findAllCompany(nit);
             if (projects == null) {
                 return ResponseEntity.notFound().build();
             } else {
@@ -75,16 +74,25 @@ public class ProjectController {
 
     @PostMapping("/project")
     public ResponseEntity<?> createProject(@RequestBody ProjectRequest projectRequest) throws Exception {
-
-        Project savedProject = null;
         try {
-            savedProject = projectService.createProject(projectRequest);
+            Project savedProject = projectService.createProject(projectRequest);
+            return ResponseEntity.ok(savedProject);
         } catch (IllegalAccessException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error al guardar datos.\"}");
         }
-        return ResponseEntity.ok(savedProject);
     }
 
+    @PutMapping("/projects/status")
+    public ResponseEntity<?> updateStatus(@RequestBody ProjectStatusRequest statusRequest) {
+        ProjectStatusResponse response = null;
+        try {
+            response = projectService.updateProjectStatus(statusRequest.getProjectId(), statusRequest.getAction());
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            response.setMensaje("{\"error\":\"Error al actualizar datos.\"}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
 
 
 }

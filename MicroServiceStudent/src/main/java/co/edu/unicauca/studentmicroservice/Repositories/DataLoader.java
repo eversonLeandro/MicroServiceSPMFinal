@@ -27,7 +27,7 @@ public class DataLoader implements CommandLineRunner {
             Student student7 = new Student("2468013579", "202010007", "pedro.gonzalez@unicauca.edu.co", "Pedro González", "3142468013");
             Student student8 = new Student("1029384756", "202010008", "sofia.ramirez@unicauca.edu.co", "Sofía Ramírez", "3121029384");
             Student student9 = new Student("6574839201", "202010009", "javier.lopez@unicauca.edu.co", "Javier López", "3196574839");
-            Student student10 = new Student("3847562910", "202010010", "camila.torres@unicauca.edu.co", "Camila Torres", "3153847562");
+            Student student10 = new Student("0816", "202010010", "camila@unicauca.edu.co", "Camila", "3153847562");
 
             // Guardamos todos los estudiantes
             studentservice.saveAll(Arrays.asList(

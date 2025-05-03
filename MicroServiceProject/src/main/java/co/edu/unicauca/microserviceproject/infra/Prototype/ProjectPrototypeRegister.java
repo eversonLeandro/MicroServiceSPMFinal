@@ -1,6 +1,7 @@
 package co.edu.unicauca.microserviceproject.infra.Prototype;
 
 import co.edu.unicauca.microserviceproject.entities.Project;
+import co.edu.unicauca.microserviceproject.infra.states.RecibidoState;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,9 @@ public class ProjectPrototypeRegister {
         plantilla.setPostulations(new ArrayList<>());
         plantilla.setCompany(null);
         plantilla.setCoordinator(null);
+        plantilla.setEstado(new RecibidoState());
+        plantilla.setEstadoTexto("RECIBIDO");
+
 
         gestorPrototipos.registrar("DEFECTO", plantilla);
     }

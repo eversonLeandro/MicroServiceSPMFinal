@@ -5,9 +5,7 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
-import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.domain.entities.Project;
-import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
@@ -31,24 +29,13 @@ import javax.swing.table.DefaultTableModel;
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver {
 
     ProjectService projectService;
-    CompanyService companyService;
-    StudentService studentService;
     User usuario;
     List<Project> proyectos;
-    List<Company> companies;
-    List<Student> students;
 
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
-
+        
         initComponents();
         agregarEventos();
-
-        IRepository repository3 = Factory.getInstance().getRepository("company");
-        companyService = new CompanyService(repository3);
-
-        IRepository repositorys = Factory.getInstance().getRepository("student");
-        studentService = new StudentService(repositorys);
-
         this.projectService = projectService;
         Subject.getInstance().agregarObservador(this);
         this.usuario = usuario;
@@ -163,11 +150,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         });
 
         jLabel8.setText("Estudiantes");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
 
         lblProyectos.setText("Proyectos");
         lblProyectos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -365,19 +347,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }//GEN-LAST:event_btnRegistrarEmpresaActionPerformed
 
     private void lblProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProyectosMouseClicked
-
+    
     }//GEN-LAST:event_lblProyectosMouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        lblProyectosregistrados.setText("Estudiantes Registadas");
-        students = studentService.listarEstudiantes();
-        actualizarTablaEstudiantes(students);
-    }//GEN-LAST:event_jLabel8MouseClicked
-
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        lblProyectosregistrados.setText("Compañias Registadas");
-        companies = companyService.listarEmpresas();
-        actualizarTablaEmpresas(companies);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -452,46 +426,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             });
         }
     }
-    private void actualizarTablaEmpresas(List<Company> companies) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpiar la tabla
-        model.setColumnIdentifiers(new String[]{"NIT", "Nombre", "Teléfono", "Nombre Contacto", "Sector"}); // Cambiar encabezados
-
-        if (companies == null || companies.isEmpty()) {
-            Messages.showMessageDialog("No existen empresas registradas.", "Información");
-            return;
-        }
-
-        for (Company c : companies) {
-            model.addRow(new Object[]{
-                c.getNit(),
-                c.getNombre(),
-                c.getTelefono(),
-                c.getNombrecontaccto(), // Asegúrate que el getter coincida con el nombre real
-                c.getSector()
-            });
-        }
-    }
-    private void actualizarTablaEstudiantes(List<Student> students) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpiar la tabla
-        model.setColumnIdentifiers(new String[]{"Nombre", "Cedula", "Codigo", "Email ", "Telefono"}); // Cambiar encabezados
-
-        if (students == null || students.isEmpty()) {
-            Messages.showMessageDialog("No existen empresas registradas.", "Información");
-            return;
-        }
-
-        for (Student c : students) {
-            model.addRow(new Object[]{
-                c.getNombre(),
-                c.getCedula(),
-                c.getCodigo(),
-                c.getEmail(),
-                c.getTelefono(),});
-        }
-    }
-
 
     private void configurarEventosTabla() {
         jTable1.addMouseListener(new MouseAdapter() {
@@ -523,7 +457,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
     private void abrirGUICoordinadorProject(Project p) {
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p, usuario);
+        GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p,usuario);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }

@@ -1,9 +1,6 @@
 package co.edu.unicauca.microserviceproject.repository;
 
-import co.edu.unicauca.microserviceproject.entities.Company;
-import co.edu.unicauca.microserviceproject.entities.Coordinator;
-import co.edu.unicauca.microserviceproject.entities.Postulation;
-import co.edu.unicauca.microserviceproject.entities.Project;
+import co.edu.unicauca.microserviceproject.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import java.sql.Timestamp;
@@ -26,6 +23,8 @@ public class DataLoader implements CommandLineRunner {
     CoordinatorRepository coordinatorRepository;
     @Autowired
     PostulationRepository postulationRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -93,5 +92,18 @@ public class DataLoader implements CommandLineRunner {
         postulationRepository.saveAll(postulaciones);
         projectRepository.save(project); // Postulations se guardan si hay cascade, si no:
         projectRepository.save(project2);
+
+        Comment comment1 = new Comment(project.getId().intValue(), 123, "Lucía Ramírez",
+                "Este proyecto tiene un gran potencial. Necesitamos revisar el presupuesto.");
+        commentRepository.save(comment1);
+
+        Comment comment2 = new Comment(project.getId().intValue(), 123, "Lucía Ramírez",
+                "He revisado los requisitos y todo parece estar en orden.");
+        commentRepository.save(comment2);
+
+        Comment comment3 = new Comment(project2.getId().intValue(), 123, "Lucía Ramírez",
+                "El enfoque en IA para análisis de juegos es innovador.");
+        commentRepository.save(comment3);
+        
     }
 }

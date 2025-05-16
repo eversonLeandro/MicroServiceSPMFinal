@@ -8,10 +8,7 @@ import co.edu.unicauca.interfaces.ICompanyRepository;
 import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.Messages;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -99,26 +96,7 @@ public class CompanyRepository implements ICompanyRepository {
 
     @Override
     public List<Object> list() {
-        try {
-            URL url = new URL("http://localhost:8088/apiCompanies"); // Endpoint para obtener todas las empresas
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            // Leer el InputStream de la respuesta
-            InputStream inputStream = connection.getInputStream();
-
-            // Usar ObjectMapper para mapear la respuesta JSON a una lista de Company
-            ObjectMapper mapper = new ObjectMapper();
-            List<Company> companies = mapper.readValue(inputStream, new TypeReference<List<Company>>() {
-            });
-
-            return new ArrayList<>(companies);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null; // En caso de error, retornar null
-        }
+        return null;
     }
 
     public Object found(Object usename) {

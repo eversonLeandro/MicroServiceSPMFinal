@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package co.edu.unicauca.infra.dto;
+package co.edu.unicauca.infra.adapter;
 
 /**
  *
@@ -18,8 +18,7 @@ public class ProjectRequestCompany {
     private String tiempoMaximo;
     private String presupuesto;
     private String fechaEntregadaEsperada;
-
- private String estadoTexto;
+    private String estadoTexto;
 
 
     public String getEstadoTexto() {

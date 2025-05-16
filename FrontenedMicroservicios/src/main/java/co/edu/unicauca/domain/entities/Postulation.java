@@ -19,11 +19,12 @@ public class Postulation {
     private Long idPostulation;
     private Long idEstudiante;
     private Long idProyecto;
-    private transient Timestamp fechaPostulacion;
+    //private transient Timestamp fechaPostulacion;
 
     public Postulation(Long idEstudiante, Long idProyecto) {
         this.idEstudiante = idEstudiante;
         this.idProyecto = idProyecto;
+       // this.fechaPostulacion = fechaPostulacion;
     }
 
     public Postulation() {
@@ -46,13 +47,13 @@ public class Postulation {
         this.idProyecto = idProyecto;
     }
 
-    public Timestamp getFechaPostulacion() {
+   /* public Timestamp getFechaPostulacion() {
         return fechaPostulacion;
     }
 
     public void setFechaPostulacion(Timestamp fechaPostulacion) {
         this.fechaPostulacion = fechaPostulacion;
-    }
+    }*/
 
     public Long getIdPostulation() {
         return idPostulation;

@@ -8,6 +8,7 @@ import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IFrameFactory;
+import co.edu.unicauca.interfaces.IUserService;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,10 +23,10 @@ import javax.swing.JFrame;
  */
 public class GUILogin extends javax.swing.JFrame {
 
-    private UserService Service;
+    private final IUserService Service;
     private IFrameFactory frameFactory;
 
-    public GUILogin(UserService service, IFrameFactory frame) {
+    public GUILogin(IUserService service, IFrameFactory frame) {
         this.Service = service;
         this.frameFactory = frame;
         initComponents();
@@ -202,22 +203,17 @@ public class GUILogin extends javax.swing.JFrame {
         if (usuario.isEmpty()) {
             Messages.showMessageDialog("Ambos Campos son Obligatorios", "Atención");
         } else {
-            User result = Service.login(usuario);
+            User result = Service.authenticate(usuario, contrasenia);
             txtcontrasenia.setText("");
             txtusario.setText("");
             if (result != null) {
-                if (verifyPassword(contrasenia, result.getContrasenia())) {
-                    JFrame instance = frameFactory.createFrame(result);
-                    instance.setExtendedState(JFrame.NORMAL);
-                    instance.setLocationRelativeTo(null);
-                    instance.setVisible(true);
-                    this.dispose();
 
-                } else {
-                    Messages.showMessageDialog("Credenciales invalidad", "Atención");
-                }
-            } else {
-                Messages.showMessageDialog("Usuario inexistenete", "Atención");
+                JFrame instance = frameFactory.createFrame(result);
+                instance.setExtendedState(JFrame.NORMAL);
+                instance.setLocationRelativeTo(null);
+                instance.setVisible(true);
+                this.dispose();
+
             }
         }
 

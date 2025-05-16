@@ -82,14 +82,4 @@ public class StudentService {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-    public List<Student> listarEstudiantes() {
-        List<Object> objects = repository.list();
-        List<Student> students = new ArrayList<>();
-        for (Object obj : objects) {
-            if (obj instanceof Student) {
-                students.add((Student) obj);
-            }
-        }
-        return students;
-    }
 }

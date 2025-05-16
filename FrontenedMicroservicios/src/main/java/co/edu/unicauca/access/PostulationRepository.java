@@ -18,8 +18,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,9 +35,6 @@ public class PostulationRepository implements IPostulationRepository {
     @Override
     public boolean save(Object postular) {
         Postulation postulation = (Postulation) postular;
-        Date currentDate = new Date(System.currentTimeMillis());
-        Timestamp fechaActual = new Timestamp(currentDate.getTime());
-        postulation.setFechaPostulacion(fechaActual);
         try {
             URL url = new URL(POST_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -47,7 +42,7 @@ public class PostulationRepository implements IPostulationRepository {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
-            
+
             Gson gson;
             gson = new Gson();//setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
             String jsonInputString = gson.toJson(postulation);

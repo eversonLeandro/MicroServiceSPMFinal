@@ -22,9 +22,11 @@ import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
 
 import co.edu.unicauca.main.Main;
+import java.text.SimpleDateFormat;
 
 //import co.edu.unicauca.interfaces.ProjectState;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 
@@ -55,6 +57,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         cargarEstados();
         llenarCampos(project);
         this.usuario = usuario;
+        cargarComentarios();
     }
 
     /**
@@ -104,6 +107,10 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtmodificarestado = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
+        btnEnviarComentario = new javax.swing.JButton();
+        txtNuevoComentario = new javax.swing.JTextField();
+        scrollComentarios = new javax.swing.JScrollPane();
+        txtComentarios = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -427,21 +434,54 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
         jLabel15.setText("Comentarios del proyecto");
 
+        btnEnviarComentario.setBackground(new java.awt.Color(9, 33, 103));
+        btnEnviarComentario.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviarComentario.setText("Enviar");
+        btnEnviarComentario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarComentarioActionPerformed(evt);
+            }
+        });
+
+        txtNuevoComentario.setBackground(new java.awt.Color(255, 255, 255));
+        txtNuevoComentario.setForeground(new java.awt.Color(0, 0, 0));
+
+        scrollComentarios.setBackground(new java.awt.Color(255, 255, 255));
+        scrollComentarios.setForeground(new java.awt.Color(0, 0, 0));
+
+        txtComentarios.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        scrollComentarios.setViewportView(txtComentarios);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollComentarios)
+                            .addComponent(txtNuevoComentario))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEnviarComentario)
+                        .addGap(12, 12, 12))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(590, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel15)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollComentarios, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEnviarComentario)
+                    .addComponent(txtNuevoComentario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -466,7 +506,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 160, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addComponent(jLabel3)
@@ -541,6 +581,48 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         this.dispose();;
 
     }//GEN-LAST:event_lblProyectosMouseClicked
+
+    private void btnEnviarComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarComentarioActionPerformed
+        try {
+            String mensaje = txtNuevoComentario.getText().trim();
+
+            if (mensaje.isEmpty()) {
+                Messages.showMessageDialog("El comentario no puede estar vacío", "Advertencia");
+                return;
+            }
+
+            if (project.getId() > Integer.MAX_VALUE || usuario.getId() > Integer.MAX_VALUE) {
+                Messages.showMessageDialog("ID de proyecto o usuario demasiado grande", "Error");
+                return;
+            }
+
+            int projectId = (int) project.getId();
+            int userId = usuario.getId().intValue();
+
+            System.out.println("Enviando comentario - Proyecto: " + projectId
+                    + ", Usuario: " + userId
+                    + ", Mensaje: " + mensaje);
+
+            boolean exito = projectService.addComment(
+                    projectId,
+                    userId,
+                    usuario.getUsername(),
+                    mensaje
+            );
+
+            if (exito) {
+                Messages.showMessageDialog("Comentario agregado correctamente", "Éxito");
+                txtNuevoComentario.setText("");
+                cargarComentarios();
+            } else {
+                Messages.showMessageDialog("No se pudo agregar el comentario", "Error");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Messages.showMessageDialog("Error al enviar comentario: " + e.getMessage(), "Error");
+        }
+
+    }//GEN-LAST:event_btnEnviarComentarioActionPerformed
     private void llenarCampos(Project proyecto) {
         txtnombrecordinador.setText(usuario.getUsername());
         txtnombre.setText(proyecto.getNombre());
@@ -610,7 +692,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                 "Confirmar cambio de estado", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion != JOptionPane.YES_OPTION) {
-            return ;
+            return;
         }
         ProjectStatusRequest request = new ProjectStatusRequest();
         request.setProjectId(project.getId());
@@ -621,16 +703,12 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         } else {
             request.setAction("avanzar");
         }
-        
-        
+
         projectStatusResponse = projectService.updateProjectStatus(request);
 
         txtestado.setText(projectStatusResponse.getEstado());
         actualizarOpcionesEstado(projectStatusResponse.getEstado());
         Messages.showMessageDialog(projectStatusResponse.getMensaje(), "Estado Actualizado");
-        
-        
-        
 
         /*ProjectState estadoActual = project.getEstado();
         ProjectState nuevoEstado = null;
@@ -661,8 +739,50 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
          */
     }
 
+    private void cargarComentarios() {
+        try {
+            System.out.println("Intentando cargar comentarios para proyecto ID: " + project.getId());
+
+            if (project.getId() > Integer.MAX_VALUE) {
+                Messages.showMessageDialog("ID de proyecto demasiado grande", "Error");
+                return;
+            }
+            int projectId = (int) project.getId();
+
+            List<Map<String, String>> comentarios = projectService.getCommentsByProject(projectId);
+
+            System.out.println("Comentarios recibidos: " + (comentarios != null ? comentarios.size() : "null"));
+
+            if (comentarios == null || comentarios.isEmpty()) {
+                txtComentarios.setText("No hay comentarios para este proyecto.");
+            } else {
+                mostrarComentarios(comentarios);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            txtComentarios.setText("Error al cargar comentarios: " + e.getMessage());
+        }
+    }
+
+    private void mostrarComentarios(List<Map<String, String>> comentarios) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Map<String, String> comentario : comentarios) {
+            sb.append("[")
+                    .append(comentario.get("timestamp"))
+                    .append("] ")
+                    .append(comentario.get("coordinatorName"))
+                    .append(":\n")
+                    .append(comentario.get("message"))
+                    .append("\n\n");
+        }
+
+        txtComentarios.setText(sb.toString());
+        txtComentarios.setCaretPosition(0);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEnviarComentario;
     private javax.swing.JButton btnguardarCambios;
     private javax.swing.JComboBox<String> cbxestados;
     private javax.swing.JButton jButton5;
@@ -688,7 +808,10 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel lblProyectos;
+    private javax.swing.JScrollPane scrollComentarios;
+    private javax.swing.JTextPane txtComentarios;
     private javax.swing.JTextField txtInformacion;
+    private javax.swing.JTextField txtNuevoComentario;
     private javax.swing.JTextField txtPresupuesto;
     private javax.swing.JTextField txtdescripcion;
     private javax.swing.JTextField txtempresa;

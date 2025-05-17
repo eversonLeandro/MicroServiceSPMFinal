@@ -19,8 +19,11 @@ public class ProjectRequestCompany {
     private String presupuesto;
     private String fechaEntregadaEsperada;
     private String estadoTexto;
+    private String periodoAcademico;
 
 
+    
+    
     public String getEstadoTexto() {
         return estadoTexto;
     }
@@ -99,4 +102,19 @@ public class ProjectRequestCompany {
     public void setFechaEntregadaEsperada(String fechaEntregadaEsperada) {
         this.fechaEntregadaEsperada = fechaEntregadaEsperada;
     }
+
+    /**
+     * @return the periodoAcademico
+     */
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
+
+    /**
+     * @param periodoAcademico the periodoAcademico to set
+     */
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
+    }
+    
 }

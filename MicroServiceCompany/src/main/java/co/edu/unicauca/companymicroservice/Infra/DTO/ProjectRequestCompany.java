@@ -10,6 +10,7 @@ public class ProjectRequestCompany {
     private String tiempoMaximo;
     private String presupuesto;
     private String fechaEntregadaEsperada;
+    private String periodoAcademico;
 
     public Long getId() {
         return id;
@@ -81,5 +82,13 @@ public class ProjectRequestCompany {
 
     public void setFechaEntregadaEsperada(String fechaEntregadaEsperada) {
         this.fechaEntregadaEsperada = fechaEntregadaEsperada;
+    }
+
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
+
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
     }
 }

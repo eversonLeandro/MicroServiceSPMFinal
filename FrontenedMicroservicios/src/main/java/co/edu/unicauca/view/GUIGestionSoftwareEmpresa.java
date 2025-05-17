@@ -294,7 +294,7 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        
         GUIPostularProject instance = new GUIPostularProject(this, projectService, this, user, companyService);
         instance.setVisible(true);
         // TODO add your handling code here:

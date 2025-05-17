@@ -13,7 +13,7 @@ public class ProjectRequestCompany {
     private String presupuesto;
     private String fechaEntregadaEsperada;
     private String estadoTexto;
-
+    private String periodoAcademico;
 
     public String getEstadoTexto() {
         return estadoTexto;
@@ -94,20 +94,12 @@ public class ProjectRequestCompany {
     public void setFechaEntregadaEsperada(String fechaEntregadaEsperada) {
         this.fechaEntregadaEsperada = fechaEntregadaEsperada;
     }
-    public ProjectRequestCompany clone() {
-        ProjectRequestCompany cloned = new ProjectRequestCompany();
 
-        // Copiar todos los campos
-        cloned.setId(this.id); // Long es inmutable
-        cloned.setNitCompany(this.nitCompany);
-        cloned.setNombre(this.nombre); // String es inmutable
-        cloned.setResumen(this.resumen);
-        cloned.setDescripcion(this.descripcion);
-        cloned.setObjetivo(this.objetivo);
-        cloned.setTiempoMaximo(this.tiempoMaximo);
-        cloned.setPresupuesto(this.presupuesto);
-        cloned.setFechaEntregadaEsperada(this.fechaEntregadaEsperada);
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
 
-        return cloned;
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
     }
 }

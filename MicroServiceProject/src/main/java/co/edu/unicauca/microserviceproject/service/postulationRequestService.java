@@ -17,7 +17,6 @@ public class postulationRequestService {
     @RabbitListener(queues = "postulationQueue")
     public void receiveMessage(Postulation postulation) {
         try{
-
             postulationRepository.save(postulation);
             System.out.println("Postulation saved with rabbitMQ");
 

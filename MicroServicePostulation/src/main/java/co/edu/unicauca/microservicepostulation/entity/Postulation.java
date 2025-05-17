@@ -3,8 +3,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
-
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,14 +20,14 @@ public class Postulation {
     @NotNull
     private Long idProyecto;
     @NotNull
-    private Timestamp fechaPostulacion;
+    private LocalDateTime fechaPostulacion;
 
 
-    public Timestamp getFechaPostulacion() {
+    public LocalDateTime getFechaPostulacion() {
         return fechaPostulacion;
     }
 
-    public void setFechaPostulacion(Timestamp fechaPostulacion) {
+    public void setFechaPostulacion(LocalDateTime fechaPostulacion) {
         this.fechaPostulacion = fechaPostulacion;
     }
 }

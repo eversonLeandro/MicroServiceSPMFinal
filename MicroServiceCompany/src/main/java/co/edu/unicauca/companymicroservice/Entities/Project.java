@@ -35,6 +35,8 @@ public class Project {
     @JoinColumn(name = "nit", nullable = false)
     private Company company;
 
+    @Column(length = 10, nullable = false)
+    private String periodoAcademico;
 
 
     public Project() {
@@ -53,6 +55,13 @@ public class Project {
         this.company = company;
     }
 
+    public enum Estado {
+        RECIBIDO,
+        ACEPTADO,
+        RECHAZADO,
+        EJECUCION,
+        CERRADO
+    }
     public Long getIdProject() {
         return idProject;
     }
@@ -117,19 +126,19 @@ public class Project {
         this.fechaEntregaEsperada = fechaEntregaEsperada;
     }
 
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
+
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
+    }
+
     public Company getCompany() {
         return company;
     }
 
     public void setCompany(Company company) {
         this.company = company;
-    }
-
-    public enum Estado {
-        RECIBIDO,
-        ACEPTADO,
-        RECHAZADO,
-        EJECUCION,
-        CERRADO
     }
 }

@@ -577,6 +577,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private void lblProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProyectosMouseClicked
         GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService, usuario);
         instance.setExtendedState(JFrame.NORMAL);
+         instance.setLocationRelativeTo(null);
         instance.setVisible(true);
         this.dispose();;
 

@@ -1,18 +1,22 @@
 package co.edu.unicauca.companymicroservice.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "company")
 public class Company {
-
     @Id
     @Column(length = 15, nullable = false)
     private String nit;
 
     @Column(length = 100, nullable = false)
     private String nombre;
+
+    @Column(length = 50, nullable = false)  // Nuevo campo email
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -24,25 +28,23 @@ public class Company {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contacto_id", referencedColumnName = "idContacto")
+    @JsonIgnore
+    @JsonManagedReference
     private Contacto contacto;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> proyectos;
 
+    public Company(){}
 
-    public Company() {
-    }
-
-    public Company(String nit, String nombre, Estado estado,String sector,Contacto contacto,List<Project> proyectos ){
-        this.nit = nit;
+    public Company(String nombre, String email, Sector sector, Estado estado, Contacto contacto, List<Project> proyectos) {
         this.nombre = nombre;
+        this.email = email;
+        this.sector = sector;
         this.estado = estado;
-        this.sector = Company.Sector.valueOf(sector.toUpperCase());
-        this.proyectos = proyectos;
         this.contacto = contacto;
-
+        this.proyectos = proyectos;
     }
-
 
     public String getNit() {
         return nit;
@@ -58,6 +60,22 @@ public class Company {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Sector getSector() {
+        return sector;
+    }
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
     }
 
     public Estado getEstado() {
@@ -94,13 +112,6 @@ public class Company {
         SALUD,
         EDUCATION,
         OTROS
-    }
-
-    public Sector getSector(){
-        return sector;
-    }
-    public void setSector(Sector sector){
-        this.sector =sector;
     }
 
 }

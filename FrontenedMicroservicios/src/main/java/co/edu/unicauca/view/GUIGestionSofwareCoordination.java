@@ -5,7 +5,9 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
@@ -15,12 +17,31 @@ import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import co.edu.unicauca.main.Main;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import java.awt.Color;
+import java.awt.Paint;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.renderer.category.BarRenderer;
 
 /**
  *
@@ -31,15 +52,22 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     ProjectService projectService;
     User usuario;
     List<Project> proyectos;
+    List<Company> companies;
+    List<Student> students;
+    private String ultimoTipoGrafico = "tabla";
+
 
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
         
         initComponents();
         agregarEventos();
         this.projectService = projectService;
+
         Subject.getInstance().agregarObservador(this);
+
         this.usuario = usuario;
         proyectos = projectService.listarProyectos();
+        llenarCBXperiodo();
         actualizarTablaP(proyectos);
         configurarEventosTabla();
     }
@@ -70,6 +98,10 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         lblProyectosregistrados = new javax.swing.JLabel();
+        cbxPeriodoAcademico = new javax.swing.JComboBox<>();
+        btnBarras = new javax.swing.JButton();
+        btnPastel = new javax.swing.JButton();
+        btnProjects = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         txtnombrecordinador = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -126,6 +158,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         btnGestionarProyecto.setBackground(new java.awt.Color(223, 224, 226));
         btnGestionarProyecto.setText("Gestionar proyecto");
+        btnGestionarProyecto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionarProyectoActionPerformed(evt);
+            }
+        });
 
         btnSalir.setBackground(new java.awt.Color(223, 224, 226));
         btnSalir.setText("Salir");
@@ -207,6 +244,34 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         lblProyectosregistrados.setText("Proyectos registrados");
 
+        cbxPeriodoAcademico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+        cbxPeriodoAcademico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPeriodoAcademicoActionPerformed(evt);
+            }
+        });
+
+        btnBarras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/grafico-de-barras-creciente.png"))); // NOI18N
+        btnBarras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBarrasActionPerformed(evt);
+            }
+        });
+
+        btnPastel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/grafico-de-pastel.png"))); // NOI18N
+        btnPastel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPastelActionPerformed(evt);
+            }
+        });
+
+        btnProjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/insert_table_icon_155239.png"))); // NOI18N
+        btnProjects.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProjectsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -214,27 +279,47 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblProyectosregistrados, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(lblProyectosregistrados, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxPeriodoAcademico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnProjects, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBarras, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPastel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(lblProyectosregistrados)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(6, 6, 6)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPastel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBarras, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxPeriodoAcademico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblProyectosregistrados))
+                    .addComponent(btnProjects, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 204));
         jLabel13.setText("Coordinador de sistema");
+        jLabel13.setFocusable(false);
 
         txtnombrecordinador.setEditable(false);
         txtnombrecordinador.setBackground(new java.awt.Color(247, 247, 247));
         txtnombrecordinador.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtnombrecordinador.setBorder(null);
+        txtnombrecordinador.setFocusable(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -295,7 +380,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
                         .addGap(9, 9, 9)
                         .addComponent(btnSalir))
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel5, "card5");
@@ -347,17 +432,157 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }//GEN-LAST:event_btnRegistrarEmpresaActionPerformed
 
     private void lblProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProyectosMouseClicked
-    
+
     }//GEN-LAST:event_lblProyectosMouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7MouseClicked
+    private void actualizarVisualizacion() {
+        List<Project> filtrados = filtrar();
+
+        actualizarTablaP(filtrados);
+
+        if (filtrados == null || filtrados.isEmpty()) {
+            jScrollPane1.setViewportView(null); // Limpia la gráfica si no hay datos
+            return;
+        }
+
+        // Mostrar el tipo de gráfico actualmente activo
+        if (ultimoTipoGrafico.equals("barras")) {
+            ChartPanel chartPanel = crearGraficaDeBarrasEstado(filtrados);
+            jScrollPane1.setViewportView(chartPanel);
+        } else if (ultimoTipoGrafico.equals("pastel")) {
+            ChartPanel chartPanel = crearGraficaPastelEstado(filtrados);
+            jScrollPane1.setViewportView(chartPanel);
+
+        } else if (ultimoTipoGrafico.equals("tabla")) {
+            jScrollPane1.setViewportView(jTable1);
+        }
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
+    }
+    private void cbxPeriodoAcademicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPeriodoAcademicoActionPerformed
+        actualizarVisualizacion();
+
+
+    }//GEN-LAST:event_cbxPeriodoAcademicoActionPerformed
+
+    private void btnBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarrasActionPerformed
+        ultimoTipoGrafico = "barras";
+        actualizarVisualizacion();
+
+    }//GEN-LAST:event_btnBarrasActionPerformed
+    private ChartPanel crearGraficaDeBarrasEstado(List<Project> proyectos) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        Map<String, Integer> contadorPorSector = new HashMap<>();
+
+        for (Project p : proyectos) {
+            String estado = p.getEstadoString();
+            if (estado == null || estado.trim().isEmpty()) {
+                estado = "Sin estado";
+            }
+            contadorPorSector.put(estado, contadorPorSector.getOrDefault(estado, 0) + 1);
+        }
+
+        for (Map.Entry<String, Integer> entry : contadorPorSector.entrySet()) {
+            dataset.addValue(entry.getValue(), entry.getKey(), "");
+        }
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Proyectos por Estado",
+                "Estado",
+                "Cantidad de Proyectos",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+        CategoryPlot plot = chart.getCategoryPlot();
+
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        Paint[] colors = {
+            new Color(79, 129, 189), // Azul
+            new Color(192, 80, 77), // Rojo
+            new Color(155, 187, 89), // Verde
+            new Color(128, 100, 162), // Morado
+            new Color(247, 150, 70), // Naranja
+            new Color(75, 172, 198) // Cyan
+        };
+
+        for (int i = 0; i < dataset.getRowCount(); i++) {
+            renderer.setSeriesPaint(i, colors[i % colors.length]);
+        }
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(300, 180));
+        return chartPanel;
+    }
+
+
+    private void btnPastelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastelActionPerformed
+
+        ultimoTipoGrafico = "pastel";
+        actualizarVisualizacion();
+    }//GEN-LAST:event_btnPastelActionPerformed
+
+    private ChartPanel crearGraficaPastelEstado(List<Project> proyectos) {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        Map<String, Integer> contadorPorEstado = new HashMap<>();
+        for (Project p : proyectos) {
+            String estado = p.getEstadoString();
+            if (estado == null || estado.trim().isEmpty()) {
+                estado = "Sin estado"; 
+            }
+            contadorPorEstado.put(estado, contadorPorEstado.getOrDefault(estado, 0) + 1);
+        }
+
+        for (Map.Entry<String, Integer> entry : contadorPorEstado.entrySet()) {
+            dataset.setValue(entry.getKey(), entry.getValue());
+        }
+
+        // Crear gráfico de pastel
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Distribución de Proyectos por Estado", 
+                dataset, // dataset
+                true, // incluir leyenda
+                true, // tooltips
+                false // URLs
+        );
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}: {1} ({2})"));
+        chartPanel.setPreferredSize(new Dimension(300, 180));
+
+        return chartPanel;
+    }
+
+
+    private void btnProjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectsActionPerformed
+
+        ultimoTipoGrafico = "tabla";
+        this.proyectos = projectService.listarProyectos();
+        actualizarTablaP(filtrar());        // Actualiza datos de la tabla
+        jScrollPane1.setViewportView(jTable1);  // Muestra la tabla en el JScrollPane
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
+    }//GEN-LAST:event_btnProjectsActionPerformed
+
+    private void btnGestionarProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarProyectoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestionarProyectoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBarras;
     private javax.swing.JButton btnGestionarProyecto;
+    private javax.swing.JButton btnPastel;
+    private javax.swing.JButton btnProjects;
     private javax.swing.JButton btnRegistrarEmpresa;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cbxPeriodoAcademico;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -384,7 +609,23 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
     @Override
     public void actualizarProyectos(List<Project> proyectos) {
-        actualizarTablaP(proyectos);
+
+        this.proyectos = proyectos;
+        actualizarTablaP(filtrar());
+    }
+
+    public List<Project> filtrar() {
+        String periodoSeleccionado = cbxPeriodoAcademico.getSelectedItem().toString();
+        List<Project> filtrados = null;
+
+        if (periodoSeleccionado.equalsIgnoreCase("All")) {
+            return proyectos;
+        } else {
+            filtrados = proyectos.stream()
+                    .filter(p -> p.getPeriodoAcademico().equalsIgnoreCase(periodoSeleccionado))
+                    .collect(Collectors.toList());
+            return filtrados;
+        }
     }
 
     private void agregarEventos() {
@@ -425,6 +666,49 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
                 p.getEstadoString()
             });
         }
+
+    }
+
+
+    private void actualizarTablaEmpresas(List<Company> companies) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+        model.setColumnIdentifiers(new String[]{"NIT", "Nombre", "Teléfono", "Nombre Contacto", "Sector"}); // Cambiar encabezados
+
+        if (companies == null || companies.isEmpty()) {
+            Messages.showMessageDialog("No existen empresas registradas.", "Información");
+            return;
+        }
+
+        for (Company c : companies) {
+            model.addRow(new Object[]{
+                c.getNit(),
+                c.getNombre(),
+                c.getTelefono(),
+                c.getNombrecontaccto(), // Asegúrate que el getter coincida con el nombre real
+                c.getSector()
+            });
+        }
+    }
+
+    private void actualizarTablaEstudiantes(List<Student> students) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+        model.setColumnIdentifiers(new String[]{"Nombre", "Cedula", "Codigo", "Email ", "Telefono"}); // Cambiar encabezados
+
+        if (students == null || students.isEmpty()) {
+            Messages.showMessageDialog("No existen empresas registradas.", "Información");
+            return;
+        }
+
+        for (Student c : students) {
+            model.addRow(new Object[]{
+                c.getNombre(),
+                c.getCedula(),
+                c.getCodigo(),
+                c.getEmail(),
+                c.getTelefono(),});
+        }
     }
 
     private void configurarEventosTabla() {
@@ -455,10 +739,23 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         }
     }
 
+    private void llenarCBXperiodo() {
+
+        LocalDateTime fechaActual = LocalDateTime.now();
+        int anioActual = fechaActual.getYear();
+
+        for (int anio = anioActual; anio > 2000; anio--) {
+            cbxPeriodoAcademico.addItem(anio + "-2");
+            cbxPeriodoAcademico.addItem(anio + "-1");
+        }
+    }
+
     private void abrirGUICoordinadorProject(Project p) {
         // Instanciar la GUI del coordinador y mostrarla
         GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p,usuario);
+        
         instance.setExtendedState(JFrame.NORMAL);
+         instance.setLocationRelativeTo(null);
         instance.setVisible(true);
     }
 

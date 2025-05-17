@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,14 +22,14 @@ public class PostulationService {
         if (postulationRepository.existsByIdEstudianteAndIdProyecto(idEstudiante, idProyecto)) {
             throw new IllegalArgumentException("El estudiante ya está postulado a este proyecto.");
         }
-        Date currentDate = new Date(System.currentTimeMillis());
+        LocalDateTime currentDate = LocalDateTime.now();
 
         // 1. Guardar en la base de datos
         Postulation postulation = Postulation.builder()
                 .idEstudiante(idEstudiante)
                 .idProyecto(idProyecto)
                 .build();
-        postulation.setFechaPostulacion(new Timestamp(currentDate.getTime()));
+        postulation.setFechaPostulacion(currentDate);
         postulation = postulationRepository.save(postulation);
 
         // 2. Enviar mensaje a RabbitMQ
@@ -39,9 +37,8 @@ public class PostulationService {
                 postulation.getId(),
                 idEstudiante.toString(),
                 idProyecto,
-                new Timestamp(currentDate.getTime())
+                currentDate
         );
-        System.out.println("asdassa");
         senderService.sendPostulation(dto);
 
         return postulation;

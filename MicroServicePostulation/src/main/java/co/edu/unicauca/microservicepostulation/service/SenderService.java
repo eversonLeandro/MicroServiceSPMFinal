@@ -13,7 +13,6 @@ public class SenderService {
         rabbitTemplate.convertAndSend(RabbitMQConfig.POSTULATION_QUEUE, postulationDTO);
     }
 
-    // Si quieres un método más general para mandar cualquier mensaje
     public void sendMessage(String queueName, Object message) {
         System.out.println("📤 Enviando mensaje a la cola: " + queueName + " → " + message);
         rabbitTemplate.convertAndSend(queueName, message);

@@ -216,6 +216,7 @@ public class ProjectRepository implements IProjectRepository {
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             return null;
         }
     }

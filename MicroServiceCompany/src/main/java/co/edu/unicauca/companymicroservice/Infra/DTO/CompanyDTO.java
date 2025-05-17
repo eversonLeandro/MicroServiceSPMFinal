@@ -1,4 +1,5 @@
 package co.edu.unicauca.companymicroservice.Infra.DTO;
+
 public class CompanyDTO {
     private String nit;
     private String nombre;
@@ -10,10 +11,7 @@ public class CompanyDTO {
     private String cargo;
     private String estado;
 
-
-    public CompanyDTO() {
-    }
-
+    public CompanyDTO(){}
     public CompanyDTO(String nit, String nombre, String email, String telefono, String nombrecontaccto, String apellido, String sector, String cargo, String estado) {
         this.nit = nit;
         this.nombre = nombre;

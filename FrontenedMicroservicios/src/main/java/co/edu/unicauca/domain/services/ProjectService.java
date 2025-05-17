@@ -9,6 +9,7 @@ import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.infra.adapter.ProjectRepositoryAdapter;
 import co.edu.unicauca.infra.adapter.ProjectRequestCompany;
+import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.infra.dto.ProjectStatusRequest;
 import co.edu.unicauca.infra.dto.ProjectStatusResponse;
 import java.io.IOException;
@@ -16,11 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  *
  * @author Yisus
  */
-public class ProjectService {
+
+public class ProjectService extends Subject {
 
     private ProjectRepository repository;
     private ProjectRepositoryAdapter reposadapter;
@@ -43,7 +46,8 @@ public class ProjectService {
                 projects.add((Project) obj);
             }
         }
-        // notificarObservadores(projects);
+
+        notificarObservadores(projects);
         // Devuelves la lista de Project como List<Object>
         return projects;
     }
@@ -52,10 +56,12 @@ public class ProjectService {
         return repository.found(idproject);
     }
 
+
     public List<Project> obtenerProyectosPorNit(String nit) {
 
         return reposadapter.getProjectsNit(nit);
     }
+
 
     public boolean saveProject(Project project) {
 
@@ -68,6 +74,7 @@ public class ProjectService {
         return repository.actualizarEstado(request);
 
     }
+
 
     public List<Map<String, String>> getCommentsByProject(int projectId) {
         try {
@@ -93,5 +100,6 @@ public class ProjectService {
             return false;
         }
     }
+
 
 }

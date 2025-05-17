@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class StudentRepository implements IStudentRepository {
 
-    private final String API_URL = "http://localhost:8087/api/Students";
+    private final String API_URL = "http://localhost:8083/api/Students";
 
     public StudentRepository() {
 
@@ -36,7 +36,7 @@ public class StudentRepository implements IStudentRepository {
         Student estudiante = (Student) usuario;
 
         try {
-            URL url = new URL(API_URL + "/crear"); // API_URL = http://localhost:8087/api/Students
+            URL url = new URL(API_URL + "/crear"); // API_URL = http://localhost:8083/api/Students
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");

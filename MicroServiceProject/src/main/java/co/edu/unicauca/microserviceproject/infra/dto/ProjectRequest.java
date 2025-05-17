@@ -16,6 +16,15 @@ public class ProjectRequest {
     private String TiempoMaximo;
     private String presupuesto;
     private String FechaEntregadaEsperada;
+    private String periodoAcademico;
+
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
+
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
+    }
 
     public Long getNitCompany() {
         return nitCompany;

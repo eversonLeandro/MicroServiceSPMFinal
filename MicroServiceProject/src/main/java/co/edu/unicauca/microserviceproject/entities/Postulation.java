@@ -1,8 +1,7 @@
 package co.edu.unicauca.microserviceproject.entities;
 
 import jakarta.persistence.*;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Postulation {
@@ -21,7 +20,7 @@ public class Postulation {
         this.idPostulation = idPostulation;
     }
 
-    private Timestamp  fecha;
+    private LocalDateTime  fecha;
 
     public Long getCodStudent() {
         return codStudent;
@@ -39,15 +38,15 @@ public class Postulation {
         this.codProject = codProject;
     }
 
-    public Timestamp getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
-    public Postulation(Long idPostulation,Long codStudent_, Long codProject_, Timestamp fecha_) {
+    public Postulation(Long idPostulation,Long codStudent_, Long codProject_, LocalDateTime fecha_) {
         this.idPostulation = idPostulation;
         this.codStudent = codStudent_;
         this.codProject = codProject_;

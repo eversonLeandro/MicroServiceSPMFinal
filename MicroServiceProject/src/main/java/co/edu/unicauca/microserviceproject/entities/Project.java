@@ -44,6 +44,7 @@ public class Project implements PrototypeProject {
     private String TiempoMaximo;
     private String presupuesto;
     private String FechaEntregadaEsperada;
+    private String periodoAcademico;
 
 
 
@@ -52,7 +53,7 @@ public class Project implements PrototypeProject {
         this.estado = new RecibidoState();
     }
 
-    public Project(Company Company, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada, ProjectState estado) {
+    public Project(Company Company, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada, ProjectState estado, String periodoAcademico) {
         this.company = Company;
         this.nombre = nombre;
         this.resumen = resumen;
@@ -62,7 +63,8 @@ public class Project implements PrototypeProject {
         this.presupuesto = presupuesto;
         this.FechaEntregadaEsperada = FechaEntregadaEsperada;
         this.estado = estado;
-        this.estado = new RecibidoState(); // Estado inicial
+        this.estado = new RecibidoState();
+        this.periodoAcademico = periodoAcademico;// Estado inicial
     }
     public Project(ProjectState estado) {
         this.estado = new RecibidoState();
@@ -190,16 +192,19 @@ public class Project implements PrototypeProject {
         this.estadoTexto = estadoTexto;
     }
 
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
+
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
+    }
+
     @Override
     public PrototypeProject clonar() {
-        return new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado);
+        return new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado,periodoAcademico);
     }
-    public Project clone() {
-        Project clone = new Project(company,nombre,resumen,descripcion,objetivo,TiempoMaximo,presupuesto,FechaEntregadaEsperada,estado);
-        clone.setEstado(new RecibidoState());
-        clone.setEstadoTexto("RECIBIDO");
-        return clone;
-}
+
 }
 
 

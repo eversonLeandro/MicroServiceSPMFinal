@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -13,5 +13,5 @@ public class PostulationDTO  implements Serializable{
     private Long idPostulation;
     private String codStudent;
     private Long codProject;
-    private Timestamp fecha;
+    private LocalDateTime fecha;
 }

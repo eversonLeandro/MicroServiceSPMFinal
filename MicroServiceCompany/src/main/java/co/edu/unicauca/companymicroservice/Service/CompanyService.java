@@ -71,12 +71,12 @@ public class CompanyService{
             companyRepository.save(company);
 
             UsuarioRequest userdto=usuarioMapper.obteneruser(entity);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_COMPANY_CREATED, userdto);
 
             CompanyRequestProject companyRequestProject = new CompanyRequestProject();
             companyRequestProject.setNit(Long.valueOf(company.getNit()));
             companyRequestProject.setNombre(company.getNombre());
 
-            rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_COMPANY_CREATED,userdto);
 
             rabbitTemplate.convertAndSend(RabbitMQConfig.COMPANY_QUEUE,companyRequestProject);
 

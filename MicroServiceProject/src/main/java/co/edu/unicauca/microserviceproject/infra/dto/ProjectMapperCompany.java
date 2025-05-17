@@ -17,6 +17,7 @@ public interface ProjectMapperCompany {
     @Mapping(source = "fechaEntregadaEsperada", target = "fechaEntregadaEsperada")
     @Mapping(source = "company.nit", target = "nitCompany")
     @Mapping(source = "estadoTexto", target = "estadoTexto")// Asegura que company no sea null
+    @Mapping(source = "periodoAcademico", target = "periodoAcademico")
     ProjectRequestCompany dto(Project project);
 
 

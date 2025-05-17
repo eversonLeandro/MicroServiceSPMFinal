@@ -23,6 +23,7 @@ co\edu\unicauca\access\Factory.class
 co\edu\unicauca\view\GUIRecuperarContraseña$2.class
 co\edu\unicauca\infra\Subject.class
 co\edu\unicauca\view\GUIRegistreCompany$4.class
+co\edu\unicauca\view\GUIGestionSofwareCoordination$11.class
 co\edu\unicauca\view\GUIRegistreCompany$6.class
 co\edu\unicauca\infra\verProyectPostuladoContext.class
 co\edu\unicauca\view\GUIEstablecerContraseña$3.class
@@ -42,6 +43,7 @@ co\edu\unicauca\view\GUIGestionSofwareCoordinationProject.class
 co\edu\unicauca\view\GUIRecuperarContraseña$1.class
 co\edu\unicauca\view\GUIPostularProject.class
 co\edu\unicauca\view\GUIRegisterStudent.class
+co\edu\unicauca\view\GUIGestionSofwareCoordination$12.class
 co\edu\unicauca\infra\IFrameEventListener.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination.class
 co\edu\unicauca\view\GUIDetalleProyecto$3.class
@@ -58,10 +60,12 @@ co\edu\unicauca\domain\services\ProjectService.class
 co\edu\unicauca\infra\gotaAguaTexto.class
 co\edu\unicauca\view\GUIGestionSottwareStudent$1.class
 co\edu\unicauca\view\GUIGestionSofwareCoordinationProject$2.class
+co\edu\unicauca\view\GUIGestionSofwareCoordination$9.class
 co\edu\unicauca\interfaces\ICoordinatorRepository.class
 co\edu\unicauca\infra\Subject$1.class
 co\edu\unicauca\view\GUIGestionSofwareCoordinationProject$3.class
 co\edu\unicauca\domain\entities\Company.class
+co\edu\unicauca\view\Paint.class
 co\edu\unicauca\infra\dto\ProjectStatusResponse.class
 co\edu\unicauca\infra\dto\CommentRequest.class
 co\edu\unicauca\view\GUICodigoContraseña.class
@@ -71,6 +75,7 @@ co\edu\unicauca\interfaces\IPostulationRepository.class
 co\edu\unicauca\view\GUIRegistreCompany$5.class
 co\edu\unicauca\view\GUIRecuperarContraseña.class
 co\edu\unicauca\view\GUIPostularProject$3.class
+co\edu\unicauca\view\GUIGestionSofwareCoordination$10.class
 co\edu\unicauca\infra\dto\CommentResponse.class
 co\edu\unicauca\interfaces\IFrameFactory.class
 co\edu\unicauca\interfaces\IRepository.class
@@ -85,6 +90,7 @@ co\edu\unicauca\view\GUIRecordType$3.class
 co\edu\unicauca\view\GUICodigoContraseña$1.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$3.class
 co\edu\unicauca\infra\renderButton.class
+co\edu\unicauca\view\GUIGestionSofwareCoordination$13.class
 co\edu\unicauca\view\GUILogin$1.class
 co\edu\unicauca\view\GUIRegisterStudent$2.class
 co\edu\unicauca\domain\entities\User.class

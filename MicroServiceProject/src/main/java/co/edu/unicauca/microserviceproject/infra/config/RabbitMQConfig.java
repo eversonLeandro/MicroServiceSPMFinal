@@ -14,6 +14,8 @@ public class RabbitMQConfig {
     public static final String PROJECT_QUEUE = "projectQueue";
     public static final String POSTULATION_QUEUE = "postulationQueue";
     public static final String COMPANY_QUEUE = "companyQueue";
+    public static final String PROJECT_STATUS_NOTIFICATION_QUEUE = "projectStatusNotificationQueue";
+
 
     @Bean
     public Queue projectQueue() {
@@ -25,7 +27,8 @@ public class RabbitMQConfig {
     }
     @Bean
     public Queue companyQueue() { return new Queue(COMPANY_QUEUE , false);}
-
+    @Bean
+    public Queue projectStatusNotificationQueue() {return new Queue(PROJECT_STATUS_NOTIFICATION_QUEUE, false);}
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
@@ -37,7 +40,5 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }
-
-
 
 }

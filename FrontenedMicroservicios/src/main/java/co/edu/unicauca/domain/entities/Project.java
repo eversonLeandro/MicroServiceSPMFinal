@@ -20,6 +20,8 @@ public class Project {
     private String tiempoMaximo;
     private String presupuesto;
     private String FechaEntregadaEsperada;
+    private String periodoAcademico;
+    
     
     private ProjectState estado;
     private String nombreEmpresa;
@@ -45,7 +47,7 @@ public class Project {
         
     }
 
-    public Project(long id, String nitEmpresa, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada, String estado, String nombreEmpresa) {
+    public Project(long id, String nitEmpresa, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada, String estado, String nombreEmpresa,String periodoAcademico) {
         this.id = id;
         this.nitEmpresa = nitEmpresa;
         this.nombre = nombre;
@@ -56,6 +58,7 @@ public class Project {
         this.presupuesto = presupuesto;
         this.FechaEntregadaEsperada = FechaEntregadaEsperada;
         this.nombreEmpresa = nombreEmpresa;
+        this.periodoAcademico=periodoAcademico;
     }
    
     public Project(String nitEmpresa, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada) {
@@ -184,6 +187,20 @@ public class Project {
      */
     public void setPostulations(List<Postulation> postulations) {
         this.postulations = postulations;
+    }
+
+    /**
+     * @return the periodoAcademico
+     */
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
+
+    /**
+     * @param periodoAcademico the periodoAcademico to set
+     */
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
     }
 
     

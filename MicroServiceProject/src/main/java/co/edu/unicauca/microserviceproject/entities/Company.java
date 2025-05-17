@@ -1,6 +1,7 @@
 package co.edu.unicauca.microserviceproject.entities;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,10 @@ import java.util.List;
 public class Company {
 
     @Id
+    @NotNull
     private Long nit;
     private String nombre;
-
+    private String email;
 
 
     @OneToMany(mappedBy = "company")
@@ -52,6 +54,21 @@ public class Company {
         this.nombre = nombre;
         estado = "ACTIVO";
     }
+    public Company(Long nit, String nombre,String estado,String email) {
+        this.nit = nit;
+        this.nombre = nombre;
+        estado = "ACTIVO";
+        this.email = email;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @PrePersist
     public void prePersist(){
@@ -59,4 +76,5 @@ public class Company {
             estado = "ACTIVO";
         }
     }
+
 }

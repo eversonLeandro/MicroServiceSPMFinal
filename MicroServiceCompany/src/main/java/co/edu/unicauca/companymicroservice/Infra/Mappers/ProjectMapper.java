@@ -23,7 +23,7 @@ public class ProjectMapper {
         project.setTiempoEst(dto.getTiempoMaximo());
         project.setPresupuesto(BigDecimal.valueOf(Long.valueOf(dto.getPresupuesto())));
         project.setFechaEntregaEsperada(dto.getFechaEntregadaEsperada());
-
+        project.setPeriodoAcademico(dto.getPeriodoAcademico());
         return project;
     }
 

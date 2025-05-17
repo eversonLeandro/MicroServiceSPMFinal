@@ -20,7 +20,7 @@ public class DataLoader implements CommandLineRunner {
             admin.setId(24);
             admin.setUsername("admin");
             admin.setContrasenia("admin123");
-            admin.setEmail("admin@admin.com");
+            admin.setEmail("yisus0816z@gmail.com");
             admin.setRol("ADMIN");
             usuarioService.save(admin);
 
@@ -36,7 +36,7 @@ public class DataLoader implements CommandLineRunner {
             user2.setId(30);
             user2.setUsername("meradata");
             user2.setContrasenia("clave");
-            user2.setEmail("mera@gmail.com");
+            user2.setEmail("jesusalbertoz@unicauca.edu.co");
             user2.setRol("COMPANY");
 
 

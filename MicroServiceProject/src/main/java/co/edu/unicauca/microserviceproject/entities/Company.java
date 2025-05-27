@@ -61,7 +61,6 @@ public class Company {
         this.email = email;
     }
 
-
     public String getEmail() {
         return email;
     }

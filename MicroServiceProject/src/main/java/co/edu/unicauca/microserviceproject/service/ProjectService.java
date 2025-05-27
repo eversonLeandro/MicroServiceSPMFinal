@@ -1,5 +1,6 @@
 package co.edu.unicauca.microserviceproject.service;
 
+import co.edu.unicauca.microserviceproject.entities.Coordinator;
 import co.edu.unicauca.microserviceproject.infra.Prototype.ProjectPrototypeRegister;
 import co.edu.unicauca.microserviceproject.infra.config.RabbitMQConfig;
 import co.edu.unicauca.microserviceproject.infra.dto.*;
@@ -100,35 +101,37 @@ public class ProjectService {
         if (company.isEmpty()) {
             throw new IllegalArgumentException("La compañía con NIT " + dto.getNitCompany() + " no existe.");
         }
+        Optional<Coordinator> coordinator = coordinatorRepository.findById(Long.valueOf("123"));
+        project.setCoordinator(coordinator.get());
 
         project.setCompany(company.get());
         Project savedProject = projectRepository.save(project);
 
         ProjectRequestCompany projectRequestCompany = projectMapperCompany.dto(savedProject);
 
-        try {
-            // Enviar a RabbitMQ
-            rabbitTemplate.convertAndSend(RabbitMQConfig.PROJECT_QUEUE, projectRequestCompany);
-        } catch (AmqpException e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            // Enviar a RabbitMQ
+//            rabbitTemplate.convertAndSend(RabbitMQConfig.PROJECT_QUEUE, projectRequestCompany);
+//        } catch (AmqpException e) {
+//            System.out.println(e.getMessage());
+//        }
 
 
-//        // Preparar llamada REST
-//        RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//        HttpEntity<ProjectRequestCompany> request = new HttpEntity<>(projectRequestCompany, headers);
-//
-//        ResponseEntity<ProjectRequestCompany> response = restTemplate.postForEntity(
-//                "http://localhost:8088/apiCompanies/saveProject",
-//                request,
-//                ProjectRequestCompany.class
-//        );
-//
-//        ProjectRequestCompany responseBody = response.getBody();
-//        System.out.println("Respuesta del microservicio: " + responseBody);
+        // Preparar llamada REST
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<ProjectRequestCompany> request = new HttpEntity<>(projectRequestCompany, headers);
+
+        ResponseEntity<ProjectRequestCompany> response = restTemplate.postForEntity(
+                "http://localhost:8088/apiCompanies/saveProject",
+                request,
+                ProjectRequestCompany.class
+        );
+
+        ProjectRequestCompany responseBody = response.getBody();
+        System.out.println("Respuesta del microservicio: " + responseBody);
 
         return savedProject;
     }

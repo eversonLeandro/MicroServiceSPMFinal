@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: MicroServiceEmailNotification
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: yisus0816z@gmail.com
+    password: yfguvgiqjxjtyuak
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 8089
+
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+        issuer-uri: http://localhost:8080/realms/MicroserviceSPM
+        jwk-set-uri: http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs

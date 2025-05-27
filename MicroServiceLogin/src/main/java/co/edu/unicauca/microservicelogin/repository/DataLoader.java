@@ -36,7 +36,7 @@ public class DataLoader implements CommandLineRunner {
             user2.setId(30);
             user2.setUsername("meradata");
             user2.setContrasenia("clave");
-            user2.setEmail("jesusalbertoz@unicauca.edu.co");
+            user2.setEmail("yisus0816z1@gmail.com");
             user2.setRol("COMPANY");
 
 

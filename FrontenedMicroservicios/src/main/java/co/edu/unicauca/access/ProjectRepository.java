@@ -67,7 +67,7 @@ public class ProjectRepository implements IProjectRepository {
         Project project = (Project) entity;
 
         try {
-            URL url = new URL("http://localhost:8080/apiProject/project");
+            URL url = new URL("http://localhost:8086/apiProject/project");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -116,7 +116,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Object> list() {
         try {
-            URL url = new URL("http://localhost:8080/apiProject/projects");
+            URL url = new URL("http://localhost:8086/apiProject/projects");
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -158,7 +158,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public ProjectStatusResponse actualizarEstado(ProjectStatusRequest request) {
         try {
-            URL url = new URL("http://localhost:8080/apiProject/projects/status");
+            URL url = new URL("http://localhost:8086/apiProject/projects/status");
 
             // Configurar la conexión HTTP
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -200,7 +200,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<ProjectRequestCompany> getProjectsNit(String nit) {
         try {
-            URL url = new URL("http://localhost:8080/apiProject/projectsCompany/" + nit);
+            URL url = new URL("http://localhost:8086/apiProject/projectsCompany/" + nit);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -224,7 +224,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public Project found(Object idProject) {
         try {
-            URL url = new URL("http://localhost:8080/apiProject/project/" + idProject); // Cambia el puerto si es necesario
+            URL url = new URL("http://localhost:8086/apiProject/project/" + idProject); // Cambia el puerto si es necesario
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Accept", "application/json");
@@ -247,7 +247,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Map<String, String>> getCommentsByProject(int projectId) throws IOException {
         try {
-            URL url = new URL("http://localhost:8080/api/projects/" + projectId + "/comments");
+            URL url = new URL("http://localhost:8086/api/projects/" + projectId + "/comments");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -283,7 +283,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public boolean addComment(int projectId, int coordinatorId, String coordinatorName, String message) throws IOException {
         try {
-            URL url = new URL("http://localhost:8080/api/projects/" + projectId + "/comments");
+            URL url = new URL("http://localhost:8086/api/projects/" + projectId + "/comments");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");

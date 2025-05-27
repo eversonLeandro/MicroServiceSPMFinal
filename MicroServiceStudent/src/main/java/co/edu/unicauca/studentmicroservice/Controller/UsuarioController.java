@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins  = "*")
-@RequestMapping( path ="StudentMicroservice/Usuarios")
+@RequestMapping( path ="/api/Students/Usuarios")
 public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;

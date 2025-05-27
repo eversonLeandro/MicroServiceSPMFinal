@@ -19,8 +19,8 @@ public class NotificationListener {
         System.out.println("➡️ Correo empresa: " + dto.getCorreoEmpresa());
         System.out.println("➡️ Correo coordinador: " + dto.getCorreoCordinador());
 
-        emailService.enviarCorreo(dto);
+       emailService.enviarCorreo(dto);
         System.out.println("📩 Mensaje recibido en la cola: " + dto);
-        emailService.enviarCorreo(dto);
+       emailService.enviarCorreo(dto);
     }
 }

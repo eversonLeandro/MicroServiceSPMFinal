@@ -3,9 +3,18 @@ package co.edu.unicauca.companymicroservice.Infra.DTO;
 public class CompanyRequestProject {
     private Long nit;
     private String nombre;
+    private String email;
 
     public CompanyRequestProject() {
 
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getNit() {

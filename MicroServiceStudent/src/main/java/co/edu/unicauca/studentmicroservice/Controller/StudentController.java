@@ -5,6 +5,7 @@ import co.edu.unicauca.studentmicroservice.Service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,7 +37,7 @@ public class StudentController {
         }
     }
 
-    @PostMapping("crear")
+    @PostMapping("/crear")
     public ResponseEntity<?> save(@Valid@RequestBody Student entity){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(studentService.save(entity));

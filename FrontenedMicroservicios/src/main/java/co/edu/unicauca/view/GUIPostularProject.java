@@ -9,6 +9,10 @@ import co.edu.unicauca.infra.IFrameEventListener;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.infra.gotaAguaTexto;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -305,12 +309,12 @@ public class GUIPostularProject extends javax.swing.JDialog {
         String fechaEntregaEsperada = txteEstimatedDeliveryDate.getText().trim();
 
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
-        boolean validarPresupuesto=validarNumero(presupuesto);
-        if (validacion && validarPresupuesto) {
+        boolean validarPresupuesto = validarNumero(presupuesto);
+        boolean validarFecha = validarFecha(fechaEntregaEsperada);
+        if (validacion && validarPresupuesto && validarFecha) {
 
+            Project project = new Project(String.valueOf(user.getId()), nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
 
-            Project project = new Project(String.valueOf(user.getId()),nombre,resumen,descripcion,objetivo,tiempoMaximo,presupuesto,fechaEntregaEsperada);
-            
             if (projectService.saveProject(project)) {
                 if (listener != null) {
                     listener.onEventTriggered(); // Notificamos al primer frame
@@ -354,7 +358,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
             return false;
         }
         if (presupuesto.isEmpty() || presupuesto.equalsIgnoreCase("estimated budget")) {
-            
+
             Messages.showMessageDialog("Debe agregar el presupuesto estimado", "Atención");
             txtEstimatedBudge.requestFocus();
             mostrarAdv(lbWarningEstimatedBudge);
@@ -371,19 +375,34 @@ public class GUIPostularProject extends javax.swing.JDialog {
 
     }
 
-    private boolean validarNumero(String numero) {
-    if (numero == null || numero.trim().isEmpty()) {
-        return false; // Si es nulo o vacío, no es válido
+    private boolean validarFecha(String fecha) {
+        if (fecha == null || fecha.trim().isEmpty()) {
+            return false;
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(fecha, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            Messages.showMessageDialog("Debe ingresar una fecha válida", "Atención");
+            return false;
+        }
     }
 
-    try {
-        new BigDecimal(numero.trim()); 
-        return true; 
-    } catch (NumberFormatException e) {
-         Messages.showMessageDialog("Ingrese un número válido para el presupuesto.", "Atención");
-        return false; 
+    private boolean validarNumero(String numero) {
+        if (numero == null || numero.trim().isEmpty()) {
+            return false; // Si es nulo o vacío, no es válido
+        }
+        try {
+            new BigDecimal(numero.trim());
+            return true;
+        } catch (NumberFormatException e) {
+            Messages.showMessageDialog("Ingrese un número válido para el presupuesto.", "Atención");
+            return false;
+        }
     }
-}
+
     private void mostrarAdv(JLabel lb) {
         lb.setText("*"); // Color rojo para mayor visibilidad
         lb.setVisible(true);

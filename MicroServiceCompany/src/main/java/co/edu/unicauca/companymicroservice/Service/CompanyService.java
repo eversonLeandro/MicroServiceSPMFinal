@@ -76,7 +76,7 @@ public class CompanyService{
             CompanyRequestProject companyRequestProject = new CompanyRequestProject();
             companyRequestProject.setNit(Long.valueOf(company.getNit()));
             companyRequestProject.setNombre(company.getNombre());
-
+            companyRequestProject.setEmail(company.getEmail());
 
             rabbitTemplate.convertAndSend(RabbitMQConfig.COMPANY_QUEUE,companyRequestProject);
 

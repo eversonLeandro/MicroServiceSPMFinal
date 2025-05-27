@@ -30,7 +30,7 @@ class PostulationRepositoryTest {
         postulation.setIdProyecto(200L);
 
         LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-        postulation.setFechaPostulacion(Timestamp.valueOf(now));
+        postulation.setFechaPostulacion(now);
 
         Postulation saved = postulationRepository.save(postulation);
         Optional<Postulation> found = postulationRepository.findById(saved.getId());
@@ -39,24 +39,23 @@ class PostulationRepositoryTest {
         assertNotNull(found.get().getFechaPostulacion());
         assertEquals(
                 now.truncatedTo(ChronoUnit.MINUTES),
-                found.get().getFechaPostulacion().toLocalDateTime().truncatedTo(ChronoUnit.MINUTES)
+                found.get().getFechaPostulacion().truncatedTo(ChronoUnit.MINUTES)
         );
     }
 
     @Test
     void whenFindByIdEstudiante_thenReturnPostulationsWithDates() {
         LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-        Timestamp testTimestamp = Timestamp.valueOf(now);
 
         Postulation postulation1 = new Postulation();
         postulation1.setIdEstudiante(100L);
         postulation1.setIdProyecto(200L);
-        postulation1.setFechaPostulacion(new Timestamp(testTimestamp.getTime()));
+        postulation1.setFechaPostulacion(now);
 
         Postulation postulation2 = new Postulation();
         postulation2.setIdEstudiante(100L);
         postulation2.setIdProyecto(300L);
-        postulation2.setFechaPostulacion(new Timestamp(testTimestamp.getTime()));
+        postulation2.setFechaPostulacion(now);
 
         postulationRepository.save(postulation1);
         postulationRepository.save(postulation2);
@@ -65,12 +64,9 @@ class PostulationRepositoryTest {
 
         assertEquals(2, result.size());
 
-        LocalDateTime date1 = result.get(0).getFechaPostulacion().toLocalDateTime()
-                .truncatedTo(ChronoUnit.MINUTES);
-        LocalDateTime date2 = result.get(1).getFechaPostulacion().toLocalDateTime()
-                .truncatedTo(ChronoUnit.MINUTES);
-        LocalDateTime expectedDate = testTimestamp.toLocalDateTime()
-                .truncatedTo(ChronoUnit.MINUTES);
+        LocalDateTime date1 = result.get(0).getFechaPostulacion().truncatedTo(ChronoUnit.MINUTES);
+        LocalDateTime date2 = result.get(1).getFechaPostulacion().truncatedTo(ChronoUnit.MINUTES);
+        LocalDateTime expectedDate = now.truncatedTo(ChronoUnit.MINUTES);
 
         assertEquals(expectedDate, date1);
         assertEquals(expectedDate, date2);

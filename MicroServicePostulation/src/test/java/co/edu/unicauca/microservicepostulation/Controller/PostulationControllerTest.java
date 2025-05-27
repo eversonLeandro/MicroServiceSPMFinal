@@ -10,7 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,15 +36,14 @@ class PostulationControllerTest {
         postulation.setId(1L);
         postulation.setIdEstudiante(100L);
         postulation.setIdProyecto(200L);
-        postulation.setFechaPostulacion(new Timestamp(System.currentTimeMillis()));
+        postulation.setFechaPostulacion(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
     }
 
     @Test
     void createPostulation_Success() {
         when(postulationService.savePostulation(any(Long.class), any(Long.class)))
-            .thenReturn(postulation);
+                .thenReturn(postulation);
         Postulation result = postulationController.createPostulation(postulation);
-
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertNotNull(result.getFechaPostulacion());

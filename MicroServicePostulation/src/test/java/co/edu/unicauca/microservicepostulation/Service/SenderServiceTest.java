@@ -12,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
@@ -27,22 +29,22 @@ class SenderServiceTest {
     private SenderService senderService;
 
     private PostulationDTO postulationDTO;
-    private Timestamp testTimestamp;
+    private LocalDateTime testDateTime;
 
     @BeforeEach
     void setUp() {
-        testTimestamp = new Timestamp(System.currentTimeMillis());
-        postulationDTO = new PostulationDTO(1L, "100", 200L, testTimestamp);
+        testDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+        postulationDTO = new PostulationDTO(1L, "100", 200L, testDateTime);
     }
 
     @Test
     void sendPostulation_WithTimestamp() {
         senderService.sendPostulation(postulationDTO);
         verify(rabbitTemplate, times(1))
-            .convertAndSend(
-                eq(RabbitMQConfig.POSTULATION_QUEUE), 
-                eq(postulationDTO)
-            );
-        assertEquals(testTimestamp, postulationDTO.getFecha());
+                .convertAndSend(
+                        eq(RabbitMQConfig.POSTULATION_QUEUE),
+                        eq(postulationDTO)
+                );
+        assertEquals(testDateTime, postulationDTO.getFecha());
     }
 }

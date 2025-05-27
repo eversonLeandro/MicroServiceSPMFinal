@@ -27,15 +27,15 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()
-                        .requestMatchers("/api/Students/**").hasRole("STUDENT") // o hasAuthority("ROLE_STUDENT")
+                        .requestMatchers("/api/Students/**").hasRole("STUDENT")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter()) // ¡Paréntesis cerrados correctamente!
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
                         )
                 )
-                .csrf(csrf -> csrf.disable()); // Deshabilitar CSRF (opcional para APIs)
+                .csrf(csrf -> csrf.disable());
         return http.build();
     }
 
@@ -58,7 +58,7 @@ public class SecurityConfig {
 
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter()); // ¡Inyección!
+        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
         return jwtConverter;
     }
 }

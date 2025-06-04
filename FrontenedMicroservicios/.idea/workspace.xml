@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dfba8a26-44da-4cbc-8998-26dd13bca907" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ApiGateway/src/main/java/co/edu/unicauca/apigateway/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/SessionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceCompany/src/main/java/co/edu/unicauca/companymicroservice/Infra/Config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceCompany/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/infra/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServicePostulation/src/main/java/co/edu/unicauca/microservicepostulation/infra/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServicePostulation/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceProject/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Infra/Config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/CompanyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/PostulationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/PostulationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIPostularProject.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIPostularProject.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/FrontenedMicroservicios-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/FrontenedMicroservicios-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceCompany/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceEmailNotification/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceEmailNotification/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/java/co/edu/unicauca/microserviceemailnotification/infra/config/NotificationListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/java/co/edu/unicauca/microserviceemailnotification/infra/config/NotificationListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceLogin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServicePostulation/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServicePostulation/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServicePostulation/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceProject/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Controller/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Controller/TeamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Controller/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/resources/application.properties" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;eversonLeandro&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://theyisusz@github.com/theyisusz/MicroservicesSPM.git&quot;,
+    &quot;accountId&quot;: &quot;d21e8706-e004-43ef-af6d-c9ac34f59aff&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2wbDEKPrqtQ3W0DEALVzl9xk4t3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;jesus&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yisus/OneDrive/Documentos/SoftwareProjectManagementM/MicroservicesSPM/FrontenedMicroservicios&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dfba8a26-44da-4cbc-8998-26dd13bca907" name="Changes" comment="" />
+      <created>1746301266795</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1746301266795</updated>
+      <workItem from="1746301267826" duration="20000" />
+      <workItem from="1746312072813" duration="12000" />
+      <workItem from="1747781122513" duration="3002000" />
+      <workItem from="1747952795847" duration="506000" />
+      <workItem from="1748377998689" duration="8017000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

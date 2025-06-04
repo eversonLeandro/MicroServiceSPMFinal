@@ -1,0 +1,48 @@
+# application.yml
+spring:
+  application:
+    name: MicroServiceLogin
+
+  # Configuraci�n de H2 Database
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  # Configuraci�n de RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 8085
+
+
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+        issuer-uri: http://localhost:8080/realms/MicroserviceSPM
+        jwk-set-uri: http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs
+
+
+keycloak:
+  auth-server-url: http://localhost:8080
+  realm: MicroserviceSPM
+  resource: system-desktop
+  credentials:
+    secret: pQZqPhgwKx32hFTuoMxmj638FrhoN5dG

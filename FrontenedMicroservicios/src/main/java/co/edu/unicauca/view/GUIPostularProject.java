@@ -307,14 +307,15 @@ public class GUIPostularProject extends javax.swing.JDialog {
         String tiempoMaximo = txtMaximumTime.getText().trim();
         String presupuesto = txtEstimatedBudge.getText().trim();
         String fechaEntregaEsperada = txteEstimatedDeliveryDate.getText().trim();
-
+    
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
         boolean validarPresupuesto = validarNumero(presupuesto);
         boolean validarFecha = validarFecha(fechaEntregaEsperada);
         if (validacion && validarPresupuesto && validarFecha) {
 
             Project project = new Project(String.valueOf(user.getId()), nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
-
+            project.setPeriodoAcademico(calcularPeriodo());
+            
             if (projectService.saveProject(project)) {
                 if (listener != null) {
                     listener.onEventTriggered(); // Notificamos al primer frame
@@ -326,6 +327,10 @@ public class GUIPostularProject extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnRegistrarProyectoActionPerformed
+     public String calcularPeriodo(){
+        LocalDate today = LocalDate.now();
+       return today.getMonthValue() < 6? String.valueOf(today.getYear()) + "-"+1 : String.valueOf(today.getYear()) + "-"+2;
+    }
     private boolean validarCamposVacios(String nombre, String resumen, String descripcion, String objetivo, String tiempoMaximo, String presupuesto, String fechaEntregaEsperada) {
         if (nombre.isEmpty() || nombre.equalsIgnoreCase("project name")) {
             Messages.showMessageDialog("Debe agregar el nombre del proyecto", "Atención");

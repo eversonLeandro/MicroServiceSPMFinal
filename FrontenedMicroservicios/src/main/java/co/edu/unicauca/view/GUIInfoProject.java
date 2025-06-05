@@ -331,14 +331,14 @@ public class GUIInfoProject extends javax.swing.JDialog {
             return;
         }
         txtNombre.setText(project.getNombre());
-        txtEmpresa.setText(project.getCompany().getNombre());
+        txtEmpresa.setText(project.getNombreEmpresa());
         txtFecha.setText(project.getFechaEntregadaEsperada());
         txtTiempo.setText(project.getTiempoMaximo());
         txtPresupuesto.setText(project.getPresupuesto());
         txtAreaObjetivos.setText(project.getObjetivo());
         txtAreaDescrip.setText(project.getDescripcion());
         txtAreaResumen.setText(project.getResumen());
-        txtEstado.setText(project.getEstadoString());
+        txtEstado.setText(project.getEstadoTexto());
 
     }
 

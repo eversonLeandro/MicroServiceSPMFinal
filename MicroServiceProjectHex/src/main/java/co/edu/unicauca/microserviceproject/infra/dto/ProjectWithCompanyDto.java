@@ -9,19 +9,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class ProjectDto {
-    private Long id;
-    private Long nitCompany;
+public class ProjectWithCompanyDto {
+    private Long idProject;
+    private Long companyId;
+    private Long coordinatorId;
     private String nombre;
     private String resumen;
     private String descripcion;
     private String objetivo;
     private String tiempoMaximo;
-    private String presupuesto;
-    private String fechaEntregadaEsperada;
-    private String estadoTexto;
-    private String periodoAcademico;
-    private String nombreEmpresa;
-
+    private String estado;
+    private String fechaEntrega;
+    private String companyName;
 
 }

@@ -20,6 +20,15 @@ public class ProjectRequestCompany {
     private String fechaEntregadaEsperada;
     private String estadoTexto;
     private String periodoAcademico;
+    private String nombreEmpresa;
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
 
 
     

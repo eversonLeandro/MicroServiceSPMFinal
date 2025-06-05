@@ -90,6 +90,7 @@ public class ProjectRepository implements IProjectRepository {
             "tiempoMaximo": "%s",
             "presupuesto": "%s",
             "fechaEntregadaEsperada": "%s"
+            "periodoAcademico": "%s"                                      
         }
         """,
                     project.getCompanyId(),
@@ -99,7 +100,8 @@ public class ProjectRepository implements IProjectRepository {
                     project.getObjetivo(),
                     project.getTiempoMaximo(),
                     project.getPresupuesto(),
-                    project.getFechaEntregadaEsperada()
+                    project.getFechaEntregadaEsperada(),
+                    project.getPeriodoAcademico()
             );
 
             // Enviar el JSON al servidor
@@ -230,7 +232,7 @@ public class ProjectRepository implements IProjectRepository {
             // Deserializamos la respuesta JSON a una lista de objetos genéricos
             List<ProjectRequestCompany> proyectos = mapper.readValue(inputStream, new TypeReference<List<ProjectRequestCompany>>() {
             });
-
+            System.out.println("asa");
             return proyectos;
 
         } catch (Exception e) {

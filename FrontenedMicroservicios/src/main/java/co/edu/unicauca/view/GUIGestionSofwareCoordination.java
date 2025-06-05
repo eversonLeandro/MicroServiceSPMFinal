@@ -663,7 +663,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             LocalDate fechaEntrega = LocalDate.now().plusMonths(meses);
             model.addRow(new Object[]{
                 p.getNombre(),
-                p.getCompany().getNombre(),
+                p.getNombreEmpresa(),
                 fechaEntrega.toString(),
                 p.getEstadoString()
             });

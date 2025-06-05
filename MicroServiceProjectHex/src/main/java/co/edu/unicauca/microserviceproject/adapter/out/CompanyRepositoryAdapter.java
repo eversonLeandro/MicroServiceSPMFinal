@@ -8,7 +8,9 @@ import co.edu.unicauca.microserviceproject.infra.mappers.CompanyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class CompanyRepositoryAdapter implements ICompanyRepositoryPort {
@@ -29,6 +31,10 @@ public class CompanyRepositoryAdapter implements ICompanyRepositoryPort {
         CompanyEntity companyEntity= companyJpaRepository.save(entity);
         return CompanyMapper.entityToDomain(companyEntity);
     }
-
+    @Override
+    public List<Company> findAllCompanies() {
+        List<CompanyEntity> companyEntities = companyJpaRepository.findAll();
+        return companyEntities.stream().map(CompanyMapper :: entityToDomain).collect(Collectors.toList());
+    }
 
 }

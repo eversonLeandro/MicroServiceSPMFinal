@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class ProjectoRepositoryAdapter implements IProjectRepositoryPort {
+public class ProjectRepositoryAdapter implements IProjectRepositoryPort {
 
     @Autowired
     private ProjectJpaRepository projectJpaRepository;

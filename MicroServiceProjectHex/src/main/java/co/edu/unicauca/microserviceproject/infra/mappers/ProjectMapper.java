@@ -1,6 +1,7 @@
 package co.edu.unicauca.microserviceproject.infra.mappers;
 
 import co.edu.unicauca.microserviceproject.domain.model.project.Project;
+import co.edu.unicauca.microserviceproject.domain.model.project.ProjectWithCompany;
 import co.edu.unicauca.microserviceproject.domain.model.project.VO.FechaEntrega;
 import co.edu.unicauca.microserviceproject.domain.model.project.VO.PeriodoAcademico;
 import co.edu.unicauca.microserviceproject.domain.model.project.VO.Presupuesto;
@@ -31,7 +32,6 @@ public class ProjectMapper {
              Presupuesto.of(new BigDecimal(savedProject.getPresupuesto())),
              FechaEntrega.of(LocalDate.parse(savedProject.getFechaEntregadaEsperada(),formatter)),
              PeriodoAcademico.of(savedProject.getPeriodoAcademico())
-
         );
 
     }
@@ -56,14 +56,16 @@ public class ProjectMapper {
         return new ProjectDto(
                 project.getIdProject(),
                 project.getCompanyId(),
-                project.getCoordinatorId(),
                 project.getNombre(),
                 project.getResumen(),
                 project.getDescripcion(),
                 project.getObjetivo(),
                 project.getTiempoMaximo(),
+                project.getPresupuesto().getValor().toString(),
+                project.getFechaEntregaEsperada().getFechaFormateada(),
                 project.getEstado().getEstado(),
-                project.getFechaEntregaEsperada().getFechaFormateada()
+                project.getPeriodoAcademico().getPeriodo(),
+                null
 
         );
     }
@@ -97,6 +99,22 @@ public class ProjectMapper {
                 savedProject.getEstado().getEstado(),
                 savedProject.getPeriodoAcademico().getPeriodo()
 
+        );
+    }
+    public static ProjectDto projectWithCompanyToProjectDto(ProjectWithCompany projectWithCompany) {
+        return new ProjectDto(
+                projectWithCompany.getProject().getIdProject(),
+                projectWithCompany.getProject().getCompanyId(),
+                projectWithCompany.getProject().getNombre(),
+                projectWithCompany.getProject().getResumen(),
+                projectWithCompany.getProject().getDescripcion(),
+                projectWithCompany.getProject().getObjetivo(),
+                projectWithCompany.getProject().getTiempoMaximo(),
+                String.valueOf(projectWithCompany.getProject().getPresupuesto().getValor()),
+                projectWithCompany.getProject().getFechaEntregaEsperada().getFechaFormateada(),
+                projectWithCompany.getProject().getEstado().getEstado(),
+                projectWithCompany.getProject().getPeriodoAcademico().getPeriodo(),
+                projectWithCompany.getCompany().getNombre()
         );
     }
 }

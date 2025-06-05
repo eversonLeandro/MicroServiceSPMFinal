@@ -22,7 +22,7 @@ public class Project {
     private String FechaEntregadaEsperada;
     private String periodoAcademico;
     
-    
+    private String estadoTexto;
     private ProjectState estado;
     private String nombreEmpresa;
     private Company company;
@@ -32,6 +32,15 @@ public class Project {
         return company;
     }
 
+    public String getEstadoTexto() {
+        return estadoTexto;
+    }
+
+    public void setEstadoTexto(String estadoTexto) {
+        this.estadoTexto = estadoTexto;
+    }
+
+    
     public void setCompany(Company company) {
         this.company = company;
     }

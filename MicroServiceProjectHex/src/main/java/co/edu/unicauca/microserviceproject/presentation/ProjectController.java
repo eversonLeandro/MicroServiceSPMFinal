@@ -1,8 +1,10 @@
 package co.edu.unicauca.microserviceproject.presentation;
 
 import co.edu.unicauca.microserviceproject.aplication.port.in.*;
+import co.edu.unicauca.microserviceproject.domain.model.project.Comment;
 import co.edu.unicauca.microserviceproject.domain.model.project.Project;
 import co.edu.unicauca.microserviceproject.infra.dto.*;
+import co.edu.unicauca.microserviceproject.infra.mappers.CommentMapper;
 import co.edu.unicauca.microserviceproject.infra.mappers.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,19 @@ public class ProjectController {
     IGetProjectsByCompany iGetProjectsByCompany;
     @Autowired
     IUpdateProjectStatus iUpdateProjectStatus;
+    @Autowired
+    ProjectRequestMapper projectRequestMapper;
+    @Autowired
+    IAgregateComment IagregateComment;
+    @Autowired
+    IGetAllCommentsByCoordinator IgetcommentByCoordiantor;
+    @Autowired
+    IGetProjectWithCompany iGetProjectWithCompany;
+
 
 
     @Autowired
-    ProjectRequestMapper projectRequestMapper;
-
+    IGetCommentByProject IgetCommentByProject;
 
     @PostMapping("/project")
     public ResponseEntity<ProjectDto> save(@RequestBody ProjectRequest request) {
@@ -46,25 +56,21 @@ public class ProjectController {
 
     @GetMapping("/project/{id}")
     public ResponseEntity<?> getProject(@PathVariable Long id) throws Exception {
-        Project projectMapeado = iProjectFindById.findProjectByProjectId(id);
-        ProjectDto responseDto = ProjectMapper.domainToDto(projectMapeado);
+        ProjectDto responseDto = iGetProjectWithCompany.getProjectWithCompany(id);
+
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/projects")
-
     public ResponseEntity<?> getAllProjects() throws Exception {
-
-        List<Project> projects = iGetAllProjects.getAllProjects();
-        List<ProjectDto> responseDto = projects.stream().map(ProjectMapper :: domainToDto).collect(Collectors.toList());
-        return ResponseEntity.ok(projects);
+        List<Project> dtos = iGetAllProjects.getAllProjects();
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/projectsCompany/{nit}")
     public ResponseEntity<?> getAllProjectsCompany(@PathVariable Long nit) throws Exception {
-        List<Project> projects = iGetProjectsByCompany.GetProjectsByCompany(nit);
-        List<ProjectDto> responseDto = projects.stream().map(ProjectMapper :: domainToDto).collect(Collectors.toList());
-        return ResponseEntity.ok(projects);
+        List<ProjectDto> responseDto = iGetProjectsByCompany.getAllProjectsWithCompany(nit);
+        return ResponseEntity.ok(responseDto);
     }
     @PutMapping("/projects/status")
     public ResponseEntity<?> updateStatus(@RequestBody ProjectStatusRequest statusRequest) {
@@ -77,5 +83,31 @@ public class ProjectController {
             response.setMensaje("{\"error\":\"Error al actualizar datos.\"}");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+    ////
+@GetMapping("/comments/{projectId}")
+public ResponseEntity<?> getComments(@PathVariable Integer projectId) {
+    List<Comment> comments = IgetCommentByProject.GetCommentByProject(projectId);
+    return ResponseEntity.ok(comments);
+}
+
+    @PostMapping("/comment")
+    public ResponseEntity<CommentDto> addComment(
+            @PathVariable Integer projectId,
+            @RequestBody CommentDto request) {
+        Comment comment1 = CommentMapper.crear(projectId, request);
+        Comment savedcomment = IagregateComment.AgregateComment(comment1);
+        CommentDto responseDto = CommentMapper.domainToDto(savedcomment);
+        return ResponseEntity.ok(responseDto);
+
+    }
+
+    @GetMapping("/commentsCoordinator/{coordinatorId}")
+    public ResponseEntity<?>  getCommentsByCoordinator(
+            @PathVariable Integer projectId,
+            @PathVariable Integer coordinatorId) {
+
+        List<Comment> comments = IgetcommentByCoordiantor.getAllComments(projectId,coordinatorId);
+        return ResponseEntity.ok(comments);
     }
 }

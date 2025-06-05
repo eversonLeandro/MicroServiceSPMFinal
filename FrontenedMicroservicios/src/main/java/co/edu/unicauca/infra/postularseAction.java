@@ -20,6 +20,9 @@ public class postularseAction implements IButtonAction<PostularseContext> {
         GUIDetalleProyecto instance = new GUIDetalleProyecto(context.getParent(),
                 context.getListener(), project, context.getUsername(), context.getPostulaciones(), context.getServiceStudent());
 
+        instance.pack(); 
+        instance.setLocationRelativeTo(null);
+        
         instance.setVisible(true);
     }
 

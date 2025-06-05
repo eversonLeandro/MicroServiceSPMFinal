@@ -89,7 +89,7 @@ public class ProjectRepository implements IProjectRepository {
             "objetivo": "%s",
             "tiempoMaximo": "%s",
             "presupuesto": "%s",
-            "fechaEntregadaEsperada": "%s"
+            "fechaEntregadaEsperada": "%s",
             "periodoAcademico": "%s"                                      
         }
         """,

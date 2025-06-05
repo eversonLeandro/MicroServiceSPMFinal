@@ -9,8 +9,6 @@ import co.edu.unicauca.microserviceproject.infra.mappers.ProjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
-
 @Controller
 @AllArgsConstructor
 public class GetProjectWithCompany implements IGetProjectWithCompany {

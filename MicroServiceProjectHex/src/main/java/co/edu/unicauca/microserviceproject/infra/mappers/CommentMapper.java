@@ -1,7 +1,6 @@
 package co.edu.unicauca.microserviceproject.infra.mappers;
 
 import co.edu.unicauca.microserviceproject.domain.model.project.Comment;
-import co.edu.unicauca.microserviceproject.infra.dto.CommentDto;
 import co.edu.unicauca.microserviceproject.infra.dto.CommentRequest;
 import co.edu.unicauca.microserviceproject.infra.entities.CommentEntity;
 

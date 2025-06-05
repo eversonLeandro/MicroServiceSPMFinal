@@ -6,14 +6,11 @@ import co.edu.unicauca.microserviceproject.aplication.port.out.IProjectRepositor
 import co.edu.unicauca.microserviceproject.domain.model.company.Company;
 import co.edu.unicauca.microserviceproject.domain.model.project.Project;
 import co.edu.unicauca.microserviceproject.domain.model.project.ProjectWithCompany;
-import co.edu.unicauca.microserviceproject.infra.dto.ProjectDto;
-import co.edu.unicauca.microserviceproject.infra.mappers.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

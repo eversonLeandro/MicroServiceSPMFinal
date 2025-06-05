@@ -45,8 +45,5 @@ public class ProjectRepositoryAdapter implements IProjectRepositoryPort {
         List<ProjectEntity> projectEntities=  projectJpaRepository.getAllByCompany_Nit(ide);
         return projectEntities.stream().map(ProjectMapper::entityToDomain).collect(Collectors.toList());
     }
-    @Override
-    public Project UpdateStateProject(Project project){
-        return null;
-    }
+
 }

@@ -21,9 +21,6 @@ public class FechaEntrega {
         return new FechaEntrega(fecha);
     }
 
-    public LocalDate getFecha() {
-        return fecha;
-    }
 
     public String getFechaFormateada() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

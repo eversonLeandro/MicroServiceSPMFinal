@@ -756,8 +756,9 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         // Instanciar la GUI del coordinador y mostrarla
         GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p,usuario);
         
+        instance.pack();
         instance.setExtendedState(JFrame.NORMAL);
-         instance.setLocationRelativeTo(null);
+        instance.setLocationRelativeTo(null);
         instance.setVisible(true);
     }
 

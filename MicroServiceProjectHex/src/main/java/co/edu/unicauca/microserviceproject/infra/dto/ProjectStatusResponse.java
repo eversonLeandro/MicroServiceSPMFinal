@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Setter
+@Getter
 public class ProjectStatusResponse {
     String estado;
     String mensaje;
@@ -12,4 +13,5 @@ public class ProjectStatusResponse {
         this.estado = estado;
         this.mensaje = mensaje;
     }
+
 }

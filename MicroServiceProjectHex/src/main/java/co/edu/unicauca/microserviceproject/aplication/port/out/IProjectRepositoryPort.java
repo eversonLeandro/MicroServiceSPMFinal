@@ -12,5 +12,4 @@ public interface IProjectRepositoryPort {
     Project saveProject(Project project);
     List<Project> getAllProjects();
     List<Project> GetProjectsByCompany(Long ide);
-    Project UpdateStateProject(Project project);
 }

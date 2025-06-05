@@ -7,15 +7,7 @@ import co.edu.unicauca.microserviceproject.infra.entities.PostulationEntity;
 import java.time.LocalDateTime;
 
 public class PostulationMapper {
-    public static PostulationEntity domainToEntity(Postulacion entity) {
-        if (entity == null) return null;
-        return new PostulationEntity(
-                entity.getId(),
-                entity.getCodEstudiante(),
-                entity.getProjectId(),
-                String.valueOf(entity.getFecha())
-        );
-    }
+
 
     public static Postulacion entityToDomain(PostulationEntity postulationEntity) {
         if (postulationEntity == null) return null;

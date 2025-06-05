@@ -286,7 +286,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
             model.addRow(new Object[]{
                 i,
                 p.getFechaEntregadaEsperada(),
-                p.getCompany().getNombre(),
+                p.getNombreEmpresa(),
                 p.getNombre(),
                 p.getResumen(),
                 "Ver mas",

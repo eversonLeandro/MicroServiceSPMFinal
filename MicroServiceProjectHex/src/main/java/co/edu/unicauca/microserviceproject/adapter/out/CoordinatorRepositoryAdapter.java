@@ -23,14 +23,4 @@ public class CoordinatorRepositoryAdapter implements ICoordinatorRepositoryPort 
         return Optional.ofNullable(coordinatorEntity)
                 .map(CoordinatorMapper :: entityToDomain);
     }
-
-    @Override
-    public Coordinator saveCoordinator(Coordinator coordinator) {
-        CoordinatorEntity entity = CoordinatorMapper.domainToEntity(coordinator);
-
-        CoordinatorEntity coordinatorEntity= coordinatorJpaRepository.save(entity);
-        return CoordinatorMapper.entityToDomain(coordinatorEntity);
-    }
-
-
 }

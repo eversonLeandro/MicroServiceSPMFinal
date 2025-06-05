@@ -30,6 +30,8 @@ public class CreateProjectUseCase implements ICreateProject {
                         "La empresa con NIT " + project.getCompanyId() + " no existe."
                 ));
 
+        
+
         Project savedProject = projectRepositoryPort.saveProject(project);
 
         ProjectCreatedEvent event = ProjectMapper.domainToEvent(savedProject);

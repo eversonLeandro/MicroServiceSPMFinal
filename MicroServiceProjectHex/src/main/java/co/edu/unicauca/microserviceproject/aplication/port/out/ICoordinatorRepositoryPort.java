@@ -6,5 +6,4 @@ import java.util.Optional;
 
 public interface ICoordinatorRepositoryPort {
     Optional<Coordinator> findCoordinatorById(Long nit);
-    Coordinator saveCoordinator(Coordinator coordinator);
 }

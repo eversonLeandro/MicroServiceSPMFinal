@@ -34,21 +34,23 @@ public class UsuarioService {
     @Transactional
     public User save(UsuarioRequest usuario) {
         try {
-            // 1. Registrar en Keycloak
             keycloakUserService.crearUsuarioEnKeycloak(
                     usuario.getUsername(),
                     usuario.getContrasenia(),
                     usuario.getEmail(),
                     usuario.getRol().toLowerCase()
             );
-        } catch (ClientErrorException e) {
-            if (e.getResponse().getStatus() == 409) {
-                System.out.println("Usuario ya existe en Keycloak: " + usuario.getUsername());
-
-            } else {
-                throw e;
-            }
+        } catch (Exception e) {
+            // En este punto, solo debería lanzar si es un error crítico, no 409
+            System.out.println("Error inesperado al crear usuario en Keycloak: " + e.getMessage());
         }
+
+        // Verificar si ya existe en la base de datos antes de guardar
+        Optional<User> existente = repository.findByUsername(usuario.getUsername());
+        if (existente.isPresent()) {
+            return existente.get();
+        }
+
         User user = modelMapper.map(usuario, User.class);
         return repository.save(user);
     }

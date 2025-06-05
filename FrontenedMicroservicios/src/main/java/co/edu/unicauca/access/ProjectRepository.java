@@ -272,7 +272,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Map<String, String>> getCommentsByProject(int projectId) throws IOException {
         try {
-            URL url = new URL("http://localhost:8081/api/projects/" + projectId + "/comments");
+            URL url = new URL("http://localhost:8081/apiProject/comments/" + projectId);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -312,7 +312,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public boolean addComment(int projectId, int coordinatorId, String coordinatorName, String message) throws IOException {
         try {
-            URL url = new URL("http://localhost:8081/api/projects/" + projectId + "/comments");
+            URL url = new URL("http://localhost:8081/apiProject/comment/" + projectId);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");

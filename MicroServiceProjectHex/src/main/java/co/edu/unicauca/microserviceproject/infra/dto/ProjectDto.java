@@ -23,5 +23,4 @@ public class ProjectDto {
     private String periodoAcademico;
     private String nombreEmpresa;
 
-
 }

@@ -634,13 +634,13 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtobjetivos.setText(proyecto.getObjetivo());
         txtresumen.setText(proyecto.getResumen());
         txtdescripcion.setText(proyecto.getDescripcion());
-        txtestado.setText(proyecto.getEstadoString());
+        txtestado.setText(proyecto.getEstadoTexto());
     }
 
     private void inicializarComboBox() {
         // No cargamos nada fijo aquí
         cbxestados.setModel(new DefaultComboBoxModel<>());
-        actualizarOpcionesEstado(project.getEstadoString());
+        actualizarOpcionesEstado(project.getEstadoTexto());
     }
 
     private void cargarEstados() {

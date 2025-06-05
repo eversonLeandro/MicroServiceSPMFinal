@@ -480,7 +480,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         Map<String, Integer> contadorPorSector = new HashMap<>();
 
         for (Project p : proyectos) {
-            String estado = p.getEstadoString();
+            String estado = p.getEstadoTexto();
             if (estado == null || estado.trim().isEmpty()) {
                 estado = "Sin estado";
             }
@@ -534,7 +534,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         DefaultPieDataset dataset = new DefaultPieDataset();
         Map<String, Integer> contadorPorEstado = new HashMap<>();
         for (Project p : proyectos) {
-            String estado = p.getEstadoString();
+            String estado = p.getEstadoTexto();
             if (estado == null || estado.trim().isEmpty()) {
                 estado = "Sin estado"; 
             }
@@ -665,7 +665,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
                 p.getNombre(),
                 p.getNombreEmpresa(),
                 fechaEntrega.toString(),
-                p.getEstadoString()
+                p.getEstadoTexto()
             });
         }
 

@@ -13,9 +13,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // 1) Comprobar si ya hay datos para no duplicar
         if (usuarioService.findAll().isEmpty()) {
-            // 2) Crear y guardar usuarios “quemados”
             UsuarioRequest admin = new UsuarioRequest();
             admin.setId(24);
             admin.setUsername("admin");

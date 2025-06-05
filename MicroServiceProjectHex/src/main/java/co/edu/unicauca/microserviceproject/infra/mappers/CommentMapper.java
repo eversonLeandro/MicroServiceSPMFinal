@@ -2,6 +2,7 @@ package co.edu.unicauca.microserviceproject.infra.mappers;
 
 import co.edu.unicauca.microserviceproject.domain.model.project.Comment;
 import co.edu.unicauca.microserviceproject.infra.dto.CommentDto;
+import co.edu.unicauca.microserviceproject.infra.dto.CommentRequest;
 import co.edu.unicauca.microserviceproject.infra.entities.CommentEntity;
 
 import java.time.LocalDateTime;
@@ -31,10 +32,9 @@ public class CommentMapper {
         );
     }
 
-    public static Comment crear(Integer projectId, CommentDto request) {
+    public static Comment crear(Integer projectId, CommentRequest request) {
         return  new Comment(
-
-                request.getCoordinatorId(),
+                null,
                 projectId,
                 request.getCoordinatorId(),
                 request.getCoordinatorName(),
@@ -43,13 +43,13 @@ public class CommentMapper {
         );
     }
 
-    public static CommentDto domainToDto(Comment comment) {
+    public static CommentRequest domainToDto(Comment comment) {
         if (comment == null) return null;
-        return new CommentDto(
+        return new CommentRequest(
                 comment.getCoordinatorId(),
                 comment.getCoordinatorName(),
-                comment.getMessage(),
-                String.valueOf(comment.getTimestamp())
+                comment.getMessage()
         );
     }
+
 }

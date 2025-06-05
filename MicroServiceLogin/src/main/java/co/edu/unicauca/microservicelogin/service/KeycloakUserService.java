@@ -42,6 +42,12 @@ public class KeycloakUserService {
     public void crearUsuarioEnKeycloak(String username, String password, String email, String rol) {
         Keycloak keycloak = getInstance();
 
+        //  Verificar si el usuario ya existe en Keycloak
+        List<UserRepresentation> existingUsers = keycloak.realm(realm).users().search(username);
+        if (!existingUsers.isEmpty()) {
+            System.out.println(" Usuario ya existe en Keycloak: " + username);
+            return; // Evitar volver a crearlo
+        }
 
         // Crear credenciales
         CredentialRepresentation credential = new CredentialRepresentation();
@@ -49,7 +55,7 @@ public class KeycloakUserService {
         credential.setValue(password);
         credential.setTemporary(false);
 
-        // Crear usuario
+        // Crear representación del usuario
         UserRepresentation user = new UserRepresentation();
         user.setUsername(username);
         user.setEmail(email);
@@ -59,13 +65,14 @@ public class KeycloakUserService {
         user.setEnabled(true);
         user.setCredentials(List.of(credential));
 
+        //  Intentar crear el usuario
         Response response = keycloak.realm(realm).users().create(user);
 
         if (response.getStatus() == 201) {
             String location = response.getHeaderString("Location");
             String userId = location.substring(location.lastIndexOf("/") + 1);
 
-            // 🔍 1. Obtener el ID del cliente system-desktop
+            // Obtener el ID interno del cliente 'system-desktop'
             ClientRepresentation clientRep = keycloak.realm(realm)
                     .clients()
                     .findByClientId("system-desktop")
@@ -73,9 +80,9 @@ public class KeycloakUserService {
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Cliente 'system-desktop' no encontrado"));
 
-            String clientUUID = clientRep.getId(); // UUID interno del cliente
+            String clientUUID = clientRep.getId();
 
-            // 🎯 2. Obtener el rol del cliente (no del realm)
+            //  Obtener el rol deseado
             RoleRepresentation clientRole = keycloak.realm(realm)
                     .clients()
                     .get(clientUUID)
@@ -83,7 +90,7 @@ public class KeycloakUserService {
                     .get(rol)
                     .toRepresentation();
 
-            // 🔐 3. Asignar el rol del cliente al usuario
+            //  Asignar el rol al usuario
             keycloak.realm(realm)
                     .users()
                     .get(userId)

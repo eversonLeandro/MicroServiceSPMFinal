@@ -3,6 +3,7 @@ package co.edu.unicauca.microserviceproject.presentation;
 import co.edu.unicauca.microserviceproject.aplication.port.in.*;
 import co.edu.unicauca.microserviceproject.domain.model.project.Comment;
 import co.edu.unicauca.microserviceproject.domain.model.project.Project;
+import co.edu.unicauca.microserviceproject.domain.model.project.ProjectWithCompany;
 import co.edu.unicauca.microserviceproject.infra.dto.*;
 import co.edu.unicauca.microserviceproject.infra.mappers.CommentMapper;
 import co.edu.unicauca.microserviceproject.infra.mappers.ProjectMapper;
@@ -41,7 +42,6 @@ public class ProjectController {
     IGetProjectWithCompany iGetProjectWithCompany;
 
 
-
     @Autowired
     IGetCommentByProject IgetCommentByProject;
 
@@ -63,7 +63,8 @@ public class ProjectController {
 
     @GetMapping("/projects")
     public ResponseEntity<?> getAllProjects() throws Exception {
-        List<Project> dtos = iGetAllProjects.getAllProjects();
+        List<ProjectWithCompany> allProjects = iGetAllProjects.getAllProjects();
+        List<ProjectDto> dtos = allProjects.stream().map(ProjectMapper::projectWithCompanyToProjectDto).collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
 
@@ -72,11 +73,12 @@ public class ProjectController {
         List<ProjectDto> responseDto = iGetProjectsByCompany.getAllProjectsWithCompany(nit);
         return ResponseEntity.ok(responseDto);
     }
+
     @PutMapping("/projects/status")
     public ResponseEntity<?> updateStatus(@RequestBody ProjectStatusRequest statusRequest) {
         ProjectStatusResponse response = null;
         try {
-            response =  iUpdateProjectStatus.updateProjectStatus(statusRequest.getProjectId(), statusRequest.getAction());
+            response = iUpdateProjectStatus.updateProjectStatus(statusRequest.getProjectId(), statusRequest.getAction());
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
 
@@ -84,30 +86,30 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
-    ////
-@GetMapping("/comments/{projectId}")
-public ResponseEntity<?> getComments(@PathVariable Integer projectId) {
-    List<Comment> comments = IgetCommentByProject.GetCommentByProject(projectId);
-    return ResponseEntity.ok(comments);
-}
 
-    @PostMapping("/comment")
-    public ResponseEntity<CommentDto> addComment(
+    /// /
+    @GetMapping("/comments/{projectId}")
+    public ResponseEntity<?> getComments(@PathVariable Integer projectId) {
+        List<Comment> comments = IgetCommentByProject.GetCommentByProject(projectId);
+        return ResponseEntity.ok(comments);
+    }
+
+    @PostMapping("/comment/{projectId}")
+    public ResponseEntity<CommentRequest> addComment(
             @PathVariable Integer projectId,
-            @RequestBody CommentDto request) {
+            @RequestBody CommentRequest request) {
         Comment comment1 = CommentMapper.crear(projectId, request);
         Comment savedcomment = IagregateComment.AgregateComment(comment1);
-        CommentDto responseDto = CommentMapper.domainToDto(savedcomment);
-        return ResponseEntity.ok(responseDto);
-
+        CommentRequest responseDto = CommentMapper.domainToDto(savedcomment);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @GetMapping("/commentsCoordinator/{coordinatorId}")
-    public ResponseEntity<?>  getCommentsByCoordinator(
+    public ResponseEntity<?> getCommentsByCoordinator(
             @PathVariable Integer projectId,
             @PathVariable Integer coordinatorId) {
 
-        List<Comment> comments = IgetcommentByCoordiantor.getAllComments(projectId,coordinatorId);
+        List<Comment> comments = IgetcommentByCoordiantor.getAllComments(projectId, coordinatorId);
         return ResponseEntity.ok(comments);
     }
 }

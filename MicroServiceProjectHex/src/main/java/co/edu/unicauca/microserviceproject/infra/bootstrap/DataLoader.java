@@ -60,13 +60,13 @@ public class DataLoader implements CommandLineRunner {
 
         // Crear coordinador
 
-        CoordinatorEntity coordinator = new CoordinatorEntity(Long.valueOf("123"), "ACTIVO", "yisus0816z@gmail.com");
+        CoordinatorEntity coordinator = new CoordinatorEntity(Long.valueOf("24"), "ACTIVO", "yisus0816z@gmail.com");
         coordinatorRepository.save(coordinator);
 
         // Crear proyecto
         ProjectEntity project = new ProjectEntity(
                 900123456L,                      // NIT de la empresa
-                123L,                          // ID del coordinador
+                24L,                          // ID del coordinador
                 "App de Gestión de Inventarios",
                 "Una aplicación para gestionar inventarios de pequeñas empresas.",
                 "Sistema de escritorio con Java y MySQL.",
@@ -80,7 +80,7 @@ public class DataLoader implements CommandLineRunner {
 
         ProjectEntity project2 = new ProjectEntity(
                 30L,                              // NIT de la empresa company1
-                123L,                             // ID del coordinador
+                24L,                             // ID del coordinador
                 "MeraSoftware",
                 "Plataforma que enseña técnicas y métodos para mejorar el rendimiento en videojuegos.",
                 "Aplicación web con inteligencia artificial que analiza patrones de juego y sugiere mejoras personalizadas.",
@@ -93,7 +93,7 @@ public class DataLoader implements CommandLineRunner {
         );
         ProjectEntity project3 = new ProjectEntity(
                 10L,
-                123L,
+                24L,
                 "Sistema de Control de Asistencia con Reconocimiento Facial",
                 "Aplicación para registrar asistencia estudiantil mediante reconocimiento facial.",
                 "Sistema de escritorio en Java usando OpenCV y base de datos MySQL.",
@@ -106,7 +106,7 @@ public class DataLoader implements CommandLineRunner {
         );
         ProjectEntity project4 = new ProjectEntity(
                 10L,
-                123L,
+                24L,
                 "Plataforma de Gestión de Prácticas Empresariales",
                 "Sistema para gestionar postulaciones, seguimientos y evaluaciones de prácticas.",
                 "Aplicación web con Java, Spring y MySQL.",
@@ -121,7 +121,7 @@ public class DataLoader implements CommandLineRunner {
 
         ProjectEntity project5 = new ProjectEntity(
                 20L,
-                123L,
+                24L,
                 "Aplicación de Apoyo para Personas con Discapacidad Visual",
                 "Asistente virtual con comandos por voz para la navegación en entornos urbanos.",
                 "Aplicación móvil desarrollada en Kotlin con soporte GPS y reconocimiento de voz.",
@@ -135,7 +135,7 @@ public class DataLoader implements CommandLineRunner {
 
         ProjectEntity project6 = new ProjectEntity(
                 30L,
-                123L,
+                24L,
                 "Sistema de Evaluación de Desempeño Docente",
                 "Herramienta digital para evaluar y retroalimentar el desempeño de los profesores.",
                 "Sistema web desarrollado en Java con Spring Boot y reportes dinámicos.",
@@ -149,7 +149,7 @@ public class DataLoader implements CommandLineRunner {
 
         ProjectEntity project7 = new ProjectEntity(
                 900123456L,
-                123L,
+                24L,
                 "Red Social Académica para Intercambio de Conocimientos",
                 "Plataforma para que estudiantes y docentes compartan artículos, tutoriales y foros.",
                 "Aplicación web en Java con Spring y MySQL, integrando foros y sistema de reputación.",

@@ -1,0 +1,172 @@
+version: '3.8'
+
+services:
+  # Base de datos PostgreSQL (con múltiples bases de datos)
+  postgres-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: "123"
+      POSTGRES_DB: "student_db"  # Base de datos principal (se crea por defecto)
+      POSTGRES_MULTIPLE_DATABASES: "postulation_db,company_db,project_db,login_db"  # Bases de datos adicionales
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh  # Script para crear las DBs
+    networks:
+      - microservices-network
+
+  # RabbitMQ y Keycloak (sin cambios)
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev --import-realm
+    environment:
+    
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+      KC_DB: "postgres"
+      KC_DB_URL: "jdbc:postgresql://postgres-db:5432/login_db"  # Usa student_db como DB de Keycloak
+      KC_DB_USERNAME: "postgres"
+      KC_DB_PASSWORD: "123"
+    volumes:
+      - ./keycloak-setup/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+    networks:
+      - microservices-network
+  
+    
+    
+
+  # Microservicios (ajustados para usar sus propias bases de datos)
+  api-gateway:
+    image: apigateway-service:1.0
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_CLOUD_GATEWAY_ROUTES_0_URI: "http://project-service:8086"
+      SPRING_CLOUD_GATEWAY_ROUTES_1_URI: "http://postulation-service:8082"
+      SPRING_CLOUD_GATEWAY_ROUTES_2_URI: "http://company-service:8088"
+      SPRING_CLOUD_GATEWAY_ROUTES_3_URI: "http://student-service:8083"
+      SPRING_CLOUD_GATEWAY_ROUTES_4_URI: "http://login-service:8085"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://keycloak:8080/realms/MicroserviceSPM"
+    depends_on:
+      - student-service
+      - postulation-service
+      - company-service
+      - login-service
+      - keycloak
+    networks:
+      - microservices-network
+
+  login-service:
+    image: login-service:1.0
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-db:5432/login_db"  # Base de datos específica
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://keycloak:8080/realms/MicroserviceSPM"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+      - keycloak
+    networks:
+      - microservices-network
+
+  student-service:
+    image: student-service:1.0
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-db:5432/student_db"  # Su propia DB
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  postulation-service:
+    image: postulation-service:1.0
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-db:5432/postulation_db"  # Su propia DB
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  company-service:
+    image: company-service:1.0
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-db:5432/company_db"  # Su propia DB
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  project-service:
+    image: project-service:1.0
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-db:5432/project_db"  # Su propia DB
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://keycloak:8080/realms/MicroserviceSPM"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+      - keycloak
+    networks:
+      - microservices-network
+
+  email-notification:
+    image: emailnotification-service:1.0
+    ports:
+      - "8089:8089"
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+      SPRING_MAIL_HOST: "smtp.gmail.com"
+      SPRING_MAIL_PORT: "587"
+      SPRING_MAIL_USERNAME: "yisus0816z@gmail.com"
+      SPRING_MAIL_PASSWORD: "yfguvgiqjxjtyuak"
+    depends_on:
+      - rabbitmq
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  keycloak-data:

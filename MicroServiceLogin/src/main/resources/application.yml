@@ -1,29 +1,22 @@
-# application.yml
 spring:
   application:
     name: MicroServiceLogin
 
-  # Configuraci�n de H2 Database
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        web-allow-others: true
-
+  # Configuración PostgreSQL
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: ""
+    url: jdbc:postgresql://postgres-login:5432/logindb
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
 
   jpa:
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-  # Configuraci�n de RabbitMQ
+  # Configuración RabbitMQ
   rabbitmq:
-    host: localhost
+    host: rabbitmq  # Nombre del servicio en Docker
     port: 5672
     username: guest
     password: guest
@@ -31,18 +24,17 @@ spring:
 server:
   port: 8085
 
-
+# Configuración Keycloak
 security:
   oauth2:
     resourceserver:
       jwt:
-        issuer-uri: http://localhost:8080/realms/MicroserviceSPM
-        jwk-set-uri: http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs
-
+        issuer-uri: http://keycloak:8080/realms/MicroserviceSPM
+        jwk-set-uri: http://keycloak:8080/realms/MicroserviceSPM/protocol/openid-connect/certs
 
 keycloak:
-  auth-server-url: http://localhost:8080
+  auth-server-url: http://keycloak:8080
   realm: MicroserviceSPM
   resource: system-desktop
   credentials:
-    secret: pQZqPhgwKx32hFTuoMxmj638FrhoN5dG
+    secret: sistem-secret

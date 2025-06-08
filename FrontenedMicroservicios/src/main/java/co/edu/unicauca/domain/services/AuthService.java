@@ -23,7 +23,7 @@ public class AuthService {
 
         String body = "grant_type=password" +
                      "&client_id=system-desktop" +
-                     "&client_secret=pQZqPhgwKx32hFTuoMxmj638FrhoN5dG" +
+                     "&client_secret=3CWbaTU0fhvnaDxh0hyS1Cb0Pwv7UcCO" +
                      "&username=" + URLEncoder.encode(username, "UTF-8") +
                      "&password=" + URLEncoder.encode(password, "UTF-8") +
                      "&scope=openid";

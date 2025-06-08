@@ -1,0 +1,112 @@
+{
+  "realm": "MicroserviceSPM",
+  "enabled": true,
+  "displayName": "MicroserviceSPM",
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "clients": [
+    {
+      "clientId": "system-desktop",
+      "name": "System Desktop Client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",      
+      "secret": "system-secret",      
+      "rootUrl": "http://localhost:8081",
+      "baseUrl": "http://localhost:8081",
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "http://localhost:8081/*"
+      ],
+      "webOrigins": [
+        "+",
+        "http://localhost:8081"
+      ],
+      "adminUrl": "http://localhost:8081",
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "fullScopeAllowed": true,
+      "attributes": {
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "backchannel.logout.session.required": "true"
+      }
+    }
+  ],
+  "roles": {
+    "client": {
+      "system-desktop": [
+        {
+          "name": "company",
+          "description": "Rol para empresas",
+          "composite": false,
+          "clientRole": true
+        },
+        {
+          "name": "student",
+          "description": "Rol para estudiantes",
+          "composite": false,
+          "clientRole": true
+        },
+        {
+          "name": "coordinator",
+          "description": "Rol para coordinadores",
+          "composite": false,
+          "clientRole": true
+        },         
+        {
+          "name": "view-users",
+          "description": "Permite ver usuarios",
+          "composite": false,
+          "clientRole": true
+        },
+        {
+          "name": "manage-users",
+          "description": "Permite gestionar usuarios",
+          "composite": false,
+          "clientRole": true
+        }
+      ],
+      "realm-management": [
+        {
+          "name": "view-users",
+          "description": "Permite ver usuarios",
+          "composite": false,
+          "clientRole": true
+        },
+        {
+          "name": "manage-users",
+          "description": "Permite gestionar usuarios",
+          "composite": false,
+          "clientRole": true
+        }
+      ]
+    }
+  },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@microservicespm.com",
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "clientRoles": {
+        "system-desktop": [
+          "coordinator"
+        ]
+      }
+    }
+  ]
+}

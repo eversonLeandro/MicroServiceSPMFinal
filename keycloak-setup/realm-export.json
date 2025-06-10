@@ -100,9 +100,7 @@
       ],
       "clientRoles": {
         "system-desktop": [
-          "coordinator",
-          "company",
-          "student"
+          "coordinator"
         ]
       }
     },

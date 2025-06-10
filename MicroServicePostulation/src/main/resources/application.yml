@@ -1,7 +1,9 @@
+# application.yml - Microservicio de Postulación
 spring:
   application:
     name: MicroServicePostulation
 
+  # Configuración de H2 Database
   h2:
     console:
       enabled: true
@@ -18,6 +20,7 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
 
+  # Configuración de RabbitMQ
   rabbitmq:
     host: localhost
     port: 5672
@@ -25,7 +28,7 @@ spring:
     password: guest
 
 server:
-  port: 8082
+  port: 8082  # Puerto específico para postulaciones
 
 security:
   oauth2:

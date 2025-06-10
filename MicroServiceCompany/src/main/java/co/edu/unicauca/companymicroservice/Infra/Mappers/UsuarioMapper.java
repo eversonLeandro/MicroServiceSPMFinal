@@ -12,7 +12,7 @@ public class UsuarioMapper {
         usuarioRequest.setUsername(dto.getNombre());
         usuarioRequest.setEmail(dto.getEmail());
         usuarioRequest.setContrasenia(String.valueOf(dto.getNit()));
-        usuarioRequest.setRol(("COMPANY"));
+        usuarioRequest.setRol(("company"));
         return usuarioRequest;
     }
 }

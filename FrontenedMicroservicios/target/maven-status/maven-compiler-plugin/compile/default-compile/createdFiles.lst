@@ -12,6 +12,7 @@ co\edu\unicauca\domain\services\UserServiceProxy.class
 co\edu\unicauca\interfaces\ICompanyRepository.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$5.class
 co\edu\unicauca\access\StudentRepository$1.class
+co\edu\unicauca\infra\validation\strategies\NumericDecimalValidationStrategy.class
 co\edu\unicauca\view\GUIRecordType.class
 co\edu\unicauca\view\GUIDetalleProyecto.class
 co\edu\unicauca\access\StudentRepository.class
@@ -25,6 +26,7 @@ co\edu\unicauca\infra\Subject.class
 co\edu\unicauca\view\GUIRegistreCompany$4.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$11.class
 co\edu\unicauca\view\GUIRegistreCompany$6.class
+co\edu\unicauca\infra\validation\Validator.class
 co\edu\unicauca\infra\verProyectPostuladoContext.class
 co\edu\unicauca\view\GUIEstablecerContraseña$3.class
 co\edu\unicauca\access\UserRepository.class
@@ -41,6 +43,7 @@ co\edu\unicauca\view\GUICodigoContraseña$3.class
 co\edu\unicauca\infra\ButtonEditor.class
 co\edu\unicauca\view\GUIGestionSofwareCoordinationProject.class
 co\edu\unicauca\view\GUIRecuperarContraseña$1.class
+co\edu\unicauca\infra\validation\strategies\EmailValidationStrategy.class
 co\edu\unicauca\view\GUIPostularProject.class
 co\edu\unicauca\view\GUIRegisterStudent.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$12.class
@@ -65,7 +68,6 @@ co\edu\unicauca\interfaces\ICoordinatorRepository.class
 co\edu\unicauca\infra\Subject$1.class
 co\edu\unicauca\view\GUIGestionSofwareCoordinationProject$3.class
 co\edu\unicauca\domain\entities\Company.class
-co\edu\unicauca\view\Paint.class
 co\edu\unicauca\infra\dto\ProjectStatusResponse.class
 co\edu\unicauca\infra\dto\CommentRequest.class
 co\edu\unicauca\view\GUICodigoContraseña.class
@@ -74,7 +76,10 @@ co\edu\unicauca\view\GUIGestionSofwareCoordinationProject$6.class
 co\edu\unicauca\interfaces\IPostulationRepository.class
 co\edu\unicauca\view\GUIRegistreCompany$5.class
 co\edu\unicauca\view\GUIRecuperarContraseña.class
+co\edu\unicauca\domain\services\AuthService$2.class
 co\edu\unicauca\view\GUIPostularProject$3.class
+co\edu\unicauca\domain\services\AuthService.class
+co\edu\unicauca\interfaces\IValidationStrategy.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$10.class
 co\edu\unicauca\infra\dto\CommentResponse.class
 co\edu\unicauca\interfaces\IFrameFactory.class
@@ -97,8 +102,10 @@ co\edu\unicauca\domain\entities\User.class
 co\edu\unicauca\interfaces\IUserService.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$6.class
 co\edu\unicauca\domain\services\CompanyService.class
+co\edu\unicauca\domain\services\AuthService$1.class
 co\edu\unicauca\infra\adapter\ProjectRepositoryAdapter.class
 co\edu\unicauca\infra\dto\ProjectStatusRequest.class
+co\edu\unicauca\access\SessionManager.class
 co\edu\unicauca\view\GUILogin.class
 co\edu\unicauca\view\GUIRegisterStudent$4.class
 co\edu\unicauca\infra\adapter\ProjectRequestCompany.class
@@ -108,6 +115,7 @@ co\edu\unicauca\infra\ProjectState.class
 co\edu\unicauca\view\GUIGestionSofwareCoordinationProject$5.class
 co\edu\unicauca\domain\services\PostulationService.class
 co\edu\unicauca\domain\entities\Coordination.class
+co\edu\unicauca\infra\validation\strategies\NotEmptyAndNotDefaultStrategy.class
 co\edu\unicauca\view\GUIRegistreCompany$3.class
 co\edu\unicauca\access\ProjectRepository$2.class
 co\edu\unicauca\view\GUIDetalleProyecto$1.class
@@ -116,6 +124,8 @@ co\edu\unicauca\view\GUIGestionSoftwareEmpresa$3.class
 co\edu\unicauca\domain\entities\Project.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$8.class
 co\edu\unicauca\view\GUIRegisterStudent$3.class
+co\edu\unicauca\infra\validation\strategies\DateValidationStrategy.class
+co\edu\unicauca\infra\validation\strategies\NumericValidationStrategy.class
 co\edu\unicauca\view\GUIRegistreCompany$2.class
 co\edu\unicauca\view\GUIRecuperarContraseña$3.class
 co\edu\unicauca\domain\services\UserService.class
@@ -125,3 +135,5 @@ co\edu\unicauca\infra\gotaAguaTexto$1.class
 co\edu\unicauca\view\GUIGestionSofwareCoordination$1.class
 co\edu\unicauca\domain\entities\Student.class
 co\edu\unicauca\access\ProjectRepository$1.class
+co\edu\unicauca\infra\validation\ValidationContext.class
+co\edu\unicauca\infra\validation\strategies\TextOnlyValidationStrategy.class

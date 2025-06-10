@@ -25,9 +25,3 @@ spring:
 server:
   port: 8089
 
-security:
-  oauth2:
-    resourceserver:
-      jwt:
-        issuer-uri: http://localhost:8080/realms/MicroserviceSPM
-        jwk-set-uri: http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs

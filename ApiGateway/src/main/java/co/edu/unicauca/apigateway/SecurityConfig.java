@@ -15,7 +15,6 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -27,11 +26,11 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/api/usuarios/", "/actuator/health").permitAll()
-                        .pathMatchers("/actuator/health").permitAll()
-                        .pathMatchers("/api/Students/**").hasRole("STUDENT")
-                        .pathMatchers("/apiCompanies/**").hasRole("COMPANY")
-                        .pathMatchers("/apiProject/**").hasRole("COORDINATOR")
+                        .pathMatchers("/api/usuarios/**", "/actuator/health").permitAll()
+                        .pathMatchers("/apiCompanies/guardar", "/api/Students/crear").permitAll()
+                        .pathMatchers("/api/Students/**").hasAnyRole("STUDENT","COORDINATOR")
+                        .pathMatchers("/apiCompanies/**").hasAnyRole("COMPANY","STUDENT","COORDINATOR")
+                        .pathMatchers("/apiProject/**").hasAnyRole("COORDINATOR","STUDENT","COMPANY")
                         .pathMatchers("/postulaciones/**").hasRole("STUDENT")
                         .anyExchange().authenticated()
                 )
@@ -40,7 +39,9 @@ public class SecurityConfig {
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
                         )
                 );
-        //http.csrf(csrf -> csrf.disable());
+
+        http.csrf(csrf -> csrf.disable()); // Forma correcta de deshabilitar CSRF
+
         return http.build();
     }
 
@@ -54,25 +55,13 @@ public class SecurityConfig {
         @Override
         public Collection<GrantedAuthority> convert(Jwt jwt) {
             Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-
-            if (resourceAccess == null) {
-                return Collections.emptyList();
-            }
-
             Map<String, Object> clientRoles = (Map<String, Object>) resourceAccess.get("system-desktop");
-
-            if (clientRoles == null) {
-                return Collections.emptyList();
-            }
-
             Collection<String> roles = (Collection<String>) clientRoles.get("roles");
 
-            return roles != null ?
-                    roles.stream()
-                            .map(role -> "ROLE_" + role.toUpperCase())
-                            .map(SimpleGrantedAuthority::new)
-                            .collect(Collectors.toList())
-                    : Collections.emptyList();
+            return roles.stream()
+                    .map(role ->"ROLE_"+role.toUpperCase())
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
         }
     }
 }

@@ -1,6 +1,6 @@
 package co.edu.unicauca.studentmicroservice.Infra.Config;
 
-import co.edu.unicauca.studentmicroservice.infra.config.RabbitMQConfig;
+import co.edu.unicauca.studentmicroservice.Infra.Config.RabbitMQConfig;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

@@ -1,6 +1,7 @@
 package co.edu.unicauca.microservicepostulation.infra;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,7 +18,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -29,16 +29,14 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/postulaciones/**").hasRole("STUDENT")
                 .anyRequest().authenticated()
-            )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
-                        )
+            ).oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwt -> jwt
+                        .jwtAuthenticationConverter(jwtAuthenticationConverter())
                 )
-                .csrf(csrf -> csrf.disable());
+        );
+        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
-
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withJwkSetUri("http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs").build();
@@ -55,10 +53,9 @@ public class SecurityConfig {
                     .collect(Collectors.toList());
         }
     }
-
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter()); // ¡Inyección!
         return jwtConverter;
     }
 }

@@ -27,8 +27,8 @@ public class FrameFactory implements IFrameFactory {
 
     @Override
     public JFrame createFrame(User user) {
-        switch (user.getRol()){
-             case "STUDENT":
+        switch (user.getRol().toLowerCase()){
+             case "student":
                 IRepository repositorys = Factory.getInstance().getRepository("student");
                 IRepository repositoryp = Factory.getInstance().getRepository("project");
                 IRepository repositorypos=Factory.getInstance().getRepository("postulation");
@@ -36,11 +36,11 @@ public class FrameFactory implements IFrameFactory {
                 StudentService studentService = new StudentService(repositorys);
                 PostulationService postulationService = new PostulationService((PostulationRepository) repositorypos);
                 return new GUIGestionSottwareStudent(projectServi, user, studentService,postulationService);
-            case "ADMIN":
+            case "coordinator":
                 IRepository repository2 = Factory.getInstance().getRepository("project");
                 ProjectService projectService = new ProjectService((ProjectRepository) repository2);
                 return new GUIGestionSofwareCoordination(projectService, user);
-            case "COMPANY":
+            case "company":
                 IRepository repository3 = Factory.getInstance().getRepository("company");
                 IRepository repository4 = Factory.getInstance().getRepository("project");
                 CompanyService companyService = new CompanyService(repository3);

@@ -2,7 +2,7 @@ package co.edu.unicauca.studentmicroservice.Service;
 
 import co.edu.unicauca.studentmicroservice.Entities.Student;
 import co.edu.unicauca.studentmicroservice.Repositories.StudentRepository;
-import co.edu.unicauca.studentmicroservice.infra.config.RabbitMQConfig;
+import co.edu.unicauca.studentmicroservice.Infra.Config.RabbitMQConfig;
 import co.edu.unicauca.studentmicroservice.infra.dto.UsuarioRequest;
 import jakarta.transaction.Transactional;
 import org.aspectj.weaver.World;
@@ -109,7 +109,7 @@ public class StudentService implements BaseService<Student> {
         try {
             Student saved = studentRepository.save(entity);
             UsuarioRequest usuariDTO = modelMapper.map(entity,UsuarioRequest.class);
-            usuariDTO.setRol("STUDENT");
+            usuariDTO.setRol("student");
             rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_STUDENT_CREATED,usuariDTO);
             return saved;
         } catch (Exception e) {

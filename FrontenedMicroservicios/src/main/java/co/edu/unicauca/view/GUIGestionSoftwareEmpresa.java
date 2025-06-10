@@ -1,6 +1,7 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.access.SessionManager;
 import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
@@ -301,6 +302,7 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        SessionManager.setToken(null);
         IRepository userRepository = Factory.getInstance().getRepository("usuario");
         UserService service = new UserService(userRepository);
         IFrameFactory frameFactory = new FrameFactory();

@@ -18,7 +18,7 @@ public class DataLoader implements CommandLineRunner {
         // 1) Comprobar si ya hay datos para no duplicar
         if (studentservice.findAll().isEmpty()) {
             // Ahora creamos los estudiantes
-            Student student1 = new Student("1234567890", "202010001", "juan.perez@unicauca.edu.co", "Juan Pérez", "3151234567");
+            Student student1 = new Student("0001", "202010001", "estudiante1@gmail.com", "estudiante1", "3151234567");
             Student student2 = new Student("0987654321", "202010002", "maria.gomez@unicauca.edu.co", "María Gómez", "3209876543");
             Student student3 = new Student("5678901234", "202010003", "carlos.rodriguez@unicauca.edu.co", "Carlos Rodríguez", "3105678901");
             Student student4 = new Student("4321098765", "202010004", "laura.hernandez@unicauca.edu.co", "Laura Hernández", "3004321098");

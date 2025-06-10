@@ -28,8 +28,8 @@ public class CompanyDataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (companyRepository.count() == 0) {
             Company c1 = new Company(
-                    "Innovative Tech S.A.S.",
-                    "innovative@tech.com",
+                    "InnovativeTechSAS",
+                    "innovative@gmail.com",
                     Company.Sector.TECNOLOGIA,
                     Company.Estado.HABILITADO,
                     null,
@@ -39,7 +39,7 @@ public class CompanyDataLoader implements CommandLineRunner {
 
             Company c2 = new Company(
                     "HealthPlus",
-                    "health@plus.com",
+                    "health@gmail.com",
                     Company.Sector.SALUD,
                     Company.Estado.HABILITADO,
                     null,
@@ -49,7 +49,7 @@ public class CompanyDataLoader implements CommandLineRunner {
 
             Company c3 = new Company(
                     "EduWorld",
-                    "edu@world.com",
+                    "edu@gmail.com",
                     Company.Sector.EDUCATION,
                     Company.Estado.HABILITADO,
                     null,

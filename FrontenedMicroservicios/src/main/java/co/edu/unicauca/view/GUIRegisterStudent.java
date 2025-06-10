@@ -7,6 +7,10 @@ package co.edu.unicauca.view;
 import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.infra.validation.ValidationContext;
+import co.edu.unicauca.infra.validation.strategies.EmailValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.NumericValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.TextOnlyValidationStrategy;
 import co.edu.unicauca.main.Main;
 
 public class GUIRegisterStudent extends javax.swing.JFrame {
@@ -15,9 +19,15 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
      * Creates new form GUIRegisterCompany
      */
     StudentService servicestudent;
+    private ValidationContext emailValidator;
+    private ValidationContext numericValidator;
+    private ValidationContext textValidator;
 
     public GUIRegisterStudent(StudentService student) {
         this.servicestudent = student;
+        this.emailValidator = new ValidationContext(new EmailValidationStrategy());
+        this.numericValidator = new ValidationContext(new NumericValidationStrategy());
+        this.textValidator = new ValidationContext(new TextOnlyValidationStrategy());
         initComponents();
     }
 
@@ -274,7 +284,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-        this.dispose();               
+        this.dispose();
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
@@ -285,44 +295,22 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcodigoActionPerformed
     private boolean validarFormulario(String nombre, String cedula, String codigo, String email, String telefono) {
-        // Validar que el nombre no esté vacío y no contenga números
-        if (nombre.isEmpty()) {
-            Messages.showMessageDialog("El campo Nombre no puede estar vacío.", "Atención");
+
+        boolean isValid = true;
+
+        if (nombre.isEmpty() || cedula.isEmpty() || codigo.isEmpty()
+                || email.isEmpty() || telefono.isEmpty()) {
+            Messages.showMessageDialog("Todos los campos son obligatorios", "Atención");
             return false;
         }
 
-        // Validar que la cédula no esté vacía y solo contenga números
-        if (cedula.isEmpty()) {
-            Messages.showMessageDialog("El campo Cédula no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (!cedula.matches("\\d+")) {
-            Messages.showMessageDialog("El campo cedula debe ser un número positivo.", "Atención");
-            return false;
-        }
-        // Validar que el código sea un número positivo
-        if (!codigo.matches("\\d+")) {
-            Messages.showMessageDialog("El campo Código debe ser un número positivo.", "Atención");
-            return false;
-        }
+        isValid = isValid && textValidator.executeValidation(nombre);
+        isValid = isValid && numericValidator.executeValidation(cedula);
+        isValid = isValid && numericValidator.executeValidation(codigo);
+        isValid = isValid && emailValidator.executeValidation(email);
+        isValid = isValid && numericValidator.executeValidation(telefono);
 
-        // Validar que el email no esté vacío y tenga un formato válido
-        if (email.isEmpty()) {
-            Messages.showMessageDialog("El campo Email no puede estar vacío.", "Atención");
-            return false;
-        }
-        // Validar que el teléfono no esté vacío y solo contenga números
-        if (telefono.isEmpty()) {
-            Messages.showMessageDialog("El campo Teléfono no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (!telefono.matches("\\d+")) {
-            Messages.showMessageDialog("El campo Teléfono solo puede contener números.", "Atención");
-            return false;
-        }
-
-        // Si todas las validaciones pasan, retornar true
-        return true;
+        return isValid;
     }
 
     /**

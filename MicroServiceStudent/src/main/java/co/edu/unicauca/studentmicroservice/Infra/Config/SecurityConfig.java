@@ -1,5 +1,4 @@
 package co.edu.unicauca.studentmicroservice.Infra.Config;
-
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.context.annotation.Bean;
@@ -27,22 +26,24 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()
-                        .requestMatchers("/api/Students/**").hasRole("STUDENT")
+                        .requestMatchers("/api/Students/crear").permitAll()
+                        .requestMatchers("/api/Students/**").hasAnyRole("STUDENT","COORDINATOR") // o hasAuthority("ROLE_STUDENT")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter()) // ¡Paréntesis cerrados correctamente!
                         )
                 )
-                .csrf(csrf -> csrf.disable());
+                .csrf(csrf -> csrf.disable()); // Deshabilitar CSRF (opcional para APIs)
         return http.build();
     }
-
+    // Bean para decodificar JWT con Keycloak
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withJwkSetUri("http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs").build();
     }
+    // KeycloakRoleConverter (igual para todos)
     public static class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
         @Override
         public Collection<GrantedAuthority> convert(Jwt jwt) {
@@ -55,10 +56,9 @@ public class SecurityConfig {
                     .collect(Collectors.toList());
         }
     }
-
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter()); // ¡Inyección!
         return jwtConverter;
     }
 }

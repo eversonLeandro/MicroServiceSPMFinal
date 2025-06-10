@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class PostulationRepository implements IPostulationRepository {
 
-    private static final String POST_URL = "http://localhost:8082/postulaciones";// URL del microservicio
+    private static final String POST_URL = "http://localhost:8081/postulaciones";// URL del microservicio
 
     public PostulationRepository() {
 
@@ -41,6 +41,11 @@ public class PostulationRepository implements IPostulationRepository {
 
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                conn.setRequestProperty("Authorization", "Bearer " + token);
+            }
             conn.setDoOutput(true);
 
             Gson gson;

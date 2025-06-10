@@ -1,6 +1,7 @@
 package co.edu.unicauca.companymicroservice.Infra.Config;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,8 +18,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -28,21 +27,23 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator/health").permitAll()
-                .requestMatchers("/apiCompanies/**").hasRole("COMPANY")
+                    .requestMatchers("/apiCompanies/guardar").permitAll()
+                .requestMatchers("/apiCompanies/**").hasAnyRole("COMPANY","STUDENT","COORDINATOR")
                 .anyRequest().authenticated()
-            )
-                .oauth2ResourceServer(oauth2 -> oauth2
+            ).oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
                         )
-                )
-                .csrf(csrf -> csrf.disable());
+                );
+        http.csrf(csrf -> csrf.disable()); // Forma correcta de deshabilitar CSRF
         return http.build();
     }
+    // Bean para decodificar JWT con Keycloak
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withJwkSetUri("http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs").build();
     }
+    // KeycloakRoleConverter (igual para todos)
     public static class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
         @Override
         public Collection<GrantedAuthority> convert(Jwt jwt) {
@@ -55,10 +56,9 @@ public class SecurityConfig {
                     .collect(Collectors.toList());
         }
     }
-
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+        jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter()); // ¡Inyección!
         return jwtConverter;
     }
 }

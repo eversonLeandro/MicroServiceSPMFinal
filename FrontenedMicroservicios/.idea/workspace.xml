@@ -5,13 +5,193 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfba8a26-44da-4cbc-8998-26dd13bca907" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceCompany/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceCompany/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/SessionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/validation/Validator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/validation/strategies/DateValidationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/validation/strategies/EmailValidationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/validation/strategies/NotEmptyAndNotDefaultStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/validation/strategies/NumericDecimalValidationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/validation/strategies/NumericValidationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/validation/strategies/TextOnlyValidationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/interfaces/IValidationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/service/KeycloakUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway/src/main/java/co/edu/unicauca/apigateway/ApiGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway/src/main/java/co/edu/unicauca/apigateway/ApiGatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway/src/main/java/co/edu/unicauca/apigateway/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway/src/main/java/co/edu/unicauca/apigateway/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway/src/test/java/co/edu/unicauca/apigateway/ApiGatewayApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway/src/test/java/co/edu/unicauca/apigateway/ApiGatewayApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/CompanyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/PostulationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/PostulationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/access/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/entities/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/domain/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/FrameFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/FrameFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/adapter/ProjectRequestCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/adapter/ProjectRequestCompany.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/postularseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/infra/postularseAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIDetalleProyecto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIDetalleProyecto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSoftwareEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSoftwareEmpresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSofwareCoordination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSofwareCoordination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSofwareCoordinationProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSofwareCoordinationProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSottwareStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIGestionSottwareStudent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIInfoProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIInfoProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIPostularProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIPostularProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIRegisterStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIRegisterStudent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIRegistreCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/GUIRegistreCompany.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unicauca/view/Paint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/FrontenedMicroservicios-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/FrontenedMicroservicios-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/CompanyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/CompanyRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/PostulationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/PostulationRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/ProjectRepository$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/ProjectRepository$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/ProjectRepository$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/ProjectRepository$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/ProjectRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/ProjectRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/StudentRepository$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/StudentRepository$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/StudentRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/access/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/domain/entities/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/domain/entities/Project.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/domain/services/ProjectService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/domain/services/ProjectService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/domain/services/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/domain/services/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/infra/FrameFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/infra/FrameFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/infra/adapter/ProjectRequestCompany.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/infra/adapter/ProjectRequestCompany.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/infra/postularseAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/infra/postularseAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIDetalleProyecto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIDetalleProyecto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSoftwareEmpresa.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordination.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordinationProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSofwareCoordinationProject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSottwareStudent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSottwareStudent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSottwareStudent$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSottwareStudent$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSottwareStudent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIGestionSottwareStudent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIInfoProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIInfoProject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIPostularProject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegisterStudent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/GUIRegistreCompany.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unicauca/view/Paint.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceCompany/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/src/main/java/co/edu/unicauca/companymicroservice/Infra/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceCompany/src/main/java/co/edu/unicauca/companymicroservice/Infra/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/src/main/java/co/edu/unicauca/companymicroservice/Infra/Mappers/UsuarioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceCompany/src/main/java/co/edu/unicauca/companymicroservice/Infra/Mappers/UsuarioMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceCompany/src/main/java/co/edu/unicauca/companymicroservice/Repositories/CompanyDataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceCompany/src/main/java/co/edu/unicauca/companymicroservice/Repositories/CompanyDataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceEmailNotification/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceEmailNotification/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/java/co/edu/unicauca/microserviceemailnotification/infra/config/NotificationListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/java/co/edu/unicauca/microserviceemailnotification/infra/config/NotificationListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceEmailNotification/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceLogin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/infra/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/infra/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/repository/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/repository/DataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/service/UsuarioConsumerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/service/UsuarioConsumerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/java/co/edu/unicauca/microservicelogin/service/UsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceLogin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceLogin/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServicePostulation/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServicePostulation/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServicePostulation/src/main/java/co/edu/unicauca/microservicepostulation/infra/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServicePostulation/src/main/java/co/edu/unicauca/microservicepostulation/infra/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServicePostulation/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServicePostulation/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServicePostulation/src/test/java/co/edu/unicauca/microservicepostulation/Controller/PostulationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServicePostulation/src/test/java/co/edu/unicauca/microservicepostulation/Controller/PostulationControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServicePostulation/src/test/java/co/edu/unicauca/microservicepostulation/Repository/PostulationRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServicePostulation/src/test/java/co/edu/unicauca/microservicepostulation/Repository/PostulationRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/MicroServiceProjectApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/controller/ProjectCommentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/controller/ProjectController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/entities/Comment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/entities/Company.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/entities/Coordinator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/entities/Postulation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/entities/Project.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/Prototype/ProjectManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/Prototype/ProjectPrototypeRegister.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/Prototype/PrototypeProject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/config/ProjectCreatedEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/config/ProjectEventListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/config/RabbitMQConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/config/RestTemplateConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/CommentRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/CommentResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/NotificationStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/ProjectMapperCompany.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/ProjectRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/ProjectRequestCompany.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/ProjectRequestPostulation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/ProjectStatusRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/dto/ProjectStatusResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/AceptadoState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/CerradoState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/EnEjecucionState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/EstadoFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/MessageResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/ProjectState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/RechazadoState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/infra/states/RecibidoState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/repository/CommentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/repository/CompanyRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/repository/CoordinatorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/repository/DataLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/repository/PostulationRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/repository/ProjectRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/service/CommentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/service/ProjectService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/service/SenderService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/service/postulationRequestService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/java/co/edu/unicauca/microserviceproject/service/projectConsumerService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceProject/src/test/java/co/edu/unicauca/microserviceproject/MicroServiceProjectApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Controller/StudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Infra/Config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Infra/Config/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Infra/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Infra/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Infra/Config/TestRabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Infra/Config/TestRabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Repositories/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Repositories/DataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/java/co/edu/unicauca/studentmicroservice/Service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MicroServiceStudent/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../MicroServiceStudent/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -25,7 +205,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/theyisusz/MicroservicesSPM.git&quot;,
-    &quot;accountId&quot;: &quot;63d6f89a-5d6a-4434-8163-558b44931e00&quot;
+    &quot;accountId&quot;: &quot;f9abf157-051c-478e-bc64-6b0a1ab40daf&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -36,17 +216,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;everson&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/evers/Documents/Intellig/MicroservicesSPM/FrontenedMicroservicios&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "mera",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/RoLoNeGaTiVo/IdeaProjects/MicroservicesSPM/MicroservicesSPM/MicroServiceProjectHex",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -65,6 +249,11 @@
       <updated>1746301266795</updated>
       <workItem from="1746301267826" duration="20000" />
       <workItem from="1746312072813" duration="12000" />
+      <workItem from="1747781122513" duration="3002000" />
+      <workItem from="1747952795847" duration="506000" />
+      <workItem from="1748377998689" duration="8017000" />
+      <workItem from="1749170299152" duration="2729000" />
+      <workItem from="1749178497140" duration="3708000" />
     </task>
     <servers />
   </component>

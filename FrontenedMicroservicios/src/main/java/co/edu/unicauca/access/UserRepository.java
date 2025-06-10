@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class UserRepository implements IRepository {
 
- 
+
     public UserRepository() {
-        
+
     }
 
     @Override
@@ -43,27 +43,34 @@ public class UserRepository implements IRepository {
     }
 
     @Override
-    public User found(Object user) {  
-         String usuario = (String)user;
+    public User found(Object user) {
+        String usuario = (String) user;
+
         try {
-            URL url = new URL("http://localhost:8085/api/usuarios/validar");
+            URL url = new URL("http://localhost:8081/api/usuarios/validar"); // <-- API Gateway
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setRequestProperty("Accept", "application/json");
+
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                con.setRequestProperty("Authorization", "Bearer " + token);
+            }
+
             con.setDoOutput(true);
 
             // Construir el JSON para enviar
             String jsonInputString = "{\"username\": \"" + usuario + "\"}";
 
-            // Enviar la peticiÃ³n
             try (OutputStream os = con.getOutputStream()) {
                 byte[] input = jsonInputString.getBytes("utf-8");
                 os.write(input, 0, input.length);
             }
 
             int code = con.getResponseCode();
-            if (code == 200) { // HTTP OK
+            if (code == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
                 StringBuilder response = new StringBuilder();
                 String responseLine;
@@ -76,6 +83,7 @@ public class UserRepository implements IRepository {
                 User usuarioResultante = gson.fromJson(response.toString(), User.class);
                 return usuarioResultante;
             } else {
+                System.err.println("Código HTTP inesperado: " + code);
                 return null;
             }
 
@@ -83,7 +91,5 @@ public class UserRepository implements IRepository {
             e.printStackTrace();
             return null;
         }
-
-        
     }
 }

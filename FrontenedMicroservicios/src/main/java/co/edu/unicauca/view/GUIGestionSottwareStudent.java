@@ -5,6 +5,7 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.ProjectRepository;
+import co.edu.unicauca.access.SessionManager;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.PostulationService;
@@ -240,6 +241,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        SessionManager.setToken(null);
         this.dispose();
         Main.mostrarLogin();
     }//GEN-LAST:event_btnsalirActionPerformed
@@ -284,7 +286,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
             model.addRow(new Object[]{
                 i,
                 p.getFechaEntregadaEsperada(),
-                p.getCompany().getNombre(),
+                p.getNombreEmpresa(),
                 p.getNombre(),
                 p.getResumen(),
                 "Ver mas",

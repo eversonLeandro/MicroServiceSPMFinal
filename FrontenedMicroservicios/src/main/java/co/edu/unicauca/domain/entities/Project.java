@@ -11,8 +11,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
 
-    private long id;
-    private String nitEmpresa;
+    private long idProject;
+    private String companyId;
     private String nombre;
     private String resumen;
     private String descripcion;
@@ -22,7 +22,7 @@ public class Project {
     private String FechaEntregadaEsperada;
     private String periodoAcademico;
     
-    
+    private String estadoTexto;
     private ProjectState estado;
     private String nombreEmpresa;
     private Company company;
@@ -32,6 +32,15 @@ public class Project {
         return company;
     }
 
+    public String getEstadoTexto() {
+        return estadoTexto;
+    }
+
+    public void setEstadoTexto(String estadoTexto) {
+        this.estadoTexto = estadoTexto;
+    }
+
+    
     public void setCompany(Company company) {
         this.company = company;
     }
@@ -48,8 +57,8 @@ public class Project {
     }
 
     public Project(long id, String nitEmpresa, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada, String estado, String nombreEmpresa,String periodoAcademico) {
-        this.id = id;
-        this.nitEmpresa = nitEmpresa;
+        this.idProject = id;
+        this.companyId = nitEmpresa;
         this.nombre = nombre;
         this.resumen = resumen;
         this.descripcion = descripcion;
@@ -62,8 +71,8 @@ public class Project {
     }
    
     public Project(String nitEmpresa, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada) {
-        this.id = id;
-        this.nitEmpresa = nitEmpresa;
+        this.idProject = idProject;
+        this.companyId = nitEmpresa;
         this.nombre = nombre;
         this.resumen = resumen;
         this.descripcion = descripcion;
@@ -77,7 +86,7 @@ public class Project {
     }
     
     public long getId() {
-        return id;
+        return idProject;
     }
 
     // public void avanzarEstado() {
@@ -88,15 +97,15 @@ public class Project {
     //}
     
     public void setId(long id) {    
-        this.id = id;
+        this.idProject = id;
     }
 
-    public String getNitEmpresa() {
-        return nitEmpresa;
+    public String getCompanyId() {
+        return companyId;
     }
 
-    public void setNitEmpresa(String nitEmpresa) {
-        this.nitEmpresa = nitEmpresa;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
     public String getNombre() {

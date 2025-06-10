@@ -10,9 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
+import jakarta.ws.rs.ClientErrorException;
+import jakarta.ws.rs.core.Response;
+
 
 @Service
 public class UsuarioService {
+    @Autowired
+    private KeycloakUserService keycloakUserService;
+
     ModelMapper modelMapper= new ModelMapper();
     @Autowired
     private UsuarioRepository repository;
@@ -27,7 +33,25 @@ public class UsuarioService {
     }
     @Transactional
     public User save(UsuarioRequest usuario) {
-        User user=modelMapper.map(usuario, User.class);
+        try {
+            keycloakUserService.crearUsuarioEnKeycloak(
+                    usuario.getUsername(),
+                    usuario.getContrasenia(),
+                    usuario.getEmail(),
+                    usuario.getRol().toLowerCase()
+            );
+        } catch (Exception e) {
+            // En este punto, solo debería lanzar si es un error crítico, no 409
+            System.out.println("Error inesperado al crear usuario en Keycloak: " + e.getMessage());
+        }
+
+        // Verificar si ya existe en la base de datos antes de guardar
+        Optional<User> existente = repository.findByUsername(usuario.getUsername());
+        if (existente.isPresent()) {
+            return existente.get();
+        }
+
+        User user = modelMapper.map(usuario, User.class);
         return repository.save(user);
     }
     @Transactional

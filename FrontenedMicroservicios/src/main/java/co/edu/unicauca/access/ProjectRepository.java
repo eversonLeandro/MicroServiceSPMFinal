@@ -67,11 +67,16 @@ public class ProjectRepository implements IProjectRepository {
         Project project = (Project) entity;
 
         try {
-            URL url = new URL("http://localhost:8086/apiProject/project");
+            URL url = new URL("http://localhost:8081/apiProject/project");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setRequestProperty("Accept", "application/json");
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                con.setRequestProperty("Authorization", "Bearer " + token);
+            }
             con.setDoOutput(true);
 
             // Crear el JSON manualmente
@@ -84,17 +89,19 @@ public class ProjectRepository implements IProjectRepository {
             "objetivo": "%s",
             "tiempoMaximo": "%s",
             "presupuesto": "%s",
-            "fechaEntregadaEsperada": "%s"
+            "fechaEntregadaEsperada": "%s",
+            "periodoAcademico": "%s"                                      
         }
         """,
-                    project.getNitEmpresa(),
+                    project.getCompanyId(),
                     project.getNombre(),
                     project.getResumen(),
                     project.getDescripcion(),
                     project.getObjetivo(),
                     project.getTiempoMaximo(),
                     project.getPresupuesto(),
-                    project.getFechaEntregadaEsperada()
+                    project.getFechaEntregadaEsperada(),
+                    project.getPeriodoAcademico()
             );
 
             // Enviar el JSON al servidor
@@ -116,15 +123,20 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Object> list() {
         try {
-            URL url = new URL("http://localhost:8086/apiProject/projects");
+            URL url = new URL("http://localhost:8081/apiProject/projects");
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+            }
             InputStream inputStream = connection.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
             List<Project> proyectos = mapper.readValue(inputStream, new TypeReference<List<Project>>() {
             });
+            System.out.println(proyectos);
             return new ArrayList<>(proyectos);
 
         } catch (Exception e) {
@@ -158,13 +170,18 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public ProjectStatusResponse actualizarEstado(ProjectStatusRequest request) {
         try {
-            URL url = new URL("http://localhost:8086/apiProject/projects/status");
+            URL url = new URL("http://localhost:8081/apiProject/projects/status");
 
             // Configurar la conexión HTTP
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("PUT");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+            }
             connection.setDoOutput(true);
 
             // Convertir el objeto ProjectStatusRequest a JSON
@@ -200,18 +217,22 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<ProjectRequestCompany> getProjectsNit(String nit) {
         try {
-            URL url = new URL("http://localhost:8086/apiProject/projectsCompany/" + nit);
+            URL url = new URL("http://localhost:8081/apiProject/projectsCompany/" + nit);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+            }
             InputStream inputStream = connection.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
 
             // Deserializamos la respuesta JSON a una lista de objetos genéricos
             List<ProjectRequestCompany> proyectos = mapper.readValue(inputStream, new TypeReference<List<ProjectRequestCompany>>() {
             });
-
+            System.out.println("asa");
             return proyectos;
 
         } catch (Exception e) {
@@ -224,11 +245,15 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public Project found(Object idProject) {
         try {
-            URL url = new URL("http://localhost:8086/apiProject/project/" + idProject); // Cambia el puerto si es necesario
+            URL url = new URL("http://localhost:8081/apiProject/project/" + idProject); // Cambia el puerto si es necesario
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Accept", "application/json");
-
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                con.setRequestProperty("Authorization", "Bearer " + token);
+            }
             if (con.getResponseCode() == 200) {
                 ObjectMapper mapper = new ObjectMapper();
                 try (InputStream is = con.getInputStream()) {
@@ -247,11 +272,15 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Map<String, String>> getCommentsByProject(int projectId) throws IOException {
         try {
-            URL url = new URL("http://localhost:8086/api/projects/" + projectId + "/comments");
+            URL url = new URL("http://localhost:8081/apiProject/comments/" + projectId);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
-
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                conn.setRequestProperty("Authorization", "Bearer " + token);
+            }
             int responseCode = conn.getResponseCode();
 
             if (responseCode != 200) {
@@ -283,11 +312,16 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public boolean addComment(int projectId, int coordinatorId, String coordinatorName, String message) throws IOException {
         try {
-            URL url = new URL("http://localhost:8086/api/projects/" + projectId + "/comments");
+            URL url = new URL("http://localhost:8081/apiProject/comment/" + projectId);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "application/json");
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                conn.setRequestProperty("Authorization", "Bearer " + token);
+            }
             conn.setDoOutput(true);
 
             JsonObject jsonObject = new JsonObject();

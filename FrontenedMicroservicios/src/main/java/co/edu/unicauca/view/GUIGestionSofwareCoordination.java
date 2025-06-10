@@ -5,6 +5,7 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.access.SessionManager;
 import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.Student;
@@ -413,6 +414,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }//GEN-LAST:event_txtnombrecordinadorActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        SessionManager.setToken(null);
         Main.mostrarLogin();
         this.dispose();
 
@@ -478,7 +480,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         Map<String, Integer> contadorPorSector = new HashMap<>();
 
         for (Project p : proyectos) {
-            String estado = p.getEstadoString();
+            String estado = p.getEstadoTexto();
             if (estado == null || estado.trim().isEmpty()) {
                 estado = "Sin estado";
             }
@@ -532,7 +534,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         DefaultPieDataset dataset = new DefaultPieDataset();
         Map<String, Integer> contadorPorEstado = new HashMap<>();
         for (Project p : proyectos) {
-            String estado = p.getEstadoString();
+            String estado = p.getEstadoTexto();
             if (estado == null || estado.trim().isEmpty()) {
                 estado = "Sin estado"; 
             }
@@ -661,9 +663,9 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             LocalDate fechaEntrega = LocalDate.now().plusMonths(meses);
             model.addRow(new Object[]{
                 p.getNombre(),
-                p.getCompany().getNombre(),
+                p.getNombreEmpresa(),
                 fechaEntrega.toString(),
-                p.getEstadoString()
+                p.getEstadoTexto()
             });
         }
 
@@ -754,8 +756,9 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         // Instanciar la GUI del coordinador y mostrarla
         GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p,usuario);
         
+        instance.pack();
         instance.setExtendedState(JFrame.NORMAL);
-         instance.setLocationRelativeTo(null);
+        instance.setLocationRelativeTo(null);
         instance.setVisible(true);
     }
 

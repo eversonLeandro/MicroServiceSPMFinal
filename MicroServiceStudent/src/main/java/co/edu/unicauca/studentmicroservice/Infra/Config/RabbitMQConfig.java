@@ -1,4 +1,4 @@
-package co.edu.unicauca.studentmicroservice.infra.config;
+package co.edu.unicauca.studentmicroservice.Infra.Config;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

@@ -8,7 +8,9 @@ import co.edu.unicauca.interfaces.ICompanyRepository;
 import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.Messages;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,6 +24,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.google.gson.internal.bind.TypeAdapters.URL;
+
 /**
  *
  * @author Brayan
@@ -32,16 +36,22 @@ public class CompanyRepository implements ICompanyRepository {
 
     }
 
-   @Override
+    @Override
     public boolean save(Object companyObject) {
         Company company = (Company) companyObject;
 
         try {
-            URL url = new URL("http://localhost:8088/apiCompanies/guardar");
+            URL url = new URL("http://localhost:8081/apiCompanies/guardar");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setRequestProperty("Accept", "application/json");
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            System.out.println("el token es: " + token);
+            if (token != null) {
+                con.setRequestProperty("Authorization", "Bearer " + token);
+            }
             con.setDoOutput(true);
 
             // Crear el JSON manualmente
@@ -76,6 +86,19 @@ public class CompanyRepository implements ICompanyRepository {
 
             // Obtener el código de respuesta del servidor
             int code = con.getResponseCode();
+            System.out.println("Código de respuesta: " + code);
+
+// Si el código no es exitoso, imprime el cuerpo del error
+            if (code != 200 && code != 201) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    System.out.println("Respuesta de error: " + response.toString());
+                }
+            }
             return code == 200 || code == 201;
 
         } catch (IOException e) {

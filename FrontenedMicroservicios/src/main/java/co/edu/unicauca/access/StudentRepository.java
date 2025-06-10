@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class StudentRepository implements IStudentRepository {
 
-    private final String API_URL = "http://localhost:8083/api/Students";
+    private final String API_URL = "http://localhost:8081/api/Students";
 
     public StudentRepository() {
 
@@ -41,6 +41,11 @@ public class StudentRepository implements IStudentRepository {
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setRequestProperty("Accept", "application/json");
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                con.setRequestProperty("Authorization", "Bearer " + token);
+            }
             con.setDoOutput(true);
 
             // Crear el JSON manualmente
@@ -87,7 +92,11 @@ public class StudentRepository implements IStudentRepository {
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-
+            // Recuperar el token de sesión y agregarlo al header
+            String token = SessionManager.getToken();
+            if (token != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+            }
             InputStream inputStream = connection.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
             List<Student> estudiantes = mapper.readValue(inputStream, new TypeReference<List<Student>>() {
@@ -113,7 +122,11 @@ public class StudentRepository implements IStudentRepository {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
-
+             // Recuperar el token de sesión y agregarlo al header
+             String token = SessionManager.getToken();
+             if (token != null) {
+                 connection.setRequestProperty("Authorization", "Bearer " + token);
+             }
         int responseCode = connection.getResponseCode();
         if (responseCode == 200) {
             InputStream inputStream = connection.getInputStream();

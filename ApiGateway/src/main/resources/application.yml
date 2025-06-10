@@ -5,7 +5,6 @@ spring:
   application:
     name: api-gateway
 
-
   cloud:
     gateway:
       routes:
@@ -29,29 +28,15 @@ spring:
           uri: http://localhost:8085
           predicates:
             - Path=/api/usuarios/**
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
 
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/MicroserviceSPM
-          jwk-set-uri: http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs
+          jwk-set-uri: http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs  # "certs" en plural
 
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.security: DEBUG
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
-  endpoint:
-    health:
-      show-details: always
-

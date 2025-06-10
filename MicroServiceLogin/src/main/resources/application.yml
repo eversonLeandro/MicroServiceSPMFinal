@@ -2,9 +2,8 @@ spring:
   application:
     name: MicroServiceLogin
 
-  # Configuración PostgreSQL
   datasource:
-    url: jdbc:postgresql://postgres-login:5432/logindb
+    url: jdbc:postgresql://postgres-db:5432/login_db
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: password
@@ -14,27 +13,26 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-  # Configuración RabbitMQ
   rabbitmq:
-    host: rabbitmq  # Nombre del servicio en Docker
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/MicroserviceSPM
+          # jwk-set-uri: http://keycloak:8080/realms/MicroserviceSPM/protocol/openid-connect/certs
+          # Si usas issuer-uri, no es necesario jwk-set-uri
+
 server:
   port: 8085
-
-# Configuración Keycloak
-security:
-  oauth2:
-    resourceserver:
-      jwt:
-        issuer-uri: http://keycloak:8080/realms/MicroserviceSPM
-        jwk-set-uri: http://keycloak:8080/realms/MicroserviceSPM/protocol/openid-connect/certs
 
 keycloak:
   auth-server-url: http://keycloak:8080
   realm: MicroserviceSPM
   resource: system-desktop
   credentials:
-    secret: sistem-secret
+    secret: system-secret

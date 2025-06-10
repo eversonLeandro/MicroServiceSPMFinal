@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_PASSWORD: "123"
       POSTGRES_DB: "student_db"  # Base de datos principal (se crea por defecto)
-      POSTGRES_MULTIPLE_DATABASES: "postulation_db,company_db,project_db,login_db"  # Bases de datos adicionales
+      POSTGRES_MULTIPLE_DATABASES: "postulation_db,company_db,project_db,login_db,keycloak_db"  # Bases de datos adicionales
     ports:
       - "5432:5432"
     volumes:
@@ -29,25 +29,36 @@ services:
     image: quay.io/keycloak/keycloak:latest
     command: start-dev --import-realm
     environment:
-    
       KEYCLOAK_ADMIN: "admin"
       KEYCLOAK_ADMIN_PASSWORD: "admin"
       KC_DB: "postgres"
-      KC_DB_URL: "jdbc:postgresql://postgres-db:5432/login_db"  # Usa student_db como DB de Keycloak
+      KC_DB_URL: "jdbc:postgresql://postgres-db:5432/keycloak_db"
       KC_DB_USERNAME: "postgres"
       KC_DB_PASSWORD: "123"
+      KC_HOSTNAME: "keycloak"
+      KC_HOSTNAME_PORT: "8080"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
     volumes:
       - ./keycloak-setup/realm-export.json:/opt/keycloak/data/import/realm-export.json
     ports:
       - "8080:8080"
     depends_on:
       - postgres-db
+    healthcheck:
+      # Health check universal que funciona en ambos sistemas
+      # Usa Java (que siempre está disponible en Keycloak) para hacer la petición HTTP
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /realms/MicroserviceSPM HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && timeout 5 cat <&3 | head -1 | grep -q '200\\|302' || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 90s
     networks:
       - microservices-network
-  
+      
     
     
-
   # Microservicios (ajustados para usar sus propias bases de datos)
   api-gateway:
     image: apigateway-service:1.0
@@ -69,22 +80,17 @@ services:
     networks:
       - microservices-network
 
-  login-service:
-    image: login-service:1.0
+  adminer:
+    image: adminer
+    container_name: adminer
     ports:
-      - "8085:8085"
-    environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-db:5432/login_db"  # Base de datos específica
-      SPRING_DATASOURCE_USERNAME: "postgres"
-      SPRING_DATASOURCE_PASSWORD: "123"
-      SPRING_RABBITMQ_HOST: "rabbitmq"
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://keycloak:8080/realms/MicroserviceSPM"
-    depends_on:
-      - postgres-db
-      - rabbitmq
-      - keycloak
+      - "8090:8080"
     networks:
       - microservices-network
+    depends_on:
+      - postgres-db
+    restart: unless-stopped
+
 
   student-service:
     image: student-service:1.0
@@ -162,6 +168,35 @@ services:
       - rabbitmq
     networks:
       - microservices-network
+  
+
+  login-service:
+    image: login-service:1.0
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-db:5432/login_db"  # Base de datos específica
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://keycloak:8080/realms/MicroserviceSPM"
+    depends_on:
+      postgres-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      keycloak:
+        condition: service_healthy
+      postulation-service:
+        condition: service_started
+      company-service:
+        condition: service_started
+      project-service:
+        condition: service_started
+    networks:
+      - microservices-network
+    restart: on-failure
+
 
 networks:
   microservices-network:

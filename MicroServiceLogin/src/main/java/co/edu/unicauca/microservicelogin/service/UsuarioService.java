@@ -29,11 +29,13 @@ public class UsuarioService {
     @Transactional
     public Optional<User> findByUsername(String username) {
         // Como en tu entidad username es @Id, puedes usar findById:
+        System.out.println("consultando usuario en repositorio");
         return repository.findByUsername(username);
     }
     @Transactional
     public User save(UsuarioRequest usuario) {
         try {
+            System.out.println("registrando en keycloak");
             keycloakUserService.crearUsuarioEnKeycloak(
                     usuario.getUsername(),
                     usuario.getContrasenia(),

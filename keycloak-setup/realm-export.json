@@ -1,17 +1,22 @@
 {
+  "id": "MicroserviceSPM",
   "realm": "MicroserviceSPM",
   "enabled": true,
   "displayName": "MicroserviceSPM",
   "accessTokenLifespan": 300,
   "ssoSessionIdleTimeout": 1800,
   "ssoSessionMaxLifespan": 36000,
+  "defaultRoles": [
+    "default-roles-microservicespm"
+  ],
   "clients": [
     {
+      "id": "system-desktop-client-id",
       "clientId": "system-desktop",
       "name": "System Desktop Client",
       "enabled": true,
-      "clientAuthenticatorType": "client-secret",      
-      "secret": "system-secret",      
+      "clientAuthenticatorType": "client-secret",
+      "secret": "system-secret",
       "rootUrl": "http://localhost:8081",
       "baseUrl": "http://localhost:8081",
       "redirectUris": [
@@ -29,7 +34,7 @@
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": true,
-      "authorizationServicesEnabled": false,
+      "authorizationServicesEnabled": true,
       "fullScopeAllowed": true,
       "attributes": {
         "backchannel.logout.revoke.offline.tokens": "false",
@@ -38,57 +43,48 @@
     }
   ],
   "roles": {
+    "realm": [
+      {
+        "id": "default-roles-microservicespm-id",
+        "name": "default-roles-microservicespm",
+        "description": "Default roles for MicroserviceSPM realm",
+        "composite": true,
+        "clientRole": false,
+        "containerId": "MicroserviceSPM"
+      }
+    ],
     "client": {
       "system-desktop": [
         {
+          "id": "company-role-id",
           "name": "company",
           "description": "Rol para empresas",
           "composite": false,
-          "clientRole": true
+          "clientRole": true,
+          "containerId": "system-desktop-client-id"
         },
         {
+          "id": "student-role-id",
           "name": "student",
           "description": "Rol para estudiantes",
           "composite": false,
-          "clientRole": true
+          "clientRole": true,
+          "containerId": "system-desktop-client-id"
         },
         {
+          "id": "coordinator-role-id",
           "name": "coordinator",
           "description": "Rol para coordinadores",
           "composite": false,
-          "clientRole": true
-        },         
-        {
-          "name": "view-users",
-          "description": "Permite ver usuarios",
-          "composite": false,
-          "clientRole": true
-        },
-        {
-          "name": "manage-users",
-          "description": "Permite gestionar usuarios",
-          "composite": false,
-          "clientRole": true
-        }
-      ],
-      "realm-management": [
-        {
-          "name": "view-users",
-          "description": "Permite ver usuarios",
-          "composite": false,
-          "clientRole": true
-        },
-        {
-          "name": "manage-users",
-          "description": "Permite gestionar usuarios",
-          "composite": false,
-          "clientRole": true
+          "clientRole": true,
+          "containerId": "system-desktop-client-id"
         }
       ]
     }
   },
   "users": [
     {
+      "id": "admin-user-id",
       "username": "admin",
       "enabled": true,
       "firstName": "Admin",
@@ -104,9 +100,65 @@
       ],
       "clientRoles": {
         "system-desktop": [
-          "coordinator"
+          "coordinator",
+          "company",
+          "student"
         ]
       }
+    },
+    {
+      "id": "service-account-system-desktop-id",
+      "username": "service-account-system-desktop",
+      "enabled": true,
+      "emailVerified": true,
+      "serviceAccountClientId": "system-desktop",
+      "credentials": [],
+      "realmRoles": [
+        "default-roles-microservicespm"
+      ],
+      "clientRoles": {
+        "realm-management": [
+          "view-users",
+          "manage-users", 
+          "realm-admin"
+        ],
+        "system-desktop": [
+          "uma_protection"
+        ]
+      },
+      "groups": []
     }
+  ],
+  "clientScopeMappings": {
+    "realm-management": [
+      {
+        "client": "system-desktop",
+        "roles": [
+          "view-users",
+          "manage-users",
+          "realm-admin"
+        ]
+      }
+    ]
+  },
+  "scopeMappings": [
+    {
+      "client": "system-desktop",
+      "roles": [
+        "default-roles-microservicespm"
+      ]
+    }
+  ],
+  "defaultDefaultClientScopes": [
+    "web-origins",
+    "profile",
+    "roles",
+    "email"
+  ],
+  "defaultOptionalClientScopes": [
+    "address",
+    "phone",
+    "offline_access",
+    "microprofile-jwt"
   ]
 }

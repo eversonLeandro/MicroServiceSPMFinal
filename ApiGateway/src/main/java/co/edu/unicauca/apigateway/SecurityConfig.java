@@ -26,8 +26,14 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/api/usuarios/**", "/actuator/health").permitAll()
+                        // Endpoints públicos específicos
+                        .pathMatchers("/api/usuarios/validar", "/actuator/health").permitAll()
                         .pathMatchers("/apiCompanies/guardar", "/api/Students/crear").permitAll()
+
+                        // Otros endpoints de usuarios SÍ requieren autenticación
+                        .pathMatchers("/api/usuarios/crear", "/api/usuarios/actualizar").authenticated()
+
+                        // El resto de rutas protegidas
                         .pathMatchers("/api/Students/**").hasAnyRole("STUDENT","COORDINATOR")
                         .pathMatchers("/apiCompanies/**").hasAnyRole("COMPANY","STUDENT","COORDINATOR")
                         .pathMatchers("/apiProject/**").hasAnyRole("COORDINATOR","STUDENT","COMPANY")
@@ -40,7 +46,7 @@ public class SecurityConfig {
                         )
                 );
 
-        http.csrf(csrf -> csrf.disable()); // Forma correcta de deshabilitar CSRF
+        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }

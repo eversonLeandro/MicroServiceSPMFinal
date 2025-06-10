@@ -10,9 +10,13 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private UsuarioRepository repository;
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("QEUMANDO DATOS DE USUARIOS");
+        repository.deleteAll();
         if (usuarioService.findAll().isEmpty()) {
             UsuarioRequest admin = new UsuarioRequest();
             admin.setId(24);

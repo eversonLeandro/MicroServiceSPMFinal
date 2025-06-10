@@ -33,9 +33,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/MicroserviceSPM
-          jwk-set-uri: http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs  # "certs" en plural
-
+          issuer-uri: http://keycloak:8080/realms/MicroserviceSPM
+          jwk-set-uri: http://keycloak:8080/realms/MicroserviceSPM/protocol/openid-connect/certs
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

@@ -64,6 +64,7 @@ public class UserRepository implements IRepository {
             // Construir el JSON para enviar
             String jsonInputString = "{\"username\": \"" + usuario + "\"}";
 
+            System.out.println(usuario);
             try (OutputStream os = con.getOutputStream()) {
                 byte[] input = jsonInputString.getBytes("utf-8");
                 os.write(input, 0, input.length);

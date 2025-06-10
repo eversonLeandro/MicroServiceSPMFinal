@@ -34,7 +34,7 @@ public class SecurityConfig {
     }
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri("http://localhost:8080/realms/MicroserviceSPM/protocol/openid-connect/certs").build();
+        return NimbusJwtDecoder.withJwkSetUri("http://keycloak:8080/realms/MicroserviceSPM/protocol/openid-connect/certs").build();
     }
     // KeycloakRoleConverter (igual para todos)
     public static class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {

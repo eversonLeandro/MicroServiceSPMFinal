@@ -1,16 +1,12 @@
 package co.edu.unicauca.main;
 
 import co.edu.unicauca.access.Factory;
-import co.edu.unicauca.access.ProjectRepository;
-import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.domain.services.UserServiceProxy;
 import co.edu.unicauca.infra.FrameFactory;
 import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
 import co.edu.unicauca.interfaces.IUserService;
-import co.edu.unicauca.view.GUIGestionSofwareCoordination;
-
 import co.edu.unicauca.view.GUIGestionSottwareStudent;
 import co.edu.unicauca.view.GUILogin;
 import javax.swing.JFrame;

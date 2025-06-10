@@ -61,6 +61,9 @@ services:
     
   # Microservicios (ajustados para usar sus propias bases de datos)
   api-gateway:
+    build:
+      context: ./ApiGateway
+      dockerfile: Dockerfile
     image: apigateway-service:1.0
     ports:
       - "8081:8081"
@@ -93,6 +96,9 @@ services:
 
 
   student-service:
+    build:
+      context: ./MicroServiceStudent
+      dockerfile: Dockerfile
     image: student-service:1.0
     ports:
       - "8083:8083"
@@ -104,10 +110,14 @@ services:
     depends_on:
       - postgres-db
       - rabbitmq
+      - keycloak
     networks:
       - microservices-network
 
   postulation-service:
+    build:
+      context: ./MicroServicePostulation
+      dockerfile: Dockerfile
     image: postulation-service:1.0
     ports:
       - "8082:8082"
@@ -119,10 +129,14 @@ services:
     depends_on:
       - postgres-db
       - rabbitmq
+      - keycloak
     networks:
       - microservices-network
 
   company-service:
+    build:
+      context: ./MicroServiceCompany
+      dockerfile: Dockerfile
     image: company-service:1.0
     ports:
       - "8088:8088"
@@ -138,6 +152,9 @@ services:
       - microservices-network
 
   project-service:
+    build:
+      context: ./MicroServiceProjectHex
+      dockerfile: Dockerfile
     image: project-service:1.0
     ports:
       - "8086:8086"
@@ -155,6 +172,9 @@ services:
       - microservices-network
 
   email-notification:
+    build:
+      context: ./MicroServiceEmailNotification
+      dockerfile: Dockerfile
     image: emailnotification-service:1.0
     ports:
       - "8089:8089"
@@ -171,6 +191,9 @@ services:
   
 
   login-service:
+    build:
+      context: ./MicroServiceLogin
+      dockerfile: Dockerfile
     image: login-service:1.0
     ports:
       - "8085:8085"

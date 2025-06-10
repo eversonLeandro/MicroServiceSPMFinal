@@ -32,89 +32,12 @@ de software, las cuales seran evaluadas por el Coordinador de Programa. Los proy
 seleccionados seran asignados a estudiantes de ultimos semestres, quienes los desarrollaran
 como parte de sus practicas profesionales, pasantias o proyectos academicos.
 
-# **Requisitos Funcionales Detallados**
+# Caracteristicas Principales
 
-## **Modulo de Gestion de Empresas**
-
-Permite a las empresas registrarse, publicar necesidades de software y gestionar sus solicitudes.
-
-### **1. Registro de Empresas**
-
-* **Descripcion**: Las empresas pueden crear una cuenta en el sistema.
-* **Criterios de Aceptacion**:
-
-  * Formulario con campos obligatorios: nombre, NIT, sector, correo electronico, contrasena.
-  * Validacion de correo electronico unico.
-
-### **2. Publicacion de Necesidades de Software**
-
-* **Descripcion**: Las empresas pueden describir problemas/proyectos que requieren solucion.
-* **Criterios de Aceptacion**:
-
-  * Formulario con campos: titulo, descripcion, tecnologias requeridas, plazo estimado.
-  * Estado inicial del proyecto: "Pendiente de revision".
-
-### **3. Gestion de Solicitudes**
-
-* **Descripcion**: Las empresas pueden ver el estado de sus proyectos publicados.
-* **Criterios de Aceptacion**:
-
-  * Estados posibles: *Pendiente*, *Aprobado*, *Rechazado*, *Asignado*, *Finalizado*.
-  * Notificaciones por correo electronico al cambiar de estado.
-
-### **4. Comunicacion con el Coordinador**
-
-* **Descripcion**: Sistema de mensajeria interna para ver las correcciones sobre los proyectos.
-* **Criterios de Aceptacion**:
-
-  * Chat en tiempo real o mensajeria asincrona.
-  * Historial de conversaciones por proyecto.
-
----
-
-## **Modulo del Coordinador del Programa**
-
-Permite al coordinador revisar, aprobar y asignar proyectos.
-
-### **5. Revision y Seleccion de Proyectos**
-
-* **Descripcion**: El coordinador evalua las solicitudes de empresas.
-* **Criterios de Aceptacion**:
-.
-  * Opcion de cambiar el estado del proyecto a : *Pendiente*, *Aprobado*, *Rechazado*, *Asignado*, *Finalizado*.
-  * Posibilidad de solicitar ajustes a la empresa mediante los comentarios.
-  * Opcion de asignar un equipo para desarrollar el proyecto
-
-### **6. Dashboard de Estadisticas**
-
-* **Descripcion**: Visualizacion de metricas clave.
-* **Criterios de Aceptacion**:
-
-  * Graficos de proyectos por estado, sector y tiempo de respuesta.
-  * Exportacion de datos (Excel, PDF).
-
-### **7. Gestion de Periodos Academicos**
-
-* **Descripcion**: Configuracion de fechas limite para recepcion de proyectos.
-* **Criterios de Aceptacion**:
-
-  * Calendario interactivo con periodos activos/inactivos.
-  * Recordatorios automaticos a empresas y estudiantes.
-
----
-
-## **Modulo de Estudiantes**
-
-Permite a los estudiantes postularse a proyectos y gestionar su participacion.
-
-### **8. Postulacion a Proyectos**
-
-* **Descripcion**: Los estudiantes pueden ver proyectos disponibles y aplicar.
-* **Criterios de Aceptacion**:
-
-  * Opcion de postularse a los proyectos listados en la pestaña de Proyectos.
-
----
+### Modulos Funcionales
+- **Gestion de Empresas**: Registro de empresas, publicacion de proyectos y correciones mediante comentarios del coordinador.
+- **Coordinador de Programa**: Revision, seleccion y asignacion de proyectos a estudiantes , Dashboard de estadisticas y  gestion de proyectos.
+- **Estudiantes**: Postulacion a proyectos disponibles.
 
 ## Tecnologías utilizadas
 

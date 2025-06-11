@@ -79,3 +79,6 @@ Equipo de Ingenieria de Software de la Universidad del Cauca:
 - [Brayan Hernan Meneses]()
 
 *Asesorado por: Wilson Libardo Pantoja Yepez*
+
+## Instrucciones
+Para ejecutar el proyecto de manera exitosa, sigue estos pasos: (1) construye las imágenes con el comando docker-compose build; (2) levanta los contenedores en segundo plano usando docker-compose up -d; y (3) si es posible, vuelve a ejecutar docker-compose up -d para asegurarte de que los servicios estén corriendo correctamente. Asegúrate de que los puertos necesarios estén disponibles y, si deseas detener y eliminar los contenedores, puedes usar docker-compose down.

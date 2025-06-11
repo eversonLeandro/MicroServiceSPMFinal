@@ -108,9 +108,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: "123"
       SPRING_RABBITMQ_HOST: "rabbitmq"
     depends_on:
-      - postgres-db
-      - rabbitmq
-      - keycloak
+      postgres-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      keycloak:
+        condition: service_healthy
     networks:
       - microservices-network
 
@@ -127,9 +130,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: "123"
       SPRING_RABBITMQ_HOST: "rabbitmq"
     depends_on:
-      - postgres-db
-      - rabbitmq
-      - keycloak
+      postgres-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      keycloak:
+        condition: service_healthy
     networks:
       - microservices-network
 
@@ -146,8 +152,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: "123"
       SPRING_RABBITMQ_HOST: "rabbitmq"
     depends_on:
-      - postgres-db
-      - rabbitmq
+      postgres-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      keycloak:
+        condition: service_healthy
     networks:
       - microservices-network
 
@@ -165,9 +175,12 @@ services:
       SPRING_RABBITMQ_HOST: "rabbitmq"
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://keycloak:8080/realms/MicroserviceSPM"
     depends_on:
-      - postgres-db
-      - rabbitmq
-      - keycloak
+      postgres-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      keycloak:
+        condition: service_healthy
     networks:
       - microservices-network
 
@@ -185,7 +198,12 @@ services:
       SPRING_MAIL_USERNAME: "yisus0816z@gmail.com"
       SPRING_MAIL_PASSWORD: "yfguvgiqjxjtyuak"
     depends_on:
-      - rabbitmq
+      postgres-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      keycloak:
+        condition: service_healthy
     networks:
       - microservices-network
   

@@ -11,7 +11,7 @@ public class CompanyMapper {
          CompanyEntity company = CompanyEntity.builder()
                 .nit(entity.getNit())
                 .nombre(entity.getNombre())
-                .email(entity.getEmail().toString())
+                .email(entity.getEmail().getEmail())
                 .build();
         return company;
     }

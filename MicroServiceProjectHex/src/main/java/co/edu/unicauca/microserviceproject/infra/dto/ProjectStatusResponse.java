@@ -13,5 +13,6 @@ public class ProjectStatusResponse {
         this.estado = estado;
         this.mensaje = mensaje;
     }
+    public ProjectStatusResponse() {}
 
 }

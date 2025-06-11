@@ -18,7 +18,7 @@ public class ProjectRequestMapper {
     return new Project(
             new RecibidoState(),
             request.getNitCompany(),
-            request.getCoordinatorId(),
+            24L,
             request.getNombre(),
             request.getResumen(),
             request.getDescripcion(),

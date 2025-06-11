@@ -78,6 +78,7 @@ public class CompanyService{
             companyRequestProject.setNombre(company.getNombre());
             companyRequestProject.setEmail(company.getEmail());
 
+            System.out.println("Correo:"+companyRequestProject.getEmail());
             rabbitTemplate.convertAndSend(RabbitMQConfig.COMPANY_QUEUE,companyRequestProject);
 
             return true;

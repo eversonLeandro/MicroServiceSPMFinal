@@ -76,7 +76,7 @@ public class ProjectController {
 
     @PutMapping("/projects/status")
     public ResponseEntity<?> updateStatus(@RequestBody ProjectStatusRequest statusRequest) {
-        ProjectStatusResponse response = null;
+        ProjectStatusResponse response = new ProjectStatusResponse();
         try {
             response = iUpdateProjectStatus.updateProjectStatus(statusRequest.getProjectId(), statusRequest.getAction());
             return ResponseEntity.status(HttpStatus.OK).body(response);

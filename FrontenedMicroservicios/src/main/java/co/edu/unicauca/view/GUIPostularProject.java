@@ -8,14 +8,24 @@ import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.infra.IFrameEventListener;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.infra.gotaAguaTexto;
+import co.edu.unicauca.infra.validation.ValidationContext;
+import co.edu.unicauca.infra.validation.Validator;
+import co.edu.unicauca.infra.validation.strategies.DateValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.EmailValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.NotEmptyAndNotDefaultStrategy;
+import co.edu.unicauca.infra.validation.strategies.NumericDecimalValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.NumericValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.TextOnlyValidationStrategy;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -30,6 +40,13 @@ public class GUIPostularProject extends javax.swing.JDialog {
     private ProjectService projectService;
     private CompanyService companyService;
     private User user;
+    private ValidationContext nombreValidator;
+    private ValidationContext resumenValidator;
+    private ValidationContext descripcionValidator;
+    private ValidationContext objetivoValidator;
+    private ValidationContext tiempoValidator;
+    private ValidationContext presupuestoValidator;
+    private ValidationContext fechaValidator;
 
     public GUIPostularProject(JFrame parent, ProjectService projectService, IFrameEventListener listener, User user, CompanyService companyService) {
         super(parent, "Nueva projecto", true);
@@ -37,6 +54,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
         this.projectService = projectService;
         this.companyService = companyService;
         this.listener = listener;
+         configurarValidadores();
         initComponents();
         setSize(800, 700);
         setLocationRelativeTo(parent);
@@ -307,105 +325,51 @@ public class GUIPostularProject extends javax.swing.JDialog {
         String tiempoMaximo = txtMaximumTime.getText().trim();
         String presupuesto = txtEstimatedBudge.getText().trim();
         String fechaEntregaEsperada = txteEstimatedDeliveryDate.getText().trim();
-    
-        boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
-        boolean validarPresupuesto = validarNumero(presupuesto);
-        boolean validarFecha = validarFecha(fechaEntregaEsperada);
-        if (validacion && validarPresupuesto && validarFecha) {
 
-            Project project = new Project(String.valueOf(user.getId()), nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
+        boolean isValid = validarFormulario(nombre, resumen, descripcion,objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
+
+        if (isValid) {
+            Project project = new Project(String.valueOf(user.getId()), nombre, resumen,descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
             project.setPeriodoAcademico(calcularPeriodo());
-            
             if (projectService.saveProject(project)) {
                 if (listener != null) {
-                    listener.onEventTriggered(); // Notificamos al primer frame
+                    listener.onEventTriggered();
                 }
                 Messages.showMessageDialog("Agregado correctamente", "Atención");
                 this.dispose();
             } else {
-                Messages.showMessageDialog("No se agrego el proyecto", "Atención");
+                Messages.showMessageDialog("No se agregó el proyecto", "Atención");
             }
         }
     }//GEN-LAST:event_btnRegistrarProyectoActionPerformed
-     public String calcularPeriodo(){
+    public String calcularPeriodo() {
         LocalDate today = LocalDate.now();
-       return today.getMonthValue() < 6? String.valueOf(today.getYear()) + "-"+1 : String.valueOf(today.getYear()) + "-"+2;
-    }
-    private boolean validarCamposVacios(String nombre, String resumen, String descripcion, String objetivo, String tiempoMaximo, String presupuesto, String fechaEntregaEsperada) {
-        if (nombre.isEmpty() || nombre.equalsIgnoreCase("project name")) {
-            Messages.showMessageDialog("Debe agregar el nombre del proyecto", "Atención");
-            txtNameProyect.requestFocus();
-            mostrarAdv(lbWarningProjectName);
-            return false;
-        }
-        if (resumen.isEmpty() || resumen.equalsIgnoreCase("overView")) {
-            Messages.showMessageDialog("Debe agregar un resumen", "Atención");
-            txtOverView.requestFocus();
-            mostrarAdv(lbWarningOverView);
-            return false;
-        }
-        if (descripcion.isEmpty() || descripcion.equalsIgnoreCase("description")) {
-            Messages.showMessageDialog("Debe agregar una descripción del proyecto", "Atención");
-            txtDescription.requestFocus();
-            mostrarAdv(lbWarningDescription);
-            return false;
-        }
-        if (objetivo.isEmpty() || objetivo.equalsIgnoreCase("objective")) {
-            Messages.showMessageDialog("Debe agregar un objetivo principal", "Atención");
-            txtObjetivo.requestFocus();
-            mostrarAdv(lbWarningObjetive);
-            return false;
-        }
-        if (tiempoMaximo.isEmpty() || tiempoMaximo.equalsIgnoreCase("maximum time")) {
-            Messages.showMessageDialog("Debe especificar el tiempo máximo", "Atención");
-            txtMaximumTime.requestFocus();
-            mostrarAdv(lbWarningMaximumTime);
-            return false;
-        }
-        if (presupuesto.isEmpty() || presupuesto.equalsIgnoreCase("estimated budget")) {
-
-            Messages.showMessageDialog("Debe agregar el presupuesto estimado", "Atención");
-            txtEstimatedBudge.requestFocus();
-            mostrarAdv(lbWarningEstimatedBudge);
-            return false;
-        }
-        if (fechaEntregaEsperada.isEmpty() || fechaEntregaEsperada.equalsIgnoreCase("estimated delivery date")) {
-            Messages.showMessageDialog("Debe agregar la fecha de entrega esperada", "Atención");
-            txteEstimatedDeliveryDate.requestFocus();
-            mostrarAdv(lbWarningEstimatedDeliveryDate);
-            return false;
-        }
-
-        return true;
-
+        return today.getMonthValue() < 6 ? String.valueOf(today.getYear()) + "-" + 1 : String.valueOf(today.getYear()) + "-" + 2;
     }
 
-    private boolean validarFecha(String fecha) {
-        if (fecha == null || fecha.trim().isEmpty()) {
-            return false;
+    private boolean validarFormulario(String nombre, String resumen, String descripcion,String objetivo, String tiempoMaximo,String presupuesto, String fechaEntregaEsperada) {
+        
+        Map<ValidationContext, JTextField> campos = Map.of(nombreValidator, txtNameProyect,resumenValidator, txtOverView,descripcionValidator, txtDescription,
+                objetivoValidator, txtObjetivo,tiempoValidator, txtMaximumTime,presupuestoValidator, txtEstimatedBudge,fechaValidator, txteEstimatedDeliveryDate);
+        
+        Map<ValidationContext, JLabel> advertencias = Map.of(nombreValidator, lbWarningProjectName,resumenValidator, lbWarningOverView,descripcionValidator, 
+                lbWarningDescription,objetivoValidator, lbWarningObjetive,tiempoValidator, lbWarningMaximumTime,presupuestoValidator, lbWarningEstimatedBudge,fechaValidator, lbWarningEstimatedDeliveryDate
+        );
+        
+        boolean allValid = true;
+        for (Map.Entry<ValidationContext, JTextField> entry : campos.entrySet()) {
+            ValidationContext validador = entry.getKey();
+            JTextField campo = entry.getValue();
+            
+            if (!validador.executeValidation(campo.getText().trim())) {
+                campo.requestFocus();
+                mostrarAdv(advertencias.get(validador));
+                allValid = false;
+                break; // Detenerse en el primer error
+            }
         }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        try {
-            LocalDate.parse(fecha, formatter);
-            return true;
-        } catch (DateTimeParseException e) {
-            Messages.showMessageDialog("Debe ingresar una fecha válida", "Atención");
-            return false;
-        }
-    }
-
-    private boolean validarNumero(String numero) {
-        if (numero == null || numero.trim().isEmpty()) {
-            return false; // Si es nulo o vacío, no es válido
-        }
-        try {
-            new BigDecimal(numero.trim());
-            return true;
-        } catch (NumberFormatException e) {
-            Messages.showMessageDialog("Ingrese un número válido para el presupuesto.", "Atención");
-            return false;
-        }
+        
+        return allValid;
     }
 
     private void mostrarAdv(JLabel lb) {
@@ -422,6 +386,37 @@ public class GUIPostularProject extends javax.swing.JDialog {
         lbWarningMaximumTime.setText("");
         lbWarningEstimatedBudge.setText("");
         lbWarningEstimatedDeliveryDate.setText("");
+    }
+     private void configurarValidadores() {
+        Validator nombreComposite = new Validator();
+        nombreComposite.addStrategy(new NotEmptyAndNotDefaultStrategy("project name", "Nombre del proyecto"));
+        this.nombreValidator = new ValidationContext(nombreComposite);
+        
+        Validator resumenComposite = new Validator();
+        resumenComposite.addStrategy(new NotEmptyAndNotDefaultStrategy("overView", "Resumen"));
+        this.resumenValidator = new ValidationContext(resumenComposite);
+
+        Validator descripcionComposite = new Validator();
+        descripcionComposite.addStrategy(new NotEmptyAndNotDefaultStrategy("description", "Descripción"));
+        this.descripcionValidator = new ValidationContext(descripcionComposite);
+
+        Validator objetivoComposite = new Validator();
+        objetivoComposite.addStrategy(new NotEmptyAndNotDefaultStrategy("objective", "Objetivo"));
+        this.objetivoValidator = new ValidationContext(objetivoComposite);
+
+        Validator tiempoComposite = new Validator();
+        tiempoComposite.addStrategy(new NotEmptyAndNotDefaultStrategy("maximum time", "Tiempo máximo"));
+        this.tiempoValidator = new ValidationContext(tiempoComposite);
+
+        Validator presupuestoComposite = new Validator();
+        presupuestoComposite.addStrategy(new NotEmptyAndNotDefaultStrategy("estimated budget", "Presupuesto"));
+        presupuestoComposite.addStrategy(new NumericDecimalValidationStrategy());
+        this.presupuestoValidator = new ValidationContext(presupuestoComposite);
+
+        Validator fechaComposite = new Validator();
+        fechaComposite.addStrategy(new NotEmptyAndNotDefaultStrategy("estimated delivery date", "Fecha de entrega"));
+        fechaComposite.addStrategy(new DateValidationStrategy("dd/MM/yyyy"));
+        this.fechaValidator = new ValidationContext(fechaComposite);
     }
     private void txtNameProyectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameProyectActionPerformed
         // TODO add your handling code here:

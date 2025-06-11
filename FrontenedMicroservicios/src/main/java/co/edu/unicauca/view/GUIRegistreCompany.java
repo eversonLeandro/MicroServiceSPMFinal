@@ -1,9 +1,13 @@
 package co.edu.unicauca.view;
+
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.infra.validation.ValidationContext;
+import co.edu.unicauca.infra.validation.strategies.EmailValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.NumericValidationStrategy;
+import co.edu.unicauca.infra.validation.strategies.TextOnlyValidationStrategy;
 import co.edu.unicauca.main.Main;
-
 
 /**
  *
@@ -12,9 +16,15 @@ import co.edu.unicauca.main.Main;
 public class GUIRegistreCompany extends javax.swing.JFrame {
 
     CompanyService servicecompany;
+    private ValidationContext emailValidator;
+    private ValidationContext numericValidator;
+    private ValidationContext textValidator;
 
     public GUIRegistreCompany(CompanyService company) {
         this.servicecompany = company;
+        this.emailValidator = new ValidationContext(new EmailValidationStrategy());
+        this.numericValidator = new ValidationContext(new NumericValidationStrategy());
+        this.textValidator = new ValidationContext(new TextOnlyValidationStrategy());
         initComponents();
     }
 
@@ -297,7 +307,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-     this.dispose();                                      
+        this.dispose();
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void txtnombrecontactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecontactoActionPerformed
@@ -338,48 +348,26 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombreActionPerformed
 
-    private boolean validarFormulario(String nit, String nombre, String email, String nombrecontacto, String apellido, String cargo, String telefono, String sector) {
-        // Validar que los campos no estén vacíos
-        if (nit.isEmpty()) {
-            Messages.showMessageDialog("El campo NIT no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (nombre.isEmpty()) {
-            Messages.showMessageDialog("El campo Nombre no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (email.isEmpty()) {
-            Messages.showMessageDialog("El campo Email no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (nombrecontacto.isEmpty()) {
-            Messages.showMessageDialog("El campo Nombre de Contacto no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (apellido.isEmpty()) {
-            Messages.showMessageDialog("El campo Apellido no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (cargo.isEmpty()) {
-            Messages.showMessageDialog("El campo Cargo no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (telefono.isEmpty()) {
-            Messages.showMessageDialog("El campo Teléfono no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (sector.isEmpty()) {
-            Messages.showMessageDialog("El campo Sector no puede estar vacío.", "Atención");
-            return false;
-        }
-        if (!nit.matches("\\d+")) {
-            Messages.showMessageDialog("El campo nit solo puede contener números.", "Atención");
-            return false;
-        }
-
-        // Si todas las validaciones pasan, retornar true
-        return true;
+    private boolean validarFormulario(String nit, String nombre, String email,String nombrecontacto, String apellido,String cargo, String telefono, String sector) {
+    boolean isValid = true;
+    
+    if (nit.isEmpty() || nombre.isEmpty() || email.isEmpty() || 
+        nombrecontacto.isEmpty() || apellido.isEmpty() || 
+        cargo.isEmpty() || telefono.isEmpty() || sector.isEmpty()) {
+        Messages.showMessageDialog("Todos los campos son obligatorios", "Atención");
+        return false;
     }
+
+    isValid = isValid && numericValidator.executeValidation(nit);
+    isValid = isValid && textValidator.executeValidation(nombre);
+    isValid = isValid && emailValidator.executeValidation(email);
+    isValid = isValid && textValidator.executeValidation(nombrecontacto);
+    isValid = isValid && textValidator.executeValidation(apellido);
+    isValid = isValid && textValidator.executeValidation(cargo);
+    isValid = isValid && numericValidator.executeValidation(telefono);
+    
+    return isValid;
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

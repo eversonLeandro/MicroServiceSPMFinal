@@ -74,7 +74,7 @@ como parte de sus practicas profesionales, pasantias o proyectos academicos.
 
 Equipo de Ingenieria de Software de la Universidad del Cauca:
 - [Juan Esteban Mera Morales]()
-- [Jesus Alberto Zufiiga Daza]()
+- [Jesus Albeiro Zuñiga Daza]()
 - [Everson Leandro Restrepo Gaviria]()
 - [Brayan Hernan Meneses]()
 
